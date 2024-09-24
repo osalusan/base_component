@@ -87,6 +87,12 @@ void BillBoard::Update()
 
 void BillBoard::Draw()
 {
+	Renderer::GetDeviceContext()->IASetInputLayout(m_VertexLayout);
+
+	//シェーダー設定
+	Renderer::GetDeviceContext()->VSSetShader(m_VertexShader, NULL, 0);
+	Renderer::GetDeviceContext()->PSSetShader(m_PixelShader, NULL, 0);
+
 	if (_sprite.x != 0)
 	{
 		//テクスチャ座標算出(剰余斬)
@@ -156,6 +162,7 @@ void BillBoard::Draw()
 	//プリミティブポロジ設定
 	Renderer::GetDeviceContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
 
+	
 	// アルファトゥカバレッジ有効
 	Renderer::SetATCEnable(true);
 
@@ -164,11 +171,6 @@ void BillBoard::Draw()
 
 	Renderer::SetATCEnable(false);
 
-	Renderer::GetDeviceContext()->IASetInputLayout(m_VertexLayout);
-
-	//シェーダー設定
-	Renderer::GetDeviceContext()->VSSetShader(m_VertexShader, NULL, 0);
-	Renderer::GetDeviceContext()->PSSetShader(m_PixelShader, NULL, 0);
 }
 
 
