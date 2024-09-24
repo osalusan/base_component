@@ -9,6 +9,7 @@
 #include "result.h"
 #include "audio.h"
 #include "gameover.h"
+#include "meshfiled.h"
 
 void Player::Init()
 {
@@ -92,16 +93,17 @@ void Player::Move()
 		_Velocity->_Velocity.z += (-forwardvector.z);
 		_Velocity->_Velocity.x += (-forwardvector.x);
 	}
-	if (Input::GetKeyPress(VK_RBUTTON))
+	if (Input::GetKeyPress(VK_RBUTTON) || Input::GetKeyPress(VK_LSHIFT))
 	{
-		if (_animationName != "Attack" && _stamina - 0.4f >= 0.0f) { _dash = true; }
+		_dash = true;
+		/*if (_animationName != "Attack" && _stamina - 0.4f >= 0.0f) { _dash = true; }*/
 	}
-	else if (Input::GetKeyRelease(VK_RBUTTON))
+	else if (Input::GetKeyRelease(VK_RBUTTON) || Input::GetKeyRelease(VK_LSHIFT))
 	{
 		_dash = false;
 	}
 	//ジャンプ
-	if (Input::GetKeyPress(VK_SPACE) && !_jump)
+	if (Input::GetKeyPress(VK_SPACE))
 	{
 		_jump = true;
 		_Velocity->_Velocity.y = 1.0f;
@@ -121,33 +123,31 @@ void Player::Move()
 
 	// ----------------------------------アニメーションの設定----------------------------------
 	// 優先順位順
-	if (_Velocity->_Velocity.z != 0 && _Velocity->_Velocity.x != 0)
+
+	if (_dash)
 	{
-		if (_dash)
-		{
-			SetState("Dash");
+		SetState("Dash");
 
-			if (_dashCount <= 10) {_Velocity->_Velocity.x *= 3.84f;_Velocity->_Velocity.z *= 3.84f; _stamina -= 0.65f; }
-			else { 
+		if (_dashCount <= 10) {_Velocity->_Velocity.x *= 3.84f;_Velocity->_Velocity.z *= 3.84f; }
+		else { 
 
-				float maxspeed = 3.84f;
-				float dashspeed = 1.64f;
-				float speed = (maxspeed - dashspeed) / 50;
-				if(_dashCount <= 60){_Velocity->_Velocity.x *= maxspeed - (_dashCount * speed); _Velocity->_Velocity.z *= maxspeed - (_dashCount * speed);}
-				else { _Velocity->_Velocity.x *= dashspeed; _Velocity->_Velocity.z *= dashspeed; }
-				_stamina -= 0.4f;
-			}
+			float maxspeed = 3.84f;
+			float dashspeed = 1.64f;
+			float speed = (maxspeed - dashspeed) / 50;
+			if(_dashCount <= 60){_Velocity->_Velocity.x *= maxspeed - (_dashCount * speed); _Velocity->_Velocity.z *= maxspeed - (_dashCount * speed);}
+			else { _Velocity->_Velocity.x *= dashspeed; _Velocity->_Velocity.z *= dashspeed; }
+			//_stamina -= 0.4f;
 		}
-		else SetState("Run");
 	}
-	else
-	{	// アニメーションの設定
-		if (_jump)SetState("Jump");
-		else SetState("Idle");
-	}
-	if (_nextanimationName == "Idle" || _nextanimationName == "Attack") { _dash = false; }
+	else SetState("Run");
+	
+	//if (_nextanimationName == "Idle" || _nextanimationName == "Attack") { _dash = false; }
 	if (_dash) { _dashCount++; }
 	else { _dashCount = 0; }
+
+
+	if (_dash) { if (_Velocity->_Velocity.y <= 0.0f) { _Velocity->_Velocity.y = 0.0f; } _jump = false; }
+	if (Input::GetKeyPress(VK_LCONTROL)) { _Velocity->_Velocity.y = -1.0f; }
 
 	// スタミナ管理
 	if (!_dash) { _stamina += 0.25f; }
@@ -195,6 +195,10 @@ void Player::CollisionControl()
 	{
 		groundHeight = _Collision->_groundHeight;
 	}
+	// オブジェクトに乗らなかったらフィールド優先
+	float filedheight = Manager::GetScene()->GetGameObject<MeshFiled>()->GetHeight(_TransForm->_Position);
+	if (groundHeight < filedheight) { groundHeight = filedheight; }
+
 
 	// 地面
 	if (_TransForm->_Position.y < groundHeight)
@@ -231,24 +235,24 @@ void Player::SetState(std::string state)
 void Player::Attack()
 {
 	auto Camera = Manager::GetScene()->GetGameObject<Player_Camera>();
-	if (Input::GetKeyTrigger(VK_LBUTTON)|| Input::GetKeyTrigger('Q') || Input::GetKeyTrigger('E'))
+	if (Input::GetKeyTrigger(VK_LBUTTON))
 	{
-		if (_stamina - 12.25f >= 0.0f)
-		{
-			SetState("Attack");
-			if (_punchi == nullptr) { 
-				_punchi = Manager::GetScene()->AddGameObject_T<PlayerPunchi>(Draw_Actor); _atkCount = 0; _atkFlag = true; _useAttack = true; _stamina -= 12.25f; 
-				_attackSE->Play(false);
-			}
-		}
+		//if (_stamina - 12.25f >= 0.0f)
+		//{
+		//	SetState("Attack");
+		//	if (_punchi == nullptr) { 
+		//		_punchi = Manager::GetScene()->AddGameObject_T<PlayerPunchi>(Draw_Actor); _atkCount = 0; _atkFlag = true; _useAttack = true; _stamina -= 12.25f; 
+		//		_attackSE->Play(false);
+		//	}
+		//}
 	}
-	if (!_atkFlag && !_useAttack) { _punchi = nullptr; }
-	if (_punchi != nullptr && _atkFlag) {
-		_punchi->_TransForm->_Position = _TransForm->_Position;
-		//_punchi->_TransForm->_Position.x = _TransForm->_Position.x + (Camera->_TransForm->GetForward().x * 5.5f);
-		//_punchi->_TransForm->_Position.y = _TransForm->_Position.y + (3.5f);
-		//_punchi->_TransForm->_Position.z = _TransForm->_Position.z + (Camera->_TransForm->GetForward().z * 5.5f);
-	}
+	//if (!_atkFlag && !_useAttack) { _punchi = nullptr; }
+	//if (_punchi != nullptr && _atkFlag) {
+	//	_punchi->_TransForm->_Position = _TransForm->_Position;
+	//	//_punchi->_TransForm->_Position.x = _TransForm->_Position.x + (Camera->_TransForm->GetForward().x * 5.5f);
+	//	//_punchi->_TransForm->_Position.y = _TransForm->_Position.y + (3.5f);
+	//	//_punchi->_TransForm->_Position.z = _TransForm->_Position.z + (Camera->_TransForm->GetForward().z * 5.5f);
+	//}
 
 	if (_nextanimationName == "Attack"&& _atkCount<= _atkTime)
 	{
@@ -256,7 +260,7 @@ void Player::Attack()
 		_atkCount++;
 	}
 	if (_atkCount >= _atkTime) { _atkFlag = false; _useAttack = false;}
-	if (!_atkFlag && _punchi != nullptr) { _punchi->SetDestroy(); }
+	//if (!_atkFlag && _punchi != nullptr) { _punchi->SetDestroy(); }
 }
 
 void Player::LoadModel()
@@ -291,16 +295,13 @@ void Player::InitComponent()
 	_Sharder = new Sharder(this);
 	_Collision = new Collision(this);
 	_animeModel = new AnimationModel(this);
-	_audio = new Audio(this);
 	_attackSE = new Audio(this);
 
 	_Velocity->Init();
 	_Sharder->Init();
 	_Collision->Init();
 	_animeModel->Init();
-	_audio->Load("asset\\sound\\AERIAL_FIGHT.wav");
 	_attackSE->Load("asset\\sound\\seireipower.wav");
-	_audio->Play(true);
 
 
 	if (Manager::GetUseJob() == JOB::Job_Swordsman)
@@ -339,7 +340,6 @@ void Player::DrawComponent()
 
 void Player::RemoveComponent()
 {
-	if (_audio != nullptr) { delete _audio; }
 	if (_job != nullptr) { _job->Unit(); delete _job; }
 	if (_animeModel != nullptr) { _animeModel->Unit(); delete _animeModel; }
 	if (_Collision != nullptr) { _Collision->Unit(); delete _Collision; }

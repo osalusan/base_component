@@ -2,7 +2,6 @@
 #include "gameobj.h"
 #include <cstdlib> 
 #include "player.h"
-#include "enemyhpBillboard.h"
 //components
 #include "velocity.h"
 #include "sharder.h"
@@ -58,10 +57,6 @@ protected:
 
 	float _stanValue = 0;
 
-
-	EnemyHelth_Billboard* _helth = {};
-	EnemyHpFrame_Billboard* _frame = {};
-	EnemyHpSpace_Billboard* _space = {};
 public:
 	float _hp = 0;
 	EnemyBase();

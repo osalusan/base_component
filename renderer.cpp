@@ -147,11 +147,11 @@ void Renderer::Init()
 
 	m_Device->CreateBlendState( &blendDesc, &m_BlendState );
 
-	blendDesc.RenderTarget[0].DestBlend = D3D11_BLEND_ONE;//”wŒi * 1
-	m_Device->CreateBlendState(&blendDesc, &m_BlendStateAdd);
-
 	blendDesc.AlphaToCoverageEnable = TRUE;
 	m_Device->CreateBlendState( &blendDesc, &m_BlendStateATC );
+
+	blendDesc.RenderTarget[0].DestBlend = D3D11_BLEND_ONE;//”wŒi * 1
+	m_Device->CreateBlendState(&blendDesc, &m_BlendStateAdd);
 
 	float blendFactor[4] = {0.0f, 0.0f, 0.0f, 0.0f};
 	m_DeviceContext->OMSetBlendState(m_BlendState, blendFactor, 0xffffffff );

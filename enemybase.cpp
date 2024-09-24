@@ -13,13 +13,7 @@ void EnemyBase::Init()
 	InitComponent();
 	SetState(ENEMY_STATE::Enemy_Idel);
 	SetMaxPaturn();
-	_space = Manager::GetScene()->AddGameObject_T<EnemyHpSpace_Billboard>(Draw_BillBoard);
-	_helth = Manager::GetScene()->AddGameObject_T<EnemyHelth_Billboard>(Draw_BillBoard);
-	_frame = Manager::GetScene()->AddGameObject_T<EnemyHpFrame_Billboard>(Draw_BillBoard);
 
-	_space->SetEnemyPointer(this);
-	_helth->SetEnemyPointer(this, _hp);
-	_frame->SetEnemyPointer(this);
 }
 
 void EnemyBase::Uninit()
@@ -41,7 +35,6 @@ void EnemyBase::Update()
 	_TransForm->_Position.z += _Velocity->_Velocity.z;
 
 	_count++;
-	if (_hp <= 0.0f) { SetDestroy(); _space->SetDestroy(); _helth->SetDestroy(); _frame->SetDestroy(); Manager::SetScene<GameClear>();}
 }
 
 void EnemyBase::Draw()
