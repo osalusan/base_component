@@ -9,31 +9,30 @@
 #include "manager.h"
 #include "enemybase.h"
 #include "title_background.h"
-#include "enemy_skull.h"
 #include "firepillar.h"
-#include "fire.h"
 #include "billboard.h"
-#include "bluefireBillboard.h"
 #include "input.h"
 #include "gameover.h"
 #include "gameclear.h"
+#include "meshfiled.h"
+#include "tree.h"
 void Game::Init()
 {
 
 	AddGameObject<Player_Camera>(Draw_Camera)->_TransForm->_Rotation = { 0.0f,0.0f,0.0f };
 	AddGameObject<Game_SkyDome>(Draw_SkyDome);
-	AddGameObject<Player>(Draw_Actor)->_TransForm->_Position = {0.0f,0.0f,40.0f};
-	AddGameObject<Enemy_Skull>(Draw_Actor)->_TransForm->_Position = { 0.0f,0.0f, 5.0f };
+	AddGameObject<Player>(Draw_Actor)->_TransForm->_Position = {0.0f,0.0f,-40.0f};
+	AddGameObject<MeshFiled>(Draw_Filed);
+	auto filed = GetGameObject<MeshFiled>();
+	for (int i = 0; i < 100; i++)
+	{
+		auto tree = AddGameObject<Tree>(Draw_BillBoard);
+		XMFLOAT2 pos = { (float)(rand() % 200 - 100),(float)(rand() % 200 - 100) };
+		tree->_TransForm->_Position = { pos.x,0.0f,pos.y };
+		//tree->_TransForm->_Position.y = filed->GetHeight(tree->_TransForm->_Position);
+	}
 	//AddGameObject<BlueFire_Ring>(Draw_Effect)->_TransForm->_Position = { 0.0f,0.0f,15.0f };
 	//AddGameObject<BillBoard>(Draw_BillBoard)->SetBillBoard(XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT3(5.0f, 5.0f, 0.0f));
-	int maxPillar = 8;
-	for (int i = 0; i < maxPillar; i++)
-	{
-		float distance = 6.28f / maxPillar;
-		float pos = maxPillar * i;
-		float size = 200.0f;
-		AddGameObject<FirePillar>(Draw_Actor)->_TransForm->_Position = { -sinf(pos) * size,10.0f,cosf(pos) * size};
-	}
 	
 	//AddGameObj(new UI(XMFLOAT3(0.0f, 0.0f, 0.0f)));
 	Scene::Init();

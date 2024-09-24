@@ -5,25 +5,50 @@ void BillBoard::Init()
 {
 	LoadTexture();
 
-	vertex[0].Position = XMFLOAT3(-1.0f, 1.0f, 0.0f);
-	vertex[0].Normal = XMFLOAT3(0.0f, 0.0f, 0.0f);
-	vertex[0].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
-	vertex[0].TexCoord = XMFLOAT2(0.0f, 0.0f + _texTop.y);
+	if (_pivot == 0)
+	{// 中央が原点
+		vertex[0].Position = XMFLOAT3(-1.0f, 1.0f, 0.0f);
+		vertex[0].Normal = XMFLOAT3(0.0f, 0.0f, 0.0f);
+		vertex[0].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
+		vertex[0].TexCoord = XMFLOAT2(0.0f, 0.0f + _texTop.y);
 
-	vertex[1].Position = XMFLOAT3(1.0f, 1.0f, 0.0f);
-	vertex[1].Normal = XMFLOAT3(0.0f, 0.0f, 0.0f);
-	vertex[1].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
-	vertex[1].TexCoord = XMFLOAT2(1.0f, 0.0f + _texTop.y);
+		vertex[1].Position = XMFLOAT3(1.0f, 1.0f, 0.0f);
+		vertex[1].Normal = XMFLOAT3(0.0f, 0.0f, 0.0f);
+		vertex[1].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
+		vertex[1].TexCoord = XMFLOAT2(1.0f, 0.0f + _texTop.y);
 
-	vertex[2].Position = XMFLOAT3(-1.0f, -1.0f, 0.0f);
-	vertex[2].Normal = XMFLOAT3(0.0f, 0.0f, 0.0f);
-	vertex[2].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
-	vertex[2].TexCoord = XMFLOAT2(0.0f, 1.0f);
+		vertex[2].Position = XMFLOAT3(-1.0f, -1.0f, 0.0f);
+		vertex[2].Normal = XMFLOAT3(0.0f, 0.0f, 0.0f);
+		vertex[2].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
+		vertex[2].TexCoord = XMFLOAT2(0.0f, 1.0f);
 
-	vertex[3].Position = XMFLOAT3(1.0f, -1.0f, 0.0f);
-	vertex[3].Normal = XMFLOAT3(0.0f, 0.0f, 0.0f);
-	vertex[3].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
-	vertex[3].TexCoord = XMFLOAT2(1.0f, 1.0f);
+		vertex[3].Position = XMFLOAT3(1.0f, -1.0f, 0.0f);
+		vertex[3].Normal = XMFLOAT3(0.0f, 0.0f, 0.0f);
+		vertex[3].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
+		vertex[3].TexCoord = XMFLOAT2(1.0f, 1.0f);
+	}
+	else if (_pivot == 1)
+	{// 中央下が原点
+		vertex[0].Position = XMFLOAT3(-1.0f, 2.0f, 0.0f);
+		vertex[0].Normal = XMFLOAT3(0.0f, 0.0f, 0.0f);
+		vertex[0].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
+		vertex[0].TexCoord = XMFLOAT2(0.0f, 0.0f + _texTop.y);
+
+		vertex[1].Position = XMFLOAT3(1.0f, 2.0f, 0.0f);
+		vertex[1].Normal = XMFLOAT3(0.0f, 0.0f, 0.0f);
+		vertex[1].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
+		vertex[1].TexCoord = XMFLOAT2(1.0f, 0.0f + _texTop.y);
+
+		vertex[2].Position = XMFLOAT3(-1.0f, 0.0f, 0.0f);
+		vertex[2].Normal = XMFLOAT3(0.0f, 0.0f, 0.0f);
+		vertex[2].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
+		vertex[2].TexCoord = XMFLOAT2(0.0f, 1.0f);
+
+		vertex[3].Position = XMFLOAT3(1.0f, 0.0f, 0.0f);
+		vertex[3].Normal = XMFLOAT3(0.0f, 0.0f, 0.0f);
+		vertex[3].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
+		vertex[3].TexCoord = XMFLOAT2(1.0f, 1.0f);
+	}
 
 	//頂点バッファの生成
 	D3D11_BUFFER_DESC bd{};
@@ -131,8 +156,13 @@ void BillBoard::Draw()
 	//プリミティブポロジ設定
 	Renderer::GetDeviceContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
 
+	// アルファトゥカバレッジ有効
+	Renderer::SetATCEnable(true);
+
 	//ポリゴン描画
 	Renderer::GetDeviceContext()->Draw(4, 0);
+
+	Renderer::SetATCEnable(false);
 
 	Renderer::GetDeviceContext()->IASetInputLayout(m_VertexLayout);
 

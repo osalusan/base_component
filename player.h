@@ -7,7 +7,6 @@
 #include "job.h"
 #include "collision.h"
 #include "animationModel.h"
-#include "playerattack.h"
 #include "audio.h"
 
 #define DISTANCE_HAND (1.7f)	//Žè‚Æ‘Ì‚Ì‹——£
@@ -57,7 +56,6 @@ private:
 	float _lerpValue = 0;
 
 
-	PlayerPunchi* _punchi = {};
 	int _atkCount = 0;
 	int _atkTime = 100.0f;
 	int _dashCount = 0;

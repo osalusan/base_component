@@ -153,13 +153,7 @@
     <ClCompile Include="particleEmiter.cpp">
       <Filter>ソース ファイル\baseclass</Filter>
     </ClCompile>
-    <ClCompile Include="enemy_skull.cpp">
-      <Filter>ソース ファイル\enemy</Filter>
-    </ClCompile>
     <ClCompile Include="fire.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="skull_attack.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="billboard.cpp">
@@ -169,12 +163,6 @@
       <Filter>ソース ファイル\actor</Filter>
     </ClCompile>
     <ClCompile Include="fade.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="enemyhpBillboard.cpp">
-      <Filter>ソース ファイル\billboard</Filter>
-    </ClCompile>
-    <ClCompile Include="playerattack.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="player_state.cpp">
@@ -188,6 +176,9 @@
     </ClCompile>
     <ClCompile Include="gameover.cpp">
       <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="meshfiled.cpp">
+      <Filter>ソース ファイル\baseclass</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -299,9 +290,6 @@
     <ClInclude Include="collision.h">
       <Filter>ヘッダー ファイル\component</Filter>
     </ClInclude>
-    <ClInclude Include="enemy_skull.h">
-      <Filter>ヘッダー ファイル\enemy</Filter>
-    </ClInclude>
     <ClInclude Include="firepillar.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -311,25 +299,10 @@
     <ClInclude Include="particleEmiter.h">
       <Filter>ヘッダー ファイル\baseclass</Filter>
     </ClInclude>
-    <ClInclude Include="fire.h">
-      <Filter>ヘッダー ファイル\particle</Filter>
-    </ClInclude>
-    <ClInclude Include="skull_attack.h">
-      <Filter>ヘッダー ファイル\enemyattack</Filter>
-    </ClInclude>
     <ClInclude Include="billboard.h">
       <Filter>ヘッダー ファイル\component</Filter>
     </ClInclude>
-    <ClInclude Include="bluefireBillboard.h">
-      <Filter>ヘッダー ファイル\billboard</Filter>
-    </ClInclude>
     <ClInclude Include="fade.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="enemyhpBillboard.h">
-      <Filter>ヘッダー ファイル\billboard</Filter>
-    </ClInclude>
-    <ClInclude Include="playerattack.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="player_state.h">
@@ -346,6 +319,15 @@
     </ClInclude>
     <ClInclude Include="gameclear.h">
       <Filter>ヘッダー ファイル\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="meshfiled.h">
+      <Filter>ヘッダー ファイル\baseclass</Filter>
+    </ClInclude>
+    <ClInclude Include="tree.h">
+      <Filter>ヘッダー ファイル\billboard</Filter>
+    </ClInclude>
+    <ClInclude Include="texturecacheManager.h">
+      <Filter>ヘッダー ファイル\component</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

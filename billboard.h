@@ -22,6 +22,7 @@ protected:
 	unsigned int _animecount = 0;
 	int _maxcount = 0;
 	XMFLOAT2 _texTop = { 0.0f,0.0f };
+	int _pivot = 0;
 public:
 	//using Component::Component;
 	// インスタンス化の時に呼ぶ
