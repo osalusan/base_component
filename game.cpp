@@ -29,7 +29,7 @@ void Game::Init()
 		auto tree = AddGameObject<Tree>(Draw_BillBoard);
 		XMFLOAT2 pos = { (float)(rand() % 200 - 100),(float)(rand() % 200 - 100) };
 		tree->_TransForm->_Position = { pos.x,0.0f,pos.y };
-		//tree->_TransForm->_Position.y = filed->GetHeight(tree->_TransForm->_Position);
+		
 	}
 	//AddGameObject<BlueFire_Ring>(Draw_Effect)->_TransForm->_Position = { 0.0f,0.0f,15.0f };
 	//AddGameObject<BillBoard>(Draw_BillBoard)->SetBillBoard(XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT3(5.0f, 5.0f, 0.0f));
@@ -41,7 +41,14 @@ void Game::Init()
 void Game::Update()
 {
 	Scene::Update();
-
+	if (_count == 0)
+	{
+		auto filed = GetGameObject<MeshFiled>();
+		for (auto tree : Manager::GetScene()->GetGameObjects<Tree>())
+		{
+			tree->_TransForm->_Position.y = filed->GetHeight(tree->_TransForm->_Position);
+		}
+	}
 	//auto& keyboard = Keyboard::GetInstance();
 	//if (keyboard.GetKeyRelease(VK_RETURN))	Manager::SetScene<Result>();
 

@@ -295,16 +295,13 @@ void Player::InitComponent()
 	_Sharder = new Sharder(this);
 	_Collision = new Collision(this);
 	_animeModel = new AnimationModel(this);
-	_audio = new Audio(this);
 	_attackSE = new Audio(this);
 
 	_Velocity->Init();
 	_Sharder->Init();
 	_Collision->Init();
 	_animeModel->Init();
-	_audio->Load("asset\\sound\\AERIAL_FIGHT.wav");
 	_attackSE->Load("asset\\sound\\seireipower.wav");
-	_audio->Play(true);
 
 
 	if (Manager::GetUseJob() == JOB::Job_Swordsman)
@@ -343,7 +340,6 @@ void Player::DrawComponent()
 
 void Player::RemoveComponent()
 {
-	if (_audio != nullptr) { delete _audio; }
 	if (_job != nullptr) { _job->Unit(); delete _job; }
 	if (_animeModel != nullptr) { _animeModel->Unit(); delete _animeModel; }
 	if (_Collision != nullptr) { _Collision->Unit(); delete _Collision; }

@@ -41,8 +41,6 @@ void Manager::Init()
 	_Scene->Init();
 	_fade = new Fade;
 	_fade->Init();
-	//ƒ‰ƒ“ƒ_ƒ€’l‚Ì‰Šú‰»
-	std::srand(static_cast<unsigned int>(std::time(nullptr)));
 }
 
 

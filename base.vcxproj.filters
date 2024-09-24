@@ -153,9 +153,6 @@
     <ClCompile Include="particleEmiter.cpp">
       <Filter>ソース ファイル\baseclass</Filter>
     </ClCompile>
-    <ClCompile Include="fire.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="billboard.cpp">
       <Filter>ソース ファイル\component</Filter>
     </ClCompile>
@@ -327,7 +324,7 @@
       <Filter>ヘッダー ファイル\billboard</Filter>
     </ClInclude>
     <ClInclude Include="texturecacheManager.h">
-      <Filter>ヘッダー ファイル\component</Filter>
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
