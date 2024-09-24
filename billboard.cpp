@@ -1,6 +1,7 @@
 #include "billboard.h"
 #include "player_camera.h"
 #include "manager.h"
+#include "texturecacheManager.h"
 void BillBoard::Init()
 {
 	LoadTexture();
@@ -184,8 +185,8 @@ void BillBoard::Load(const wchar_t* FileName)
 	//テクスチャ読み込み
 	TexMetadata metadata;
 	ScratchImage image;
-	LoadFromWICFile(FileName, WIC_FLAGS_NONE, &metadata, image);
-	CreateShaderResourceView(Renderer::GetDevice(), image.GetImages(), image.GetImageCount(), metadata, &m_Texture);
+
+	TextureCacheManager::LoadTexture(FileName,metadata,image,m_Texture);
 	assert(m_Texture);
 }
 

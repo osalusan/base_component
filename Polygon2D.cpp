@@ -2,6 +2,7 @@
 #include "main.h"
 #include "renderer.h"
 #include "Polygon2D.h"
+#include "texturecacheManager.h"
 
 //-------------------------------------------
 //原点
@@ -221,8 +222,8 @@ void Polygon2D::Load(const wchar_t* FileName)
 	//テクスチャ読み込み
 	TexMetadata metadata;
 	ScratchImage image;
-	LoadFromWICFile(FileName, WIC_FLAGS_NONE, &metadata, image);
-	CreateShaderResourceView(Renderer::GetDevice(), image.GetImages(), image.GetImageCount(), metadata, &m_Texture);
+
+	TextureCacheManager::LoadTexture(FileName, metadata, image, m_Texture);
 	assert(m_Texture);
 
 }

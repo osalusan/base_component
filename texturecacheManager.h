@@ -5,16 +5,8 @@
 class TextureCacheManager {
 private:
 	//ID3D11ShaderResourceView* m_Texture = nullptr;
-	static std::unordered_map<std::string, ID3D11ShaderResourceView*> m_Texture;
+	static std::unordered_map<const wchar_t*, ID3D11ShaderResourceView*> m_Texture;
 public:
-	static void LoadTexture(const wchar_t * filename ,TexMetadata& meta, ScratchImage& image) {
 
-		if (m_Texture.count(filename) > 0)
-		{
-			m_Texture = m_Texture[filename];
-			return;
-		}
-		LoadFromWICFile(filename, WIC_FLAGS_NONE, &meta, image);
-		m_Texture[filename] = m_Texture;
-	};
+	static void LoadTexture(const wchar_t* filename, TexMetadata& meta, ScratchImage& image, ID3D11ShaderResourceView*& texture);
 };
