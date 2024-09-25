@@ -40,17 +40,17 @@ float g_FiledHeight[FILED_MAX][FILED_MAX] =
 
 void MeshFiled::Init()
 {
-	Load(L"asset\\texture\\rocky_terrain_02_diff_2k.png",_texture);
-	Load(L"asset\\texture\\rocky_terrain_02_nor_gl_2k.png", _normal);
+	Load(L"asset\\texture\\rocky_terrain_02_diff_2k.png", m_Texture);
+	Load(L"asset\\texture\\rocky_terrain_02_nor_gl_512.png", m_Normal);
 	//Load(L"asset\\texture\\oruga_T001.png");
-	InitComponent();
+	InitComponents();
 	// Vertexバッファ生成
 	{
 		for (int x = 0; x < FILED_MAX; x++)
 		{
 			for (int z = 0; z < FILED_MAX; z++)
 			{
-				XMFLOAT3 vx,vz,vn;
+				XMFLOAT3 vx, vz, vn;
 				m_Vertex[x][z].Position = XMFLOAT3(
 					(x - 10) * 5.0f,
 					g_FiledHeight[x][z],
@@ -61,9 +61,9 @@ void MeshFiled::Init()
 			}
 		}
 		// 法線ベクトルの算出
-		for (int x = 1; x <= FILED_MAX -2; x++)
+		for (int x = 1; x <= FILED_MAX - 2; x++)
 		{
-			for (int z = 1; z <= FILED_MAX -2; z++)
+			for (int z = 1; z <= FILED_MAX - 2; z++)
 			{
 				XMFLOAT3 vx, vz, vn;
 				vx.x = m_Vertex[x + 1][z].Position.x - m_Vertex[x - 1][z].Position.x;
@@ -73,7 +73,7 @@ void MeshFiled::Init()
 				vz.x = m_Vertex[x][z - 1].Position.x - m_Vertex[x][z + 1].Position.x;
 				vz.y = m_Vertex[x][z - 1].Position.y - m_Vertex[x][z + 1].Position.y;
 				vz.z = m_Vertex[x][z - 1].Position.z - m_Vertex[x][z + 1].Position.z;
-				
+
 				// 外積
 				vn.x = vz.y * vx.z - vz.z * vx.y;
 				vn.y = vz.z * vx.x - vz.x * vx.z;
@@ -84,7 +84,7 @@ void MeshFiled::Init()
 				vn.x /= len;
 				vn.y /= len;
 				vn.z /= len;
-				
+
 				m_Vertex[x][z].Normal = vn;
 			}
 		}
@@ -104,7 +104,7 @@ void MeshFiled::Init()
 
 	// Indexバッファ生成
 	{
-		unsigned int index[((FILED_MAX + 1) * 2) * (FILED_MAX -1) - 1];
+		unsigned int index[((FILED_MAX + 1) * 2) * (FILED_MAX - 1) - 1];
 		int i = 0;
 		for (int x = 0; x < FILED_MAX - 1; x++)
 		{
@@ -120,7 +120,7 @@ void MeshFiled::Init()
 				break;
 
 			// 縮退頂点用
-			index[i] = (x + 1) * FILED_MAX + (FILED_MAX -1 );
+			index[i] = (x + 1) * FILED_MAX + (FILED_MAX - 1);
 			i++;
 
 			index[i] = (x + 1) * FILED_MAX;
@@ -130,7 +130,7 @@ void MeshFiled::Init()
 		//インデックスバッファの生成
 		D3D11_BUFFER_DESC bd{};
 		bd.Usage = D3D11_USAGE_DEFAULT;
-		bd.ByteWidth = sizeof(unsigned int) * (((FILED_MAX + 1) * 2) * (FILED_MAX - 1));
+		bd.ByteWidth = sizeof(unsigned int) * (((FILED_MAX - 1) * 2) * (FILED_MAX - 1) -2);
 		bd.BindFlags = D3D11_BIND_INDEX_BUFFER;
 		bd.CPUAccessFlags = 0;
 
@@ -141,47 +141,44 @@ void MeshFiled::Init()
 		Renderer::GetDevice()->CreateBuffer(&bd, &sd, &_indexBuffer);
 	}
 
-	light.Enable = true;
-	XMFLOAT4 direction(1.0f, -1.0f, 0.0f, 0.0f);
+	m_Light.Enable = true;
+	XMFLOAT4 direction(1.0f, -1.0f, 0.0f, 1.0f);
 	XMVECTOR vecDirection = XMLoadFloat4(&direction);
 	vecDirection = XMVector4Normalize(vecDirection);
 	XMStoreFloat4(&direction, vecDirection);
+	m_Light.Direction = direction;
+	m_Light.Ambient = { 0.1f, 0.1f, 0.1f, 1.0f };
+	m_Light.Diffuse = { 1.0f, 1.0f, 1.0f, 1.0f };
+	m_Light.Position = { -400.0f, 1000.0f, 0.0f, 0.0 };
 
-	// 結果を light.Direction に設定
-	light.Direction = direction;
-	light.Ambient = XMFLOAT4(0.1f, 0.1f, 0.1f, 1.0f);
-	light.Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
-
-	light.Position = XMFLOAT4(0.0f, 20.0f, 0.0f, 0.0f);
-	light.PointLightParam = XMFLOAT4(100.0f, 0.0f, 0.0f, 0.0f);
-
+	Renderer::SetLight(m_Light);
 }
 
 void MeshFiled::Uninit()
 {
-	RemoveComponent();
+	RemoveComponents();
 	_vertexBuffer->Release();
-	_texture->Release();
-	_normal->Release();
+	m_Texture->Release();
+	m_Normal->Release();
 }
 
 void MeshFiled::Update()
 {
-	UpdateComponent();
+	UpdateComponents();
 }
 
 void MeshFiled::Draw()
 {
 
-	Renderer::SetLight(light);
+	Renderer::SetLight(m_Light);
 
-	DrawComponent();
+	DrawComponents();
 
 	//ワールドマトリクス設定
 	XMMATRIX world, scl, rot, trans;
-	scl = XMMatrixScaling(_TransForm->_Scale.x, _TransForm->_Scale.y, _TransForm->_Scale.z);
-	rot = XMMatrixRotationRollPitchYaw(_TransForm->_Rotation.x, _TransForm->_Rotation.y, _TransForm->_Rotation.z);
-	trans = XMMatrixTranslation(_TransForm->_Position.x, _TransForm->_Position.y, _TransForm->_Position.z);
+	scl = XMMatrixScaling(m_TransForm->_Scale.x, m_TransForm->_Scale.y, m_TransForm->_Scale.z);
+	rot = XMMatrixRotationRollPitchYaw(m_TransForm->_Rotation.x, m_TransForm->_Rotation.y, m_TransForm->_Rotation.z);
+	trans = XMMatrixTranslation(m_TransForm->_Position.x, m_TransForm->_Position.y, m_TransForm->_Position.z);
 	world = scl * rot * trans;
 	Renderer::SetWorldMatrix(world);
 
@@ -202,8 +199,8 @@ void MeshFiled::Draw()
 	Renderer::SetMaterial(material);
 
 	//テクスチャ設定
-	Renderer::GetDeviceContext()->PSSetShaderResources(0, 1, &_texture);
-	//Renderer::GetDeviceContext()->PSSetShaderResources(1, 1, &_normal);
+	Renderer::GetDeviceContext()->PSSetShaderResources(0, 1, &m_Texture);
+	Renderer::GetDeviceContext()->PSSetShaderResources(1, 1, &m_Normal);
 
 	//プリミティブポロジ設定
 	Renderer::GetDeviceContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
@@ -215,22 +212,22 @@ void MeshFiled::Draw()
 
 }
 
-void MeshFiled::InitComponent()
+void MeshFiled::InitComponents()
 {
-	m_Sharder = new Sharder(this); m_Sharder->_usesharder = 1; m_Sharder->Init();
+	m_Sharder = new Sharder(this); m_Sharder->m_Usesharder = 1; m_Sharder->Init();
 }
 
-void MeshFiled::UpdateComponent()
+void MeshFiled::UpdateComponents()
 {
 	m_Sharder->Update();
 }
 
-void MeshFiled::DrawComponent()
+void MeshFiled::DrawComponents()
 {
 	m_Sharder->Draw();
 }
 
-void MeshFiled::RemoveComponent()
+void MeshFiled::RemoveComponents()
 {
 	m_Sharder->Unit(); delete m_Sharder;
 }

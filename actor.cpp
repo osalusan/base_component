@@ -6,14 +6,14 @@ void Actor::Init()
 {
 	// components
 
-	InitComponent();
+	InitComponents();
 }
 
 void Actor::Uninit()
 {
 
 	// components
-	RemoveComponent();
+	RemoveComponents();
 
 }
 
@@ -24,28 +24,28 @@ void Actor::Update()
 	Move();
 
 	// 座標の設定
-	_TransForm->_Position.x += m_Velocity->m_Velocity.x;
-	_TransForm->_Position.y += m_Velocity->m_Velocity.y;
-	_TransForm->_Position.z += m_Velocity->m_Velocity.z;
+	m_TransForm->_Position.x += m_Velocity->m_Velocity.x;
+	m_TransForm->_Position.y += m_Velocity->m_Velocity.y;
+	m_TransForm->_Position.z += m_Velocity->m_Velocity.z;
 
 	// 当たり判定処理
 	CollisionControl();
 
-	UpdateComponent();
+	UpdateComponents();
 }
 
 void Actor::Draw()
 {
+	DrawComponents();
 	//ワールドマトリクス設定
 	XMMATRIX world, scl, rot, trans;
-	scl = XMMatrixScaling(_TransForm->_Scale.x, _TransForm->_Scale.y, _TransForm->_Scale.z);
-	rot = XMMatrixRotationRollPitchYaw(_TransForm->_Rotation.x, _TransForm->_Rotation.y, _TransForm->_Rotation.z);
-	trans = XMMatrixTranslation(_TransForm->_Position.x, _TransForm->_Position.y, _TransForm->_Position.z);
+	scl = XMMatrixScaling(m_TransForm->_Scale.x, m_TransForm->_Scale.y, m_TransForm->_Scale.z);
+	rot = XMMatrixRotationRollPitchYaw(m_TransForm->_Rotation.x, m_TransForm->_Rotation.y, m_TransForm->_Rotation.z);
+	trans = XMMatrixTranslation(m_TransForm->_Position.x, m_TransForm->_Position.y, m_TransForm->_Position.z);
 	world = scl * rot * trans;
 	Renderer::SetWorldMatrix(world);
-	DrawComponent();
 }
-void Actor::InitComponent()
+void Actor::InitComponents()
 {
 	m_Velocity = new Velocity(this);
 	m_Sharder = new Sharder(this);
@@ -55,21 +55,21 @@ void Actor::InitComponent()
 }
 
 
-void Actor::UpdateComponent()
+void Actor::UpdateComponents()
 {
 	 m_Velocity->Update();
 	 m_Sharder->Update(); 
 	if (m_Model) { m_Model->Update(); }
 }
 
-void Actor::DrawComponent()
+void Actor::DrawComponents()
 {
 	if (m_AnimeModel) { m_AnimeModel->Draw(); }
 	if (m_Model) { m_Model->Draw(); }
 	 m_Sharder->Draw();
 }
 
-void Actor::RemoveComponent()
+void Actor::RemoveComponents()
 {
 	if (m_AnimeModel != nullptr)m_AnimeModel->Unit(); delete m_AnimeModel;
 	if (m_Model != nullptr)m_Model->Unit(); delete m_Model;

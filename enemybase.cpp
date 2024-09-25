@@ -10,7 +10,7 @@ EnemyBase::EnemyBase()
 void EnemyBase::Init()
 {
 	// components
-	InitComponent();
+	InitComponents();
 	SetState(ENEMY_STATE::Enemy_Idel);
 	SetMaxPaturn();
 
@@ -19,20 +19,20 @@ void EnemyBase::Init()
 void EnemyBase::Uninit()
 {
 	// components
-	RemoveComponent();
+	RemoveComponents();
 }
 
 void EnemyBase::Update()
 {
 	EnemyStateControl();
 	StateControl();
-	UpdateComponent();
+	UpdateComponents();
 	AnimationControl();
 
 	//座標の設定
-	_TransForm->_Position.x += m_Velocity->m_Velocity.x;
-	_TransForm->_Position.y += m_Velocity->m_Velocity.y;
-	_TransForm->_Position.z += m_Velocity->m_Velocity.z;
+	m_TransForm->_Position.x += m_Velocity->m_Velocity.x;
+	m_TransForm->_Position.y += m_Velocity->m_Velocity.y;
+	m_TransForm->_Position.z += m_Velocity->m_Velocity.z;
 
 	m_Count++;
 }
@@ -41,15 +41,15 @@ void EnemyBase::Draw()
 {
 	// ワールドマトリクス設定
 	XMMATRIX world, scl, rot, trans;
-	scl = XMMatrixScaling(_TransForm->_Scale.x, _TransForm->_Scale.y, _TransForm->_Scale.z);
-	rot = XMMatrixRotationRollPitchYaw(_TransForm->_Rotation.x, _TransForm->_Rotation.y, _TransForm->_Rotation.z);
-	trans = XMMatrixTranslation(_TransForm->_Position.x, _TransForm->_Position.y, _TransForm->_Position.z);
+	scl = XMMatrixScaling(m_TransForm->_Scale.x, m_TransForm->_Scale.y, m_TransForm->_Scale.z);
+	rot = XMMatrixRotationRollPitchYaw(m_TransForm->_Rotation.x, m_TransForm->_Rotation.y, m_TransForm->_Rotation.z);
+	trans = XMMatrixTranslation(m_TransForm->_Position.x, m_TransForm->_Position.y, m_TransForm->_Position.z);
 	world = scl * rot * trans;
 	Renderer::SetWorldMatrix(world);
-	DrawComponent();
+	DrawComponents();
 }
 
-void EnemyBase::InitComponent()
+void EnemyBase::InitComponents()
 {
 	m_Velocity = new Velocity(this);
 	m_Sharder = new Sharder(this);
@@ -60,7 +60,7 @@ void EnemyBase::InitComponent()
 	LoadModel();
 }
 
-void EnemyBase::UpdateComponent()
+void EnemyBase::UpdateComponents()
 {
 
 	if (m_Velocity) { m_Velocity->Update(); };
@@ -70,7 +70,7 @@ void EnemyBase::UpdateComponent()
 
 }
 
-void EnemyBase::DrawComponent()
+void EnemyBase::DrawComponents()
 {
 	if (_Animation) { _Animation->Draw(); }
 	if (m_Model) { m_Model->Draw(); }
@@ -78,7 +78,7 @@ void EnemyBase::DrawComponent()
 	if (m_Sharder) { m_Sharder->Draw(); }
 }
 
-void EnemyBase::RemoveComponent()
+void EnemyBase::RemoveComponents()
 {
 	if (_AnimModel != nullptr)_AnimModel->Unit(); delete _AnimModel;
 	if (_Animation != nullptr)_Animation->Unit(); delete _Animation;
@@ -216,7 +216,7 @@ void EnemyBase::SetDebugState(ENEMY_STATE state, int paturn)
 //---------------------------------------Enemy個々の処理---------------------------------------------
 void EnemyBase::LoadModel()
 {
-	_TransForm->_Scale = { 5.0f,2.0f,5.0f };
+	m_TransForm->_Scale = { 5.0f,2.0f,5.0f };
 	//m_Model = new ModelRenderer(this);
 	//m_Model->Init();
 	//m_Model->Load("asset\\model\\cylinder.obj");

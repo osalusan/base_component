@@ -64,10 +64,10 @@ public:
 	virtual void Uninit()override;
 	virtual void Update()override;
 	virtual void Draw()override;
-	virtual void InitComponent()override;
-	virtual void UpdateComponent()override;
-	virtual void DrawComponent()override;
-	virtual void RemoveComponent()override;
+	virtual void InitComponents()override;
+	virtual void UpdateComponents()override;
+	virtual void DrawComponents()override;
+	virtual void RemoveComponents()override;
 	virtual~EnemyBase()override;
 	virtual void EnemyAnimation();
 	virtual void EnemyStateControl();// Enemy‚ÌState“à‚ğŠÇ—
@@ -99,9 +99,9 @@ public:
 		float cRot = 6.28f / 4.0f;
 		float rotation = 0.0f;
 
-		rotation = atan2f(_TransForm->GetTargetDirection(_player->_TransForm->_Position).z, _TransForm->GetTargetDirection(_player->_TransForm->_Position).x) * -1.0f - cRot ;
-		float interpolatedRotation = Lerp_R(_TransForm->_Rotation.y, rotation, _lerpValue);
-		_TransForm->_Rotation.y = interpolatedRotation;
+		rotation = atan2f(m_TransForm->GetTargetDirection(_player->m_TransForm->_Position).z, m_TransForm->GetTargetDirection(_player->m_TransForm->_Position).x) * -1.0f - cRot ;
+		float interpolatedRotation = Lerp_R(m_TransForm->_Rotation.y, rotation, _lerpValue);
+		m_TransForm->_Rotation.y = interpolatedRotation;
 	}
 
 	virtual void RotationTargetPlayer() 
@@ -109,8 +109,8 @@ public:
 		float cRot = 6.28f / 4.0f;
 		float rotation = 0.0f;
 
-		rotation = atan2f(_TransForm->GetTargetDirection(_player->_TransForm->_Position).z, _TransForm->GetTargetDirection(_player->_TransForm->_Position).x) * -1.0f - cRot;
-		_TransForm->_Rotation.y = rotation;
+		rotation = atan2f(m_TransForm->GetTargetDirection(_player->m_TransForm->_Position).z, m_TransForm->GetTargetDirection(_player->m_TransForm->_Position).x) * -1.0f - cRot;
+		m_TransForm->_Rotation.y = rotation;
 	}
 
 	// ‰ñ“]—p‚ÌüŒ`•âŠÔ

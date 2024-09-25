@@ -51,7 +51,7 @@ void Renderer::Init()
 	swapChainDesc.SampleDesc.Quality = 0;
 	swapChainDesc.Windowed = TRUE;
 
-	hr = D3D11CreateDeviceAndSwapChain( NULL,
+	hr = D3D11CreateDeviceAndSwapChain( NULL,// ここでグラボを使うか変えられる
 										D3D_DRIVER_TYPE_HARDWARE,
 										NULL,
 										0,
@@ -180,7 +180,7 @@ void Renderer::Init()
 
 	// サンプラーステート設定
 	D3D11_SAMPLER_DESC samplerDesc{};
-	samplerDesc.Filter = D3D11_FILTER_ANISOTROPIC;
+	samplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_POINT;
 	samplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
 	samplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
 	samplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;

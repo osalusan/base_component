@@ -15,7 +15,7 @@ void main(in PS_IN In, out float4 outDiffuse : SV_Target)
     lv = normalize(lv);
     
     //Œõ‚ÌŒ¸Š
-    float ofs = 1.0f - (1.0f / Light.PointLightParam) * ld;
+    float ofs = 1.0f - lv;
     //0–¢–‚Í‚O‚É‚·‚é
     ofs = max(0.0f, ofs);
 

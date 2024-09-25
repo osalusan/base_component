@@ -7,7 +7,7 @@ void ParticleEmiter::Init()
 {
 	LoadParticleTexture();
 
-	InitComponent();
+	InitComponents();
 	VERTEX_3D vertex[4];
 
 
@@ -54,25 +54,25 @@ void ParticleEmiter::Init()
 
 void ParticleEmiter::Uninit()
 {
-	RemoveComponent();
+	RemoveComponents();
 	m_VertexBuffer->Release();
 	m_Texture->Release();
 }
 
 void ParticleEmiter::Update()
 {
-	UpdateComponent();
+	UpdateComponents();
 	////パーティクルの発射
 	//for (int i = 0; i < PARTICLE_MAX; i++)
 	//{
 	//	if (!m_Particle[i].Enable)
 	//	{
 	//		m_Particle[i].Enable = true;
-	//		m_Particle[i].position = _TransForm->_Position;
+	//		m_Particle[i].position = m_TransForm->_Position;
 	//		m_Particle[i].velocity.x = (rand() % 100 - 50) * 0.003f;
 	//		m_Particle[i].velocity.y = (rand() % 100 - 50) * 0.003f;
 	//		m_Particle[i].velocity.z = (rand() % 100 - 50) * 0.003f;
-	//		m_Particle[i].scale = _TransForm->_Scale;
+	//		m_Particle[i].scale = m_TransForm->_Scale;
 	//		m_Particle[i].lifetime = 220.0f;
 	//		break;
 	//	}
@@ -98,7 +98,7 @@ void ParticleEmiter::Update()
 
 void ParticleEmiter::Draw()
 {
-	DrawComponent();
+	DrawComponents();
 
 	Player_Camera* camera = Manager::GetScene()->GetGameObject<Player_Camera>();
 	XMMATRIX view = camera->GetViewMatrix();
@@ -158,24 +158,24 @@ void ParticleEmiter::Draw()
 
 }
 
-void ParticleEmiter::InitComponent()
+void ParticleEmiter::InitComponents()
 {
 	m_Sharder = new Sharder(this);
 
 	m_Sharder->Init();
 }
 
-void ParticleEmiter::UpdateComponent()
+void ParticleEmiter::UpdateComponents()
 {
 	
 }
 
-void ParticleEmiter::DrawComponent()
+void ParticleEmiter::DrawComponents()
 {
 	if (m_Sharder) { m_Sharder->Draw();}
 }
 
-void ParticleEmiter::RemoveComponent()
+void ParticleEmiter::RemoveComponents()
 {
 	if (m_Sharder) { m_Sharder->Unit(); delete m_Sharder; }
 }

@@ -2,30 +2,30 @@
 
 Camera::Camera(XMFLOAT3 position, XMFLOAT3 rotation )
 {
-	_TransForm->_Position = position;
-	_TransForm->_Rotation = rotation;
+	m_TransForm->_Position = position;
+	m_TransForm->_Rotation = rotation;
 }
 
 void Camera::Init()
 {
-	InitComponent();
+	InitComponents();
 }
 
 void Camera::Uninit()
 {
-	RemoveComponent();
+	RemoveComponents();
 }
 
 void Camera::Update()
 {
-	UpdateComponent();
+	UpdateComponents();
 }
 
 void Camera::Draw()
 {
 
 	XMFLOAT3 up = { 0.0f,1.0f,0.0f };
-	XMFLOAT3 position = _TransForm->_Position;
+	XMFLOAT3 position = m_TransForm->_Position;
 
 	XMMATRIX viewMatrix = XMMatrixLookAtLH(XMLoadFloat3(&position), XMLoadFloat3(&_Target), XMLoadFloat3(&up));
 
@@ -39,25 +39,25 @@ void Camera::Draw()
 
 	Renderer::SetProjectionMatrix(projectionMatrix);
 
-	DrawComponent();
+	DrawComponents();
 }
 
-void Camera::InitComponent()
+void Camera::InitComponents()
 {
 
 }
 
-void Camera::UpdateComponent()
+void Camera::UpdateComponents()
 {
 
 }
 
-void Camera::DrawComponent()
+void Camera::DrawComponents()
 {
 
 }
 
-void Camera::RemoveComponent()
+void Camera::RemoveComponents()
 {
 
 }

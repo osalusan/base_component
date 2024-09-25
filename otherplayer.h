@@ -20,10 +20,10 @@ public:
 	virtual void Uninit()override;
 	virtual void Update()override;
 	virtual void Draw()override;
-	virtual void InitComponent()override;
-	virtual void UpdateComponent()override;
-	virtual void DrawComponent()override;
-	virtual void RemoveComponent()override;
+	virtual void InitComponents()override;
+	virtual void UpdateComponents()override;
+	virtual void DrawComponents()override;
+	virtual void RemoveComponents()override;
 
 	void SetState(PLAYER_STATE state);
 	void AnimationState();

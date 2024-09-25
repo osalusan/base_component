@@ -12,12 +12,12 @@ void OtherPlayer::LoadModel()
 
 void OtherPlayer::Init()
 {
-	InitComponent();
+	InitComponents();
 }
 
 void OtherPlayer::Uninit()
 {
-	RemoveComponent();
+	RemoveComponents();
 }
 
 void OtherPlayer::Update()
@@ -26,14 +26,14 @@ void OtherPlayer::Update()
 	//À•W‚ÌÝ’è
 	if (m_Velocity)
 	{
-		_TransForm->_Position.x += m_Velocity->m_Velocity.x;
-		_TransForm->_Position.y += m_Velocity->m_Velocity.y;
-		_TransForm->_Position.z += m_Velocity->m_Velocity.z;
+		m_TransForm->_Position.x += m_Velocity->m_Velocity.x;
+		m_TransForm->_Position.y += m_Velocity->m_Velocity.y;
+		m_TransForm->_Position.z += m_Velocity->m_Velocity.z;
 	}
 
 	
 	AnimationState();
-	UpdateComponent();
+	UpdateComponents();
 }
 
 void OtherPlayer::Draw()
@@ -41,58 +41,58 @@ void OtherPlayer::Draw()
 
 	XMMATRIX world, scl, rot, trans;
 
-	scl = XMMatrixScaling(_TransForm->_Scale.x, _TransForm->_Scale.y, _TransForm->_Scale.z);
-	rot = XMMatrixRotationRollPitchYaw(_TransForm->_Rotation.x, _TransForm->_Rotation.y, _TransForm->_Rotation.z);
-	trans = XMMatrixTranslation(_TransForm->_Position.x + _partsTransFomr[0]->_Position.x, _TransForm->_Position.y + _partsTransFomr[0]->_Position.y, _TransForm->_Position.z + _partsTransFomr[0]->_Position.z);
+	scl = XMMatrixScaling(m_TransForm->_Scale.x, m_TransForm->_Scale.y, m_TransForm->_Scale.z);
+	rot = XMMatrixRotationRollPitchYaw(m_TransForm->_Rotation.x, m_TransForm->_Rotation.y, m_TransForm->_Rotation.z);
+	trans = XMMatrixTranslation(m_TransForm->_Position.x + _partsTransFomr[0]->_Position.x, m_TransForm->_Position.y + _partsTransFomr[0]->_Position.y, m_TransForm->_Position.z + _partsTransFomr[0]->_Position.z);
 	world = scl * rot * trans;
 	Renderer::SetWorldMatrix(world);
 
 	if (_partsModel[0]) { _partsModel[0]->Draw(); }
 
-	scl = XMMatrixScaling(_TransForm->_Scale.x, _TransForm->_Scale.y, _TransForm->_Scale.z);
-	rot = XMMatrixRotationRollPitchYaw(_TransForm->_Rotation.x, _TransForm->_Rotation.y, _TransForm->_Rotation.z);
-	trans = XMMatrixTranslation(_TransForm->_Position.x + _partsTransFomr[1]->_Position.x, _TransForm->_Position.y + _partsTransFomr[1]->_Position.y, _TransForm->_Position.z + _partsTransFomr[1]->_Position.z);
+	scl = XMMatrixScaling(m_TransForm->_Scale.x, m_TransForm->_Scale.y, m_TransForm->_Scale.z);
+	rot = XMMatrixRotationRollPitchYaw(m_TransForm->_Rotation.x, m_TransForm->_Rotation.y, m_TransForm->_Rotation.z);
+	trans = XMMatrixTranslation(m_TransForm->_Position.x + _partsTransFomr[1]->_Position.x, m_TransForm->_Position.y + _partsTransFomr[1]->_Position.y, m_TransForm->_Position.z + _partsTransFomr[1]->_Position.z);
 	world = scl * rot * trans;
 	Renderer::SetWorldMatrix(world);
 
 	if (_partsModel[1]) { _partsModel[1]->Draw(); }
 
-	scl = XMMatrixScaling(_TransForm->_Scale.x + _partsTransFomr[2]->_Scale.x, _TransForm->_Scale.y + _partsTransFomr[2]->_Scale.y, _TransForm->_Scale.z + _partsTransFomr[2]->_Scale.z);
-	rot = XMMatrixRotationRollPitchYaw(_TransForm->_Rotation.x, _TransForm->_Rotation.y, _TransForm->_Rotation.z);
-	trans = XMMatrixTranslation(_TransForm->_Position.x + _partsTransFomr[2]->_Position.x, _TransForm->_Position.y + _partsTransFomr[2]->_Position.y, _TransForm->_Position.z + _partsTransFomr[2]->_Position.z);
+	scl = XMMatrixScaling(m_TransForm->_Scale.x + _partsTransFomr[2]->_Scale.x, m_TransForm->_Scale.y + _partsTransFomr[2]->_Scale.y, m_TransForm->_Scale.z + _partsTransFomr[2]->_Scale.z);
+	rot = XMMatrixRotationRollPitchYaw(m_TransForm->_Rotation.x, m_TransForm->_Rotation.y, m_TransForm->_Rotation.z);
+	trans = XMMatrixTranslation(m_TransForm->_Position.x + _partsTransFomr[2]->_Position.x, m_TransForm->_Position.y + _partsTransFomr[2]->_Position.y, m_TransForm->_Position.z + _partsTransFomr[2]->_Position.z);
 	world = scl * rot * trans;
 	Renderer::SetWorldMatrix(world);
 
 	if (_partsModel[2]) { _partsModel[2]->Draw(); }
 
-	scl = XMMatrixScaling(_TransForm->_Scale.x + _partsTransFomr[3]->_Scale.x, _TransForm->_Scale.y + _partsTransFomr[3]->_Scale.y, _TransForm->_Scale.z + _partsTransFomr[3]->_Scale.z);
-	rot = XMMatrixRotationRollPitchYaw(_TransForm->_Rotation.x, _TransForm->_Rotation.y, _TransForm->_Rotation.z);
-	trans = XMMatrixTranslation(_TransForm->_Position.x + _partsTransFomr[3]->_Position.x, _TransForm->_Position.y + _partsTransFomr[3]->_Position.y, _TransForm->_Position.z + _partsTransFomr[3]->_Position.z);
+	scl = XMMatrixScaling(m_TransForm->_Scale.x + _partsTransFomr[3]->_Scale.x, m_TransForm->_Scale.y + _partsTransFomr[3]->_Scale.y, m_TransForm->_Scale.z + _partsTransFomr[3]->_Scale.z);
+	rot = XMMatrixRotationRollPitchYaw(m_TransForm->_Rotation.x, m_TransForm->_Rotation.y, m_TransForm->_Rotation.z);
+	trans = XMMatrixTranslation(m_TransForm->_Position.x + _partsTransFomr[3]->_Position.x, m_TransForm->_Position.y + _partsTransFomr[3]->_Position.y, m_TransForm->_Position.z + _partsTransFomr[3]->_Position.z);
 	world = scl * rot * trans;
 	Renderer::SetWorldMatrix(world);
 
 	if (_partsModel[3]) { _partsModel[3]->Draw(); }
 
-	scl = XMMatrixScaling(_TransForm->_Scale.x + _partsTransFomr[4]->_Scale.x, _TransForm->_Scale.y + _partsTransFomr[4]->_Scale.y, _TransForm->_Scale.z + _partsTransFomr[4]->_Scale.z);
-	rot = XMMatrixRotationRollPitchYaw(_TransForm->_Rotation.x, _TransForm->_Rotation.y, _TransForm->_Rotation.z);
-	trans = XMMatrixTranslation(_TransForm->_Position.x + _partsTransFomr[4]->_Position.x, _TransForm->_Position.y + _partsTransFomr[4]->_Position.y, _TransForm->_Position.z + _partsTransFomr[4]->_Position.z);
+	scl = XMMatrixScaling(m_TransForm->_Scale.x + _partsTransFomr[4]->_Scale.x, m_TransForm->_Scale.y + _partsTransFomr[4]->_Scale.y, m_TransForm->_Scale.z + _partsTransFomr[4]->_Scale.z);
+	rot = XMMatrixRotationRollPitchYaw(m_TransForm->_Rotation.x, m_TransForm->_Rotation.y, m_TransForm->_Rotation.z);
+	trans = XMMatrixTranslation(m_TransForm->_Position.x + _partsTransFomr[4]->_Position.x, m_TransForm->_Position.y + _partsTransFomr[4]->_Position.y, m_TransForm->_Position.z + _partsTransFomr[4]->_Position.z);
 	world = scl * rot * trans;
 	Renderer::SetWorldMatrix(world);
 
 	if (_partsModel[4]) { _partsModel[4]->Draw(); }
 
-	scl = XMMatrixScaling(_TransForm->_Scale.x + _partsTransFomr[5]->_Scale.x, _TransForm->_Scale.y + _partsTransFomr[5]->_Scale.y, _TransForm->_Scale.z + _partsTransFomr[5]->_Scale.z);
-	rot = XMMatrixRotationRollPitchYaw(_TransForm->_Rotation.x, _TransForm->_Rotation.y, _TransForm->_Rotation.z);
-	trans = XMMatrixTranslation(_TransForm->_Position.x + _partsTransFomr[5]->_Position.x, _TransForm->_Position.y + _partsTransFomr[5]->_Position.y, _TransForm->_Position.z + _partsTransFomr[5]->_Position.z);
+	scl = XMMatrixScaling(m_TransForm->_Scale.x + _partsTransFomr[5]->_Scale.x, m_TransForm->_Scale.y + _partsTransFomr[5]->_Scale.y, m_TransForm->_Scale.z + _partsTransFomr[5]->_Scale.z);
+	rot = XMMatrixRotationRollPitchYaw(m_TransForm->_Rotation.x, m_TransForm->_Rotation.y, m_TransForm->_Rotation.z);
+	trans = XMMatrixTranslation(m_TransForm->_Position.x + _partsTransFomr[5]->_Position.x, m_TransForm->_Position.y + _partsTransFomr[5]->_Position.y, m_TransForm->_Position.z + _partsTransFomr[5]->_Position.z);
 	world = scl * rot * trans;
 	Renderer::SetWorldMatrix(world);
 
 	if (_partsModel[5]) { _partsModel[5]->Draw(); }
 
-	DrawComponent();
+	DrawComponents();
 }
 
-void OtherPlayer::InitComponent()
+void OtherPlayer::InitComponents()
 {
 	m_Velocity = new Velocity(this);
 	m_Sharder = new Sharder(this);
@@ -116,18 +116,18 @@ void OtherPlayer::InitComponent()
 	LoadModel();
 }
 
-void OtherPlayer::UpdateComponent()
+void OtherPlayer::UpdateComponents()
 {
 	if (m_Velocity) { m_Velocity->Update(); };
 	if (m_Sharder) { m_Sharder->Update(); }
 }
 
-void OtherPlayer::DrawComponent()
+void OtherPlayer::DrawComponents()
 {
 	if (m_Sharder) { m_Sharder->Draw(); }
 }
 
-void OtherPlayer::RemoveComponent()
+void OtherPlayer::RemoveComponents()
 {
 	for (int i = 0; i < MAX_PARTS; i++) { if (_partsAnimation[i] != nullptr) { _partsAnimation[i]->Unit(); delete[] _partsAnimation[i]; } }
 	for (int i = 0; i < MAX_PARTS; i++) { if (_partsModel[i] != nullptr) { _partsModel[i]->Unit(); delete[] _partsModel[i]; } }

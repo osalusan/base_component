@@ -340,12 +340,6 @@
     <FxCompile Include="shader\unlitTextureVS.hlsl">
       <Filter>リソース ファイル</Filter>
     </FxCompile>
-    <FxCompile Include="billboadVS.hlsl">
-      <Filter>リソース ファイル</Filter>
-    </FxCompile>
-    <FxCompile Include="billboadPS.hlsl">
-      <Filter>リソース ファイル</Filter>
-    </FxCompile>
     <FxCompile Include="shader\BumpPS.hlsl">
       <Filter>リソース ファイル</Filter>
     </FxCompile>
@@ -356,6 +350,12 @@
       <Filter>リソース ファイル</Filter>
     </FxCompile>
     <FxCompile Include="shader\BumpTangentVS.hlsl">
+      <Filter>リソース ファイル</Filter>
+    </FxCompile>
+    <FxCompile Include="shader\DisneyPBRPS.hlsl">
+      <Filter>リソース ファイル</Filter>
+    </FxCompile>
+    <FxCompile Include="shader\DisneyPBRVS.hlsl">
       <Filter>リソース ファイル</Filter>
     </FxCompile>
   </ItemGroup>

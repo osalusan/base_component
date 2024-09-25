@@ -12,8 +12,8 @@ Polygon2D::Polygon2D(XMFLOAT3 position, XMFLOAT3 size,int pivot)
 {
 
 	if (pivot < 0 && pivot > 4)return;
-	_TransForm->_Position = position;
-	_TransForm->_Scale = size;
+	m_TransForm->_Position = position;
+	m_TransForm->_Scale = size;
 	if (pivot == 0)
 	{// 中央
 		m_Vertex[0].Position = XMFLOAT3(position.x - (size.x * 0.5f), position.y - (size.y * 0.5f), 0.0f);
@@ -150,12 +150,12 @@ void Polygon2D::Init()
 
 	Renderer::GetDevice()->CreateBuffer(&bd, &sd, &m_VertexBuffer);
 
-	InitComponent();
+	InitComponents();
 }
 
 void Polygon2D::Uninit()
 {
-	RemoveComponent();
+	RemoveComponents();
 
 	m_VertexBuffer->Release();
 	m_Texture->Release();
@@ -163,11 +163,13 @@ void Polygon2D::Uninit()
 
 void Polygon2D::Update()
 {
-	UpdateComponent();
+	UpdateComponents();
 }
 
 void Polygon2D::Draw()
 {
+	DrawComponents();
+
 	//マトリクス設定
 	Renderer::SetWorldViewProjection2D();
 
@@ -191,27 +193,25 @@ void Polygon2D::Draw()
 
 	//ポリゴン描画
 	Renderer::GetDeviceContext()->Draw(4, 0);
-
-	DrawComponent();
 }
 
-void Polygon2D::InitComponent()
+void Polygon2D::InitComponents()
 {
 	m_Sharder = new Sharder(this);
 	m_Sharder->Init();
 }
 
-void Polygon2D::UpdateComponent()
+void Polygon2D::UpdateComponents()
 {
 	m_Sharder->Update();
 }
 
-void Polygon2D::DrawComponent()
+void Polygon2D::DrawComponents()
 {
 	m_Sharder->Draw();
 }
 
-void Polygon2D::RemoveComponent()
+void Polygon2D::RemoveComponents()
 {
 	m_Sharder->Unit();
 	delete m_Sharder;
@@ -232,8 +232,8 @@ void Polygon2D::SetSize(XMFLOAT3 position, XMFLOAT3 size, int pivot)
 {
 	if (pivot < 0 && pivot > 4)return;
 
-	_TransForm->_Position = position;
-	_TransForm->_Scale = size;
+	m_TransForm->_Position = position;
+	m_TransForm->_Scale = size;
 	if (pivot == 0)
 	{// 中央
 		m_Vertex[0].Position = XMFLOAT3(position.x - (size.x * 0.5f), position.y - (size.y * 0.5f), 0.0f);

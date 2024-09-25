@@ -6,10 +6,10 @@ void SkyDome::Init()
 {
 	m_Sharder = new Sharder(this);
 	m_ModelRenderer = new ModelRenderer(this);
-	_TransForm->_Position = { 0.0f,0.0f,0.0f };
-	_TransForm->_Scale = { 500.0f,500.0f,500.0f };
-	_TransForm->_Rotation = { 0.0f,0.0f,0.0f };
-	InitComponent();
+	m_TransForm->_Position = { 0.0f,0.0f,0.0f };
+	m_TransForm->_Scale = { 500.0f,500.0f,500.0f };
+	m_TransForm->_Rotation = { 0.0f,0.0f,0.0f };
+	InitComponents();
 	LoadTextureSkyDome();
 	LoadSkyDome();
 
@@ -17,47 +17,47 @@ void SkyDome::Init()
 
 void SkyDome::Uninit()
 {
-	RemoveComponent();
+	RemoveComponents();
 }
 
 void SkyDome::Update()
 {
-	_TransForm->_Position = Manager::GetScene()->GetPlayerCharcter()->_TransForm->_Position;
-	UpdateComponent();
+	m_TransForm->_Position = Manager::GetScene()->GetPlayerCharcter()->m_TransForm->_Position;
+	UpdateComponents();
 }
 
 void SkyDome::Draw()
 {
 	//ワールドマトリクス設定
 	XMMATRIX world, scl, rot, trans;
-	scl = XMMatrixScaling(_TransForm->_Scale.x, _TransForm->_Scale.y, _TransForm->_Scale.z);
-	rot = XMMatrixRotationRollPitchYaw(_TransForm->_Rotation.x, _TransForm->_Rotation.y, _TransForm->_Rotation.z);
-	trans = XMMatrixTranslation(_TransForm->_Position.x, _TransForm->_Position.y, _TransForm->_Position.z);
+	scl = XMMatrixScaling(m_TransForm->_Scale.x, m_TransForm->_Scale.y, m_TransForm->_Scale.z);
+	rot = XMMatrixRotationRollPitchYaw(m_TransForm->_Rotation.x, m_TransForm->_Rotation.y, m_TransForm->_Rotation.z);
+	trans = XMMatrixTranslation(m_TransForm->_Position.x, m_TransForm->_Position.y, m_TransForm->_Position.z);
 	world = scl * rot * trans;
 	Renderer::SetWorldMatrix(world);
 
-	DrawComponent();
+	DrawComponents();
 }
 
-void SkyDome::InitComponent()
+void SkyDome::InitComponents()
 {
 	m_Sharder->Init();
 	m_ModelRenderer->Init();
 }
 
-void SkyDome::UpdateComponent()
+void SkyDome::UpdateComponents()
 {
 	m_Sharder->Update();
 	m_ModelRenderer->Update();
 }
 
-void SkyDome::DrawComponent()
+void SkyDome::DrawComponents()
 {
 	m_Sharder->Draw();
 	m_ModelRenderer->Draw();
 }
 
-void SkyDome::RemoveComponent()
+void SkyDome::RemoveComponents()
 {
 	if (m_Sharder != nullptr)m_Sharder->Unit(); delete m_Sharder;
 	if (m_ModelRenderer != nullptr)m_ModelRenderer->Unit(); delete m_ModelRenderer;

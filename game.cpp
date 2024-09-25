@@ -20,19 +20,19 @@
 void Game::Init()
 {
 
-	AddGameObject<Player_Camera>(Draw_Camera)->_TransForm->_Rotation = { 0.0f,0.0f,0.0f };
+	AddGameObject<Player_Camera>(Draw_Camera)->m_TransForm->_Rotation = { 0.0f,0.0f,0.0f };
 	AddGameObject<Game_SkyDome>(Draw_SkyDome);
-	AddGameObject<Player>(Draw_Actor)->_TransForm->_Position = {0.0f,0.0f,-40.0f};
+	AddGameObject<Player>(Draw_Actor)->m_TransForm->_Position = {0.0f,0.0f,-40.0f};
 	AddGameObject<MeshFiled>(Draw_Filed);
 	auto filed = GetGameObject<MeshFiled>();
 	for (int i = 0; i < 100; i++)
 	{
 		auto tree = AddGameObject<Tree>(Drawm_BillBoard);
 		XMFLOAT2 pos = { (float)(rand() % 200 - 100),(float)(rand() % 200 - 100) };
-		tree->_TransForm->_Position = { pos.x,0.0f,pos.y };
+		tree->m_TransForm->_Position = { pos.x,0.0f,pos.y };
 		
 	}
-	//AddGameObject<BlueFire_Ring>(Draw_Effect)->_TransForm->_Position = { 0.0f,0.0f,15.0f };
+	//AddGameObject<BlueFire_Ring>(Draw_Effect)->m_TransForm->_Position = { 0.0f,0.0f,15.0f };
 	//AddGameObject<BillBoard>(Drawm_BillBoard)->SetBillBoard(XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT3(5.0f, 5.0f, 0.0f));
 	
 	//AddGameObj(new UI(XMFLOAT3(0.0f, 0.0f, 0.0f)));
@@ -47,7 +47,7 @@ void Game::Update()
 		auto filed = GetGameObject<MeshFiled>();
 		for (auto tree : Manager::GetScene()->GetGameObjects<Tree>())
 		{
-			tree->_TransForm->_Position.y = filed->GetHeight(tree->_TransForm->_Position);
+			tree->m_TransForm->_Position.y = filed->GetHeight(tree->m_TransForm->_Position);
 		}
 	}
 	if (m_Count == 1)
@@ -55,7 +55,7 @@ void Game::Update()
 		auto filed = GetGameObject<MeshFiled>();
 		for (auto grass : Manager::GetScene()->GetGameObjects<Grass>())
 		{
-			grass->_TransForm->_Position.y = filed->GetHeight(grass->_TransForm->_Position);
+			grass->m_TransForm->_Position.y = filed->GetHeight(grass->m_TransForm->_Position);
 		}
 	}
 	//auto& keyboard = Keyboard::GetInstance();
