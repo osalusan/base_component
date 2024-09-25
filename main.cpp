@@ -140,7 +140,14 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 
 	// 乱数のシードを設定
 	srand(static_cast<unsigned int>(time(0)));
-	//ShowCursor(FALSE);
+	// マウスカーソルの表示
+#if _DEBUG
+	ShowCursor(TRUE);
+#else
+	ShowCursor(FALSE);
+#endif
+
+
 	//// 乱数エンジンを初期化する (mt19937はよく使われる乱数生成器)
 	//std::random_device rd;  // ノイズを使用したシード
 	//std::mt19937 gen(rd()); // メルセンヌ・ツイスタ法を使用

@@ -46,7 +46,6 @@ void Player::Update()
 	CollisionControl();
 	//アニメーション
 	AnimationState();
-
 	//コンポーネントの更新
 	UpdateComponent();
 	// 体力
@@ -124,44 +123,47 @@ void Player::Move()
 	// ----------------------------------アニメーションの設定----------------------------------
 	// 優先順位順
 
-	if (_dash)
-	{
-		SetState("Dash");
+	//if (_dash)
+	//{
+	//	SetState("Dash");
 
-		if (_dashCount <= 10) {_Velocity->_Velocity.x *= 3.84f;_Velocity->_Velocity.z *= 3.84f; }
-		else { 
+	//	if (_dashCount <= 10) {_Velocity->_Velocity.x *= 3.84f;_Velocity->_Velocity.z *= 3.84f; }
+	//	else { 
 
-			float maxspeed = 3.84f;
-			float dashspeed = 1.64f;
-			float speed = (maxspeed - dashspeed) / 50;
-			if(_dashCount <= 60){_Velocity->_Velocity.x *= maxspeed - (_dashCount * speed); _Velocity->_Velocity.z *= maxspeed - (_dashCount * speed);}
-			else { _Velocity->_Velocity.x *= dashspeed; _Velocity->_Velocity.z *= dashspeed; }
-			//_stamina -= 0.4f;
-		}
-	}
-	else SetState("Run");
-	
-	//if (_nextanimationName == "Idle" || _nextanimationName == "Attack") { _dash = false; }
-	if (_dash) { _dashCount++; }
-	else { _dashCount = 0; }
+	//		float maxspeed = 3.84f;
+	//		float dashspeed = 1.64f;
+	//		float speed = (maxspeed - dashspeed) / 50;
+	//		if(_dashCount <= 60){_Velocity->_Velocity.x *= maxspeed - (_dashCount * speed); _Velocity->_Velocity.z *= maxspeed - (_dashCount * speed);}
+	//		else { _Velocity->_Velocity.x *= dashspeed; _Velocity->_Velocity.z *= dashspeed; }
+	//		//_stamina -= 0.4f;
+	//	}
+	//}
+	//else 
+	//{
+	//	if (_Velocity->_Velocity.x != 0) { SetState("Run"); }
+	//	else { SetState("Idle"); }
+	//}
+	////if (_nextanimationName == "Idle" || _nextanimationName == "Attack") { _dash = false; }
+	//if (_dash) { _dashCount++; }
+	//else { _dashCount = 0; }
 
 
-	if (_dash) { if (_Velocity->_Velocity.y <= 0.0f) { _Velocity->_Velocity.y = 0.0f; } _jump = false; }
-	if (Input::GetKeyPress(VK_LCONTROL)) { _Velocity->_Velocity.y = -1.0f; }
+	//if (_dash) { if (_Velocity->_Velocity.y <= 0.0f) { _Velocity->_Velocity.y = 0.0f; } _jump = false; }
+	//if (Input::GetKeyPress(VK_LCONTROL)) { _Velocity->_Velocity.y = -1.0f; }
 
-	// スタミナ管理
-	if (!_dash) { _stamina += 0.25f; }
-	/*if (_dash) { _stamina -= 0.5f; }*/
-	if (_stamina >= 100.0f) { _stamina = 100.0f; }
-	if (_stamina <= 0.0f) { _stamina = 0.0f; _dash = false; }
-	// ----------------------------------向きの設定----------------------------------
-	_lerpValue = 0.1f;
-	if (_nextanimationName != "Idle")
-	{
-		rotation = atan2f(_TransForm->GetDirection(_Velocity->_Velocity).z, _TransForm->GetDirection(_Velocity->_Velocity).x) * -1.0f + cRot;
-		float interpolatedRotation = Lerp_R(_TransForm->_Rotation.y, rotation, _lerpValue);
-		_TransForm->_Rotation.y = interpolatedRotation;
-	}
+	//// スタミナ管理
+	//if (!_dash) { _stamina += 0.25f; }
+	///*if (_dash) { _stamina -= 0.5f; }*/
+	//if (_stamina >= 100.0f) { _stamina = 100.0f; }
+	//if (_stamina <= 0.0f) { _stamina = 0.0f; _dash = false; }
+	//// ----------------------------------向きの設定----------------------------------
+	//_lerpValue = 0.1f;
+	//if (_nextanimationName != "Idle")
+	//{
+	//	rotation = atan2f(_TransForm->GetDirection(_Velocity->_Velocity).z, _TransForm->GetDirection(_Velocity->_Velocity).x) * -1.0f + cRot;
+	//	float interpolatedRotation = Lerp_R(_TransForm->_Rotation.y, rotation, _lerpValue);
+	//	_TransForm->_Rotation.y = interpolatedRotation;
+	//}
 
 }
 

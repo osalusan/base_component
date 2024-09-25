@@ -16,6 +16,7 @@
 #include "gameclear.h"
 #include "meshfiled.h"
 #include "tree.h"
+#include "grass.h"
 void Game::Init()
 {
 
@@ -47,6 +48,14 @@ void Game::Update()
 		for (auto tree : Manager::GetScene()->GetGameObjects<Tree>())
 		{
 			tree->_TransForm->_Position.y = filed->GetHeight(tree->_TransForm->_Position);
+		}
+	}
+	if (_count == 1)
+	{
+		auto filed = GetGameObject<MeshFiled>();
+		for (auto grass : Manager::GetScene()->GetGameObjects<Grass>())
+		{
+			grass->_TransForm->_Position.y = filed->GetHeight(grass->_TransForm->_Position);
 		}
 	}
 	//auto& keyboard = Keyboard::GetInstance();

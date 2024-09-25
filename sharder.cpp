@@ -3,10 +3,21 @@
 
 void Sharder::Init()
 {
-	Renderer::CreateVertexShader(&m_VertexShader, &m_VertexLayout,
-		"Shader\\unlitTextureVS.cso");
-	Renderer::CreatePixelShader(&m_PixelShader,
-		"Shader\\unlitTexturePS.cso");
+	if (_usesharder == 0)
+	{
+		Renderer::CreateVertexShader(&m_VertexShader, &m_VertexLayout,
+			"Shader\\unlitTextureVS.cso");
+		Renderer::CreatePixelShader(&m_PixelShader,
+			"Shader\\unlitTexturePS.cso");
+	}
+	else if (_usesharder == 1)
+	{
+		Renderer::CreateVertexShader(&m_VertexShader, &m_VertexLayout,
+			"Shader\\BumpTangentVS.cso");
+		Renderer::CreatePixelShader(&m_PixelShader,
+			"Shader\\BumpTangentPS.cso");
+	}
+
 }
 
 void Sharder::Unit()

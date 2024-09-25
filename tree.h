@@ -4,6 +4,6 @@ class Tree :public BillBoard {
 private:
 
 public:
-	void Init()override { _pivot = 1; BillBoard::Init(); _TransForm->_Scale = { 5.0f,5.0f,5.0f }; };
+	void Init()override { _pivot = 1; BillBoard::Init(); float size = (rand() % 50) * 0.1f + 4.0f; _TransForm->_Scale = { size,size,size }; };
 	void LoadTexture()override { Load(L"asset\\texture\\Tree04_2K.png"); }
 };

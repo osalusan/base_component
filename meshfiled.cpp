@@ -1,5 +1,6 @@
 #include "meshfiled.h"
-
+#include "texturecacheManager.h"
+#include "renderer.h"
 
 float g_FiledHeight[FILED_MAX][FILED_MAX] =
 {
@@ -39,7 +40,8 @@ float g_FiledHeight[FILED_MAX][FILED_MAX] =
 
 void MeshFiled::Init()
 {
-	Load(L"asset\\texture\\rocky_terrain_02_diff_2k.png");
+	Load(L"asset\\texture\\rocky_terrain_02_diff_2k.png",_texture);
+	Load(L"asset\\texture\\rocky_terrain_02_nor_gl_2k.png", _normal);
 	//Load(L"asset\\texture\\oruga_T001.png");
 	InitComponent();
 	// Vertexバッファ生成
@@ -97,7 +99,7 @@ void MeshFiled::Init()
 		D3D11_SUBRESOURCE_DATA sd{};
 		sd.pSysMem = m_Vertex;
 
-		Renderer::GetDevice()->CreateBuffer(&bd, &sd, &m_VertexBuffer);
+		Renderer::GetDevice()->CreateBuffer(&bd, &sd, &_vertexBuffer);
 	}
 
 	// Indexバッファ生成
@@ -136,17 +138,31 @@ void MeshFiled::Init()
 		ZeroMemory(&sd, sizeof(sd));
 		sd.pSysMem = index;
 
-		Renderer::GetDevice()->CreateBuffer(&bd, &sd, &m_IndexBuffer);
+		Renderer::GetDevice()->CreateBuffer(&bd, &sd, &_indexBuffer);
 	}
+
+	light.Enable = true;
+	XMFLOAT4 direction(1.0f, -1.0f, 0.0f, 0.0f);
+	XMVECTOR vecDirection = XMLoadFloat4(&direction);
+	vecDirection = XMVector4Normalize(vecDirection);
+	XMStoreFloat4(&direction, vecDirection);
+
+	// 結果を light.Direction に設定
+	light.Direction = direction;
+	light.Ambient = XMFLOAT4(0.1f, 0.1f, 0.1f, 1.0f);
+	light.Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
+
+	light.Position = XMFLOAT4(0.0f, 20.0f, 0.0f, 0.0f);
+	light.PointLightParam = XMFLOAT4(100.0f, 0.0f, 0.0f, 0.0f);
 
 }
 
 void MeshFiled::Uninit()
 {
 	RemoveComponent();
-	m_VertexBuffer->Release();
-	m_Texture->Release();
-
+	_vertexBuffer->Release();
+	_texture->Release();
+	_normal->Release();
 }
 
 void MeshFiled::Update()
@@ -156,6 +172,9 @@ void MeshFiled::Update()
 
 void MeshFiled::Draw()
 {
+
+	Renderer::SetLight(light);
+
 	DrawComponent();
 
 	//ワールドマトリクス設定
@@ -169,10 +188,10 @@ void MeshFiled::Draw()
 	//頂点バッファの設定
 	UINT stride = sizeof(VERTEX_3D);
 	UINT offset = 0;
-	Renderer::GetDeviceContext()->IASetVertexBuffers(0, 1, &m_VertexBuffer, &stride, &offset);
+	Renderer::GetDeviceContext()->IASetVertexBuffers(0, 1, &_vertexBuffer, &stride, &offset);
 
 	// インデックスバッファ設定
-	Renderer::GetDeviceContext()->IASetIndexBuffer(m_IndexBuffer,DXGI_FORMAT_R32_UINT,0);
+	Renderer::GetDeviceContext()->IASetIndexBuffer(_indexBuffer,DXGI_FORMAT_R32_UINT,0);
 
 
 	//マテリアル設定
@@ -183,7 +202,8 @@ void MeshFiled::Draw()
 	Renderer::SetMaterial(material);
 
 	//テクスチャ設定
-	Renderer::GetDeviceContext()->PSSetShaderResources(0, 1, &m_Texture);
+	Renderer::GetDeviceContext()->PSSetShaderResources(0, 1, &_texture);
+	Renderer::GetDeviceContext()->PSSetShaderResources(1, 1, &_normal);
 
 	//プリミティブポロジ設定
 	Renderer::GetDeviceContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
@@ -197,7 +217,7 @@ void MeshFiled::Draw()
 
 void MeshFiled::InitComponent()
 {
-	_sharder = new Sharder(this);_sharder->Init();
+	_sharder = new Sharder(this); _sharder->_usesharder = 1; _sharder->Init();
 }
 
 void MeshFiled::UpdateComponent()
@@ -273,12 +293,12 @@ float MeshFiled::GetHeight(XMFLOAT3 position)
 	py = -((position.x - pos1.x) * n.x + (position.z - pos1.z) * n.z) / n.y + pos1.y;
 	return py;
 }
-void MeshFiled::Load(const wchar_t* FileName)
+void MeshFiled::Load(const wchar_t* FileName, ID3D11ShaderResourceView*& texture)
 {
 	//テクスチャ読み込み
 	TexMetadata metadata;
 	ScratchImage image;
-	LoadFromWICFile(FileName, WIC_FLAGS_NONE, &metadata, image);
-	CreateShaderResourceView(Renderer::GetDevice(), image.GetImages(), image.GetImageCount(), metadata, &m_Texture);
-	assert(m_Texture);
+
+	TextureCacheManager::LoadTexture(FileName, metadata, image, texture);
+	assert(texture);
 }

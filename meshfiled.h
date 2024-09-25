@@ -8,13 +8,16 @@ class MeshFiled : public GameObject
 private:
 
 
-	ID3D11Buffer* m_VertexBuffer = NULL;
-	ID3D11Buffer* m_IndexBuffer =  NULL;
-	ID3D11ShaderResourceView* m_Texture = NULL;
+	ID3D11Buffer* _vertexBuffer = NULL;
+	ID3D11Buffer* _indexBuffer =  NULL;
+	ID3D11ShaderResourceView* _texture = NULL;
+	ID3D11ShaderResourceView* _normal = NULL;
 
 	Sharder* _sharder = {};
 
 	VERTEX_3D m_Vertex[FILED_MAX][FILED_MAX]{};
+
+	LIGHT light;
 public:
 	MeshFiled() {};
 	~MeshFiled()override {};
@@ -27,5 +30,5 @@ public:
 	virtual void DrawComponent()override;
 	virtual void RemoveComponent()override;
 	float GetHeight(XMFLOAT3 position);
-	void Load(const wchar_t* FileName);
+	void Load(const wchar_t* FileName, ID3D11ShaderResourceView*& texture);
 };
