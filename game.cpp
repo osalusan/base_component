@@ -27,13 +27,13 @@ void Game::Init()
 	auto filed = GetGameObject<MeshFiled>();
 	for (int i = 0; i < 100; i++)
 	{
-		auto tree = AddGameObject<Tree>(Draw_BillBoard);
+		auto tree = AddGameObject<Tree>(Drawm_BillBoard);
 		XMFLOAT2 pos = { (float)(rand() % 200 - 100),(float)(rand() % 200 - 100) };
 		tree->_TransForm->_Position = { pos.x,0.0f,pos.y };
 		
 	}
 	//AddGameObject<BlueFire_Ring>(Draw_Effect)->_TransForm->_Position = { 0.0f,0.0f,15.0f };
-	//AddGameObject<BillBoard>(Draw_BillBoard)->SetBillBoard(XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT3(5.0f, 5.0f, 0.0f));
+	//AddGameObject<BillBoard>(Drawm_BillBoard)->SetBillBoard(XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT3(5.0f, 5.0f, 0.0f));
 	
 	//AddGameObj(new UI(XMFLOAT3(0.0f, 0.0f, 0.0f)));
 	Scene::Init();
@@ -42,7 +42,7 @@ void Game::Init()
 void Game::Update()
 {
 	Scene::Update();
-	if (_count == 0)
+	if (m_Count == 0)
 	{
 		auto filed = GetGameObject<MeshFiled>();
 		for (auto tree : Manager::GetScene()->GetGameObjects<Tree>())
@@ -50,7 +50,7 @@ void Game::Update()
 			tree->_TransForm->_Position.y = filed->GetHeight(tree->_TransForm->_Position);
 		}
 	}
-	if (_count == 1)
+	if (m_Count == 1)
 	{
 		auto filed = GetGameObject<MeshFiled>();
 		for (auto grass : Manager::GetScene()->GetGameObjects<Grass>())

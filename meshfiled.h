@@ -13,7 +13,7 @@ private:
 	ID3D11ShaderResourceView* _texture = NULL;
 	ID3D11ShaderResourceView* _normal = NULL;
 
-	Sharder* _sharder = {};
+	Sharder* m_Sharder = {};
 
 	VERTEX_3D m_Vertex[FILED_MAX][FILED_MAX]{};
 

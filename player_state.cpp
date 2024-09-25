@@ -9,7 +9,7 @@ void Player_Hp::Init()
 
 	_TransForm->_Position = { SCREEN_WIDTH * 0.02f,SCREEN_HEIGHT * 0.02f,0.0f };
 	_TransForm->_Scale = {SCREEN_WIDTH * 0.5f,SCREEN_HEIGHT * 0.03f,0.0f};
-	_maxhp = _player->_hp;
+	_maxhp = _player->m_Hp;
 }
 
 void Player_Hp::Update()
@@ -19,7 +19,7 @@ void Player_Hp::Update()
 
 void Player_Hp::Draw()
 {
-	float x = _player->_hp / _maxhp;
+	float x = _player->m_Hp / _maxhp;
 	float xrp = (SCREEN_WIDTH * 0.5f) * x +SCREEN_WIDTH * 0.02f;
 	//頂点データ書き換え
 	D3D11_MAPPED_SUBRESOURCE msr;
@@ -78,7 +78,7 @@ void Player_Stamina::Init()
 
 	_TransForm->_Position = { SCREEN_WIDTH * 0.02f,SCREEN_HEIGHT * 0.06f,0.0f };
 	_TransForm->_Scale = { SCREEN_WIDTH * 0.5f,SCREEN_HEIGHT * 0.03f,0.0f };
-	_maxstamina = _player->_stamina;
+	_maxstamina = _player->m_Stamina;
 }
 
 void Player_Stamina::Update()
@@ -88,7 +88,7 @@ void Player_Stamina::Update()
 
 void Player_Stamina::Draw()
 {
-	float x = _player->_stamina / _maxstamina;
+	float x = _player->m_Stamina / _maxstamina;
 	float xrp = (SCREEN_WIDTH * 0.5f) * x + SCREEN_WIDTH * 0.02f;
 	//頂点データ書き換え
 	D3D11_MAPPED_SUBRESOURCE msr;

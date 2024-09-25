@@ -278,9 +278,6 @@
     <ClInclude Include="enemybase.h">
       <Filter>ヘッダー ファイル\baseclass</Filter>
     </ClInclude>
-    <ClInclude Include="job.h">
-      <Filter>ヘッダー ファイル\baseclass</Filter>
-    </ClInclude>
     <ClInclude Include="swordsman_job.h">
       <Filter>ヘッダー ファイル\component</Filter>
     </ClInclude>

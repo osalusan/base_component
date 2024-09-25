@@ -46,9 +46,9 @@ void ParticleEmiter::Init()
 
 	for (int i = 0; i < PARTICLE_MAX; i++)
 	{
-		_particle[i].color = { 1.0f,1.0f,1.0f,1.0f };
+		m_Particle[i].color = { 1.0f,1.0f,1.0f,1.0f };
 	}
-	_mix = true;
+	m_Mix = true;
 
 }
 
@@ -65,31 +65,31 @@ void ParticleEmiter::Update()
 	////パーティクルの発射
 	//for (int i = 0; i < PARTICLE_MAX; i++)
 	//{
-	//	if (!_particle[i].Enable)
+	//	if (!m_Particle[i].Enable)
 	//	{
-	//		_particle[i].Enable = true;
-	//		_particle[i].position = _TransForm->_Position;
-	//		_particle[i].velocity.x = (rand() % 100 - 50) * 0.003f;
-	//		_particle[i].velocity.y = (rand() % 100 - 50) * 0.003f;
-	//		_particle[i].velocity.z = (rand() % 100 - 50) * 0.003f;
-	//		_particle[i].scale = _TransForm->_Scale;
-	//		_particle[i].lifetime = 220.0f;
+	//		m_Particle[i].Enable = true;
+	//		m_Particle[i].position = _TransForm->_Position;
+	//		m_Particle[i].velocity.x = (rand() % 100 - 50) * 0.003f;
+	//		m_Particle[i].velocity.y = (rand() % 100 - 50) * 0.003f;
+	//		m_Particle[i].velocity.z = (rand() % 100 - 50) * 0.003f;
+	//		m_Particle[i].scale = _TransForm->_Scale;
+	//		m_Particle[i].lifetime = 220.0f;
 	//		break;
 	//	}
 	//}
 	////パーティクルの処理
 	//for (int i = 0; i < PARTICLE_MAX; i++)
 	//{
-	//	if (_particle[i].Enable)
+	//	if (m_Particle[i].Enable)
 	//	{
-	//		_particle[i].position.x += _particle[i].velocity.x;
-	//		_particle[i].position.y += _particle[i].velocity.y;
-	//		_particle[i].position.z += _particle[i].velocity.z;
+	//		m_Particle[i].position.x += m_Particle[i].velocity.x;
+	//		m_Particle[i].position.y += m_Particle[i].velocity.y;
+	//		m_Particle[i].position.z += m_Particle[i].velocity.z;
 
-	//		_particle[i].lifetime--;
-	//		if (_particle[i].lifetime <= 0)
+	//		m_Particle[i].lifetime--;
+	//		if (m_Particle[i].lifetime <= 0)
 	//		{
-	//			_particle[i].Enable = false;
+	//			m_Particle[i].Enable = false;
 	//		}
 	//	}
 	//	
@@ -124,25 +124,25 @@ void ParticleEmiter::Draw()
 	//Zバッファ無効
 	Renderer::SetDepthEnable(false);
 	//加算合成を有効
-	if (_mix)Renderer::SetBlendAddEnable(true);
+	if (m_Mix)Renderer::SetBlendAddEnable(true);
 
 
 
 	for (int i = 0; i < PARTICLE_MAX; i++)
 	{
-		if (_particle[i].Enable)
+		if (m_Particle[i].Enable)
 		{
 			//マテリアル設定
 			MATERIAL material;
 			ZeroMemory(&material, sizeof(material));
-			material.Diffuse = _particle[i].color;
+			material.Diffuse = m_Particle[i].color;
 			material.TextureEnable = true;
 			Renderer::SetMaterial(material);
 
 			//ワールドマトリクス設定
 			XMMATRIX world, scale, rot, trans;
-			scale = XMMatrixScaling(_particle[i].scale.x,_particle[i].scale.y,_particle[i].scale.z);
-			trans = XMMatrixTranslation(_particle[i].position.x, _particle[i].position.y, _particle[i].position.z);
+			scale = XMMatrixScaling(m_Particle[i].scale.x,m_Particle[i].scale.y,m_Particle[i].scale.z);
+			trans = XMMatrixTranslation(m_Particle[i].position.x, m_Particle[i].position.y, m_Particle[i].position.z);
 			world = scale * invView * trans;
 			Renderer::SetWorldMatrix(world);
 
@@ -154,15 +154,15 @@ void ParticleEmiter::Draw()
 	Renderer::SetDepthEnable(true);
 
 	//加算合成を無効
-	if (_mix)Renderer::SetBlendAddEnable(false);
+	if (m_Mix)Renderer::SetBlendAddEnable(false);
 
 }
 
 void ParticleEmiter::InitComponent()
 {
-	_Sharder = new Sharder(this);
+	m_Sharder = new Sharder(this);
 
-	_Sharder->Init();
+	m_Sharder->Init();
 }
 
 void ParticleEmiter::UpdateComponent()
@@ -172,12 +172,12 @@ void ParticleEmiter::UpdateComponent()
 
 void ParticleEmiter::DrawComponent()
 {
-	if (_Sharder) { _Sharder->Draw();}
+	if (m_Sharder) { m_Sharder->Draw();}
 }
 
 void ParticleEmiter::RemoveComponent()
 {
-	if (_Sharder) { _Sharder->Unit(); delete _Sharder; }
+	if (m_Sharder) { m_Sharder->Unit(); delete m_Sharder; }
 }
 
 void ParticleEmiter::Load(const wchar_t* FileName)

@@ -31,9 +31,9 @@ enum class ENEMY_STATE {
 
 class EnemyBase : public GameObject {
 protected:
-	Velocity* _Velocity = {};
-	Sharder* _Sharder = {};
-	ModelRenderer* _Model = {};
+	Velocity* m_Velocity = {};
+	Sharder* m_Sharder = {};
+	ModelRenderer* m_Model = {};
 	AnimationModel* _AnimModel = {};
 	Animation* _Animation = {};
 	Player* _player = {};
@@ -41,7 +41,7 @@ protected:
 	int _attack = 0;
 	int _animationFrame = 0;
 	float _lerpValue = 0;
-	int _count = 0;
+	int m_Count = 0;
 
 	int _idleNo = 0;
 	int _atkNo = 0;

@@ -10,17 +10,17 @@ class Actor : public GameObject
 {
 protected:
 	// コンポーネント
-	Velocity* _Velocity = {};
-	Sharder* _Sharder = {};
-	ModelRenderer* _Model = {};
-	AnimationModel* _AnimeModel = {};
+	Velocity* m_Velocity = {};
+	Sharder* m_Sharder = {};
+	ModelRenderer* m_Model = {};
+	AnimationModel* m_AnimeModel = {};
 
 	// ポインタ保存用
-	BillBoard* _BillBoard = {};
+	BillBoard* m_BillBoard = {};
 
 	//オプション
-	float _gravity = -2.0f;
-	int _count = 0;
+	float m_Gravity = -2.0f;
+	int m_Count = 0;
 public:
 	Actor() {}
 	virtual void Init()override;

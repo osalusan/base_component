@@ -4,7 +4,6 @@
 #include "manager.h"
 #include "player_camera.h"
 #include "udp_client.h"
-#include "swordsman_job.h"
 #include "player_state.h"
 #include "result.h"
 #include "audio.h"
@@ -32,11 +31,11 @@ void Player::Update()
 	Move();
 
 	//座標の設定
-	if (_hp > 0.0f)
+	if (m_Hp > 0.0f)
 	{
-		_TransForm->_Position.x += _Velocity->_Velocity.x;
-		_TransForm->_Position.y += _Velocity->_Velocity.y;
-		_TransForm->_Position.z += _Velocity->_Velocity.z;
+		_TransForm->_Position.x += m_Velocity->m_Velocity.x;
+		_TransForm->_Position.y += m_Velocity->m_Velocity.y;
+		_TransForm->_Position.z += m_Velocity->m_Velocity.z;
 	}
 	
 
@@ -49,9 +48,9 @@ void Player::Update()
 	//コンポーネントの更新
 	UpdateComponent();
 	// 体力
-	if (_hp <= 0) { _animeModel->_visible = false; Manager::SetScene<GameOver>(); }
-	else { _hp += 0.02f; }
-	if (_hp >= 100.0f) { _hp = 100.0f; }
+	if (m_Hp <= 0) { mm_AnimeModel->_visible = false; Manager::SetScene<GameOver>(); }
+	else { m_Hp += 0.02f; }
+	if (m_Hp >= 100.0f) { m_Hp = 100.0f; }
 }
 
 void Player::Move()
@@ -60,8 +59,8 @@ void Player::Move()
 	//サーバーにプレイヤーデータを送る
 	//if (Manager::GetUDPClient()){Manager::GetUDPClient()->SendMyPlayerData({_TransForm->_Position.x,_TransForm->_Position.y,_TransForm->_Position.z },_state);}
 
-	_Velocity->_Velocity.x = { 0.0f };
-	_Velocity->_Velocity.z = { 0.0f };
+	m_Velocity->m_Velocity.x = { 0.0f };
+	m_Velocity->m_Velocity.z = { 0.0f };
 	auto Camera = Manager::GetScene()->GetGameObject<Player_Camera>();
 	XMFLOAT3 forwardvector = Camera->_TransForm->GetForward();
 	XMFLOAT3 rightvector = Camera->_TransForm->GetRight();
@@ -72,130 +71,130 @@ void Player::Move()
 
 	if (Input::GetKeyPress('A'))
 	{
-		_Velocity->_Velocity.x += (-rightvector.x);
-		_Velocity->_Velocity.z +=  (-rightvector.z);
+		m_Velocity->m_Velocity.x += (-rightvector.x);
+		m_Velocity->m_Velocity.z +=  (-rightvector.z);
 
 	}
 	if (Input::GetKeyPress('D'))
 	{
-		_Velocity->_Velocity.x +=  rightvector.x;
-		_Velocity->_Velocity.z +=  rightvector.z;
+		m_Velocity->m_Velocity.x +=  rightvector.x;
+		m_Velocity->m_Velocity.z +=  rightvector.z;
 	}
 	if (Input::GetKeyPress('W'))
 	{
-		_Velocity->_Velocity.z += forwardvector.z;
-		_Velocity->_Velocity.x += forwardvector.x;
+		m_Velocity->m_Velocity.z += forwardvector.z;
+		m_Velocity->m_Velocity.x += forwardvector.x;
 
 	}
 	if (Input::GetKeyPress('S'))
 	{
-		_Velocity->_Velocity.z += (-forwardvector.z);
-		_Velocity->_Velocity.x += (-forwardvector.x);
+		m_Velocity->m_Velocity.z += (-forwardvector.z);
+		m_Velocity->m_Velocity.x += (-forwardvector.x);
 	}
 	if (Input::GetKeyPress(VK_RBUTTON) || Input::GetKeyPress(VK_LSHIFT))
 	{
-		_dash = true;
+		m_Dash = true;
 		/*if (_animationName != "Attack" && _stamina - 0.4f >= 0.0f) { _dash = true; }*/
 	}
 	else if (Input::GetKeyRelease(VK_RBUTTON) || Input::GetKeyRelease(VK_LSHIFT))
 	{
-		_dash = false;
+		m_Dash = false;
 	}
 	//ジャンプ
 	if (Input::GetKeyPress(VK_SPACE))
 	{
-		_jump = true;
-		_Velocity->_Velocity.y = 1.0f;
+		m_Jump = true;
+		m_Velocity->m_Velocity.y = 1.0f;
 	}
 
 	//斜めでも速度が変わらないように
-	XMVECTOR velocityVec = XMLoadFloat3(&_Velocity->_Velocity);
+	XMVECTOR velocityVec = XMLoadFloat3(&m_Velocity->m_Velocity);
 	XMVECTOR normalizedVelocityVec = XMVector3Normalize(velocityVec);
 	XMFLOAT3 normalizedVelocity;
 	XMStoreFloat3(&normalizedVelocity, normalizedVelocityVec);
 
-	_Velocity->_Velocity.x = normalizedVelocity.x * _moveSpeed * dt;
-	_Velocity->_Velocity.z = normalizedVelocity.z * _moveSpeed * dt;
+	m_Velocity->m_Velocity.x = normalizedVelocity.x * m_MoveSpeed * dt;
+	m_Velocity->m_Velocity.z = normalizedVelocity.z * m_MoveSpeed * dt;
 
 	// 重力加速度
-	_Velocity->_Velocity.y += -2.5f * dt;
+	m_Velocity->m_Velocity.y += -2.5f * dt;
 
 	// ----------------------------------アニメーションの設定----------------------------------
 	// 優先順位順
 
-	//if (_dash)
-	//{
-	//	SetState("Dash");
+	if (m_Dash)
+	{
+		SetState("Dash");
 
-	//	if (_dashCount <= 10) {_Velocity->_Velocity.x *= 3.84f;_Velocity->_Velocity.z *= 3.84f; }
-	//	else { 
+		if (m_DashCount <= 10) {m_Velocity->m_Velocity.x *= 3.84f;m_Velocity->m_Velocity.z *= 3.84f; }
+		else { 
 
-	//		float maxspeed = 3.84f;
-	//		float dashspeed = 1.64f;
-	//		float speed = (maxspeed - dashspeed) / 50;
-	//		if(_dashCount <= 60){_Velocity->_Velocity.x *= maxspeed - (_dashCount * speed); _Velocity->_Velocity.z *= maxspeed - (_dashCount * speed);}
-	//		else { _Velocity->_Velocity.x *= dashspeed; _Velocity->_Velocity.z *= dashspeed; }
-	//		//_stamina -= 0.4f;
-	//	}
-	//}
-	//else 
-	//{
-	//	if (_Velocity->_Velocity.x != 0) { SetState("Run"); }
-	//	else { SetState("Idle"); }
-	//}
-	////if (_nextanimationName == "Idle" || _nextanimationName == "Attack") { _dash = false; }
-	//if (_dash) { _dashCount++; }
-	//else { _dashCount = 0; }
+			float maxspeed = 3.84f;
+			float dashspeed = 1.64f;
+			float speed = (maxspeed - dashspeed) / 50;
+			if(m_DashCount <= 60){m_Velocity->m_Velocity.x *= maxspeed - (m_DashCount * speed); m_Velocity->m_Velocity.z *= maxspeed - (m_DashCount * speed);}
+			else { m_Velocity->m_Velocity.x *= dashspeed; m_Velocity->m_Velocity.z *= dashspeed; }
+			//_stamina -= 0.4f;
+		}
+	}
+	else 
+	{
+		if (m_Velocity->m_Velocity.x != 0) { SetState("Run"); }
+		else { SetState("Idle"); }
+	}
+	//if (_nextanimationName == "Idle" || _nextanimationName == "Attack") { _dash = false; }
+	if (m_Dash) { m_DashCount++; }
+	else { m_DashCount = 0; }
 
 
-	//if (_dash) { if (_Velocity->_Velocity.y <= 0.0f) { _Velocity->_Velocity.y = 0.0f; } _jump = false; }
-	//if (Input::GetKeyPress(VK_LCONTROL)) { _Velocity->_Velocity.y = -1.0f; }
+	if (m_Dash) { if (m_Velocity->m_Velocity.y <= 0.0f) { m_Velocity->m_Velocity.y = 0.0f; } m_Jump = false; }
+	if (Input::GetKeyPress(VK_LCONTROL)) { m_Velocity->m_Velocity.y = -1.0f; }
 
-	//// スタミナ管理
-	//if (!_dash) { _stamina += 0.25f; }
-	///*if (_dash) { _stamina -= 0.5f; }*/
-	//if (_stamina >= 100.0f) { _stamina = 100.0f; }
-	//if (_stamina <= 0.0f) { _stamina = 0.0f; _dash = false; }
-	//// ----------------------------------向きの設定----------------------------------
-	//_lerpValue = 0.1f;
-	//if (_nextanimationName != "Idle")
-	//{
-	//	rotation = atan2f(_TransForm->GetDirection(_Velocity->_Velocity).z, _TransForm->GetDirection(_Velocity->_Velocity).x) * -1.0f + cRot;
-	//	float interpolatedRotation = Lerp_R(_TransForm->_Rotation.y, rotation, _lerpValue);
-	//	_TransForm->_Rotation.y = interpolatedRotation;
-	//}
+	// スタミナ管理
+	if (!m_Dash) { m_Stamina += 0.25f; }
+	/*if (_dash) { _stamina -= 0.5f; }*/
+	if (m_Stamina >= 100.0f) { m_Stamina = 100.0f; }
+	if (m_Stamina <= 0.0f) { m_Stamina = 0.0f; m_Dash = false; }
+	// ----------------------------------向きの設定----------------------------------
+	_lerpValue = 0.1f;
+	if (m_NextanimationName != "Idle")
+	{
+		rotation = atan2f(_TransForm->GetDirection(m_Velocity->m_Velocity).z, _TransForm->GetDirection(m_Velocity->m_Velocity).x) * -1.0f + cRot;
+		float interpolatedRotation = Lerp_R(_TransForm->_Rotation.y, rotation, _lerpValue);
+		_TransForm->_Rotation.y = interpolatedRotation;
+	}
 
 }
 
 void Player::CollisionControl()
 {
-	_Collision->Update();
+	m_Collision->Update();
 
 	float groundHeight = 0.0f;
 
-	if (_Collision->_hit)
+	if (m_Collision->_hit)
 	{
 		_TransForm->_Position.x = _TransForm->_RecordPosition.x;
 		_TransForm->_Position.z = _TransForm->_RecordPosition.z;
 		//// 向こうから当たってきたら押される
-		//if (_Collision->_otherActor->_TransForm->_Position.x != _Collision->_otherActor->_TransForm->_RecordPosition.x||
-		//	_Collision->_otherActor->_TransForm->_Position.y != _Collision->_otherActor->_TransForm->_RecordPosition.y||
-		//	_Collision->_otherActor->_TransForm->_Position.z != _Collision->_otherActor->_TransForm->_RecordPosition.z) 
+		//if (m_Collision->_otherActor->_TransForm->_Position.x != m_Collision->_otherActor->_TransForm->_RecordPosition.x||
+		//	m_Collision->_otherActor->_TransForm->_Position.y != m_Collision->_otherActor->_TransForm->_RecordPosition.y||
+		//	m_Collision->_otherActor->_TransForm->_Position.z != m_Collision->_otherActor->_TransForm->_RecordPosition.z) 
 		//{
 		//	XMFLOAT3 scale = { 0.0f,0.0f,0.0f };
 
-		//	if (_Collision->_direction.x >= 0.0f) { scale.x = _Collision->_otherActor->_TransForm->_Scale.x; }
-		//	else { scale.x = -_Collision->_otherActor->_TransForm->_Scale.x; }
-		//	if (_Collision->_direction.z >= 0.0f) { scale.z = _Collision->_otherActor->_TransForm->_Scale.z ; }
-		//	else { scale.z = -_Collision->_otherActor->_TransForm->_Scale.z; }
+		//	if (m_Collision->_direction.x >= 0.0f) { scale.x = m_Collision->_otherActor->_TransForm->_Scale.x; }
+		//	else { scale.x = -m_Collision->_otherActor->_TransForm->_Scale.x; }
+		//	if (m_Collision->_direction.z >= 0.0f) { scale.z = m_Collision->_otherActor->_TransForm->_Scale.z ; }
+		//	else { scale.z = -m_Collision->_otherActor->_TransForm->_Scale.z; }
 
-		//	_TransForm->_Position.x = _Collision->_otherActor->_TransForm->_Position.x + scale.x;
-		//	_TransForm->_Position.z = _Collision->_otherActor->_TransForm->_Position.z + scale.z;
+		//	_TransForm->_Position.x = m_Collision->_otherActor->_TransForm->_Position.x + scale.x;
+		//	_TransForm->_Position.z = m_Collision->_otherActor->_TransForm->_Position.z + scale.z;
 		//}
 	}
-	else if (_Collision->_groundHit)
+	else if (m_Collision->_groundHit)
 	{
-		groundHeight = _Collision->_groundHeight;
+		groundHeight = m_Collision->_groundHeight;
 	}
 	// オブジェクトに乗らなかったらフィールド優先
 	float filedheight = Manager::GetScene()->GetGameObject<MeshFiled>()->GetHeight(_TransForm->_Position);
@@ -206,32 +205,32 @@ void Player::CollisionControl()
 	if (_TransForm->_Position.y < groundHeight)
 	{
 		_TransForm->_Position.y = groundHeight;
-		_Velocity->_Velocity.y = 0.0f;
+		m_Velocity->m_Velocity.y = 0.0f;
 	}
 
 
-	if (_Velocity->_Velocity.y == 0) { _jump = false; }
+	if (m_Velocity->m_Velocity.y == 0) { m_Jump = false; }
 }
 
 void Player::AnimationState()
 {
-	if (_animationName != _nextanimationName && _blendRatio < 1.0f) {_blendRatio += 0.05f;}
-	else if(_animationName != _nextanimationName && _blendRatio > 0.0f){ _blendRatio -= 0.05f; }
+	if (m_AnimationName != m_NextanimationName && m_BlendRatio < 1.0f) {m_BlendRatio += 0.05f;}
+	else if(m_AnimationName != m_NextanimationName && m_BlendRatio > 0.0f){ m_BlendRatio -= 0.05f; }
 
-	_animeModel->Update(_animationName.c_str(), _animationFrame, _nextanimationName.c_str(), _animationFrame, _blendRatio);
-	//if (_blendRatio >= 1.0f || _blendRatio <= 0.0f) { _animeModel->Update(_animationName.c_str(), _animationFrame); }
-	//else { _animeModel->Update(_animationName.c_str(), _animationFrame, _nextanimationName.c_str(), _animationFrame,_blendRatio); }
+	mm_AnimeModel->Update(m_AnimationName.c_str(), m_AnimationFrame, m_NextanimationName.c_str(), m_AnimationFrame, m_BlendRatio);
+	//if (_blendRatio >= 1.0f || _blendRatio <= 0.0f) { mm_AnimeModel->Update(_animationName.c_str(), _animationFrame); }
+	//else { mm_AnimeModel->Update(_animationName.c_str(), _animationFrame, _nextanimationName.c_str(), _animationFrame,_blendRatio); }
 
-	_animationFrame++;
+	m_AnimationFrame++;
 }
 
 void Player::SetState(std::string state)
 {
-	if (!_useAttack) {
-		if (_nextanimationName != state){ _nextanimationName = state;}
+	if (!m_UseAttack) {
+		if (m_NextanimationName != state){ m_NextanimationName = state;}
 	}
 
-	if (_animationName != _nextanimationName && _blendRatio >= 1.0f) { _animationName = _nextanimationName; _blendRatio = 0.0f;}
+	if (m_AnimationName != m_NextanimationName && m_BlendRatio >= 1.0f) { m_AnimationName = m_NextanimationName; m_BlendRatio = 0.0f; m_AnimationFrame = 0; }
 }
 
 void Player::Attack()
@@ -244,7 +243,7 @@ void Player::Attack()
 		//	SetState("Attack");
 		//	if (_punchi == nullptr) { 
 		//		_punchi = Manager::GetScene()->AddGameObject_T<PlayerPunchi>(Draw_Actor); _atkCount = 0; _atkFlag = true; _useAttack = true; _stamina -= 12.25f; 
-		//		_attackSE->Play(false);
+		//		m_AttackSE->Play(false);
 		//	}
 		//}
 	}
@@ -256,22 +255,22 @@ void Player::Attack()
 	//	//_punchi->_TransForm->_Position.z = _TransForm->_Position.z + (Camera->_TransForm->GetForward().z * 5.5f);
 	//}
 
-	if (_nextanimationName == "Attack"&& _atkCount<= _atkTime)
+	if (m_NextanimationName == "Attack"&& m_AtkCount<= m_AtkTime)
 	{
 		_TransForm->_Rotation.y = Camera->_TransForm->_Rotation.y;
-		_atkCount++;
+		m_AtkCount++;
 	}
-	if (_atkCount >= _atkTime) { _atkFlag = false; _useAttack = false;}
+	if (m_AtkCount >= m_AtkTime) { m_AtkFlag = false; m_UseAttack = false;}
 	//if (!_atkFlag && _punchi != nullptr) { _punchi->SetDestroy(); }
 }
 
 void Player::LoadModel()
 {
-	_animeModel->Load("asset\\model\\Akai.fbx");
-	_animeModel->LoadAnimation("asset\\model\\Akai_Idle.fbx", "Idle");
-	_animeModel->LoadAnimation("asset\\model\\Akai_Run.fbx", "Run");
-	_animeModel->LoadAnimation("asset\\model\\HurricaneKick.fbx", "Attack");
-	_animeModel->LoadAnimation("asset\\model\\FallALoop.fbx", "Dash");
+	mm_AnimeModel->Load("asset\\model\\Akai.fbx");
+	mm_AnimeModel->LoadAnimation("asset\\model\\Akai_Idle.fbx", "Idle");
+	mm_AnimeModel->LoadAnimation("asset\\model\\Akai_Run.fbx", "Run");
+	mm_AnimeModel->LoadAnimation("asset\\model\\HurricaneKick.fbx", "Attack");
+	mm_AnimeModel->LoadAnimation("asset\\model\\FallALoop.fbx", "Dash");
 }
 
 void Player::Draw()
@@ -286,66 +285,44 @@ void Player::Draw()
 	world = scl * rot * trans;
 	Renderer::SetWorldMatrix(world);
 
-	if (_animeModel) { _animeModel->Draw(); }
+	if (mm_AnimeModel) { mm_AnimeModel->Draw(); }
 
 	DrawComponent();
 }
 
 void Player::InitComponent()
 {
-	_Velocity = new Velocity(this);
-	_Sharder = new Sharder(this);
-	_Collision = new Collision(this);
-	_animeModel = new AnimationModel(this);
-	_attackSE = new Audio(this);
+	m_Velocity = new Velocity(this);
+	m_Sharder = new Sharder(this);
+	m_Collision = new Collision(this);
+	mm_AnimeModel = new AnimationModel(this);
+	m_AttackSE = new Audio(this);
 
-	_Velocity->Init();
-	_Sharder->Init();
-	_Collision->Init();
-	_animeModel->Init();
-	_attackSE->Load("asset\\sound\\seireipower.wav");
-
-
-	if (Manager::GetUseJob() == JOB::Job_Swordsman)
-	{
-		_job = new Swordsman(this);
-	}
-	else if (Manager::GetUseJob() == JOB::Job_wizard)
-	{
-		_job = new Swordsman(this);
-	}
-	else if (Manager::GetUseJob() == JOB::Job_Cleric)
-	{
-		_job = new Swordsman(this);
-	}
-	else if (Manager::GetUseJob() == JOB::Job_knight)
-	{
-		_job = new Swordsman(this);
-	}
-	
-	if (_job) { _job->Init(); }
+	m_Velocity->Init();
+	m_Sharder->Init();
+	m_Collision->Init();
+	mm_AnimeModel->Init();
+	m_AttackSE->Load("asset\\sound\\seireipower.wav");
 
 	LoadModel();
 }
 
 void Player::UpdateComponent()
 {
-	if (_Velocity) { _Velocity->Update(); };
-	if (_Sharder) { _Sharder->Update(); }
-	if (_job) { _job->Update(); }
+	 m_Velocity->Update(); 
+	m_Sharder->Update(); 
 }
 
 void Player::DrawComponent()
 {
-	if (_Sharder) { _Sharder->Draw(); }
+	 m_Sharder->Draw(); 
 }
 
 void Player::RemoveComponent()
 {
-	if (_job != nullptr) { _job->Unit(); delete _job; }
-	if (_animeModel != nullptr) { _animeModel->Unit(); delete _animeModel; }
-	if (_Collision != nullptr) { _Collision->Unit(); delete _Collision; }
-	if (_Sharder != nullptr) { _Sharder->Unit(); delete _Sharder; }
-	if (_Velocity != nullptr) { _Velocity->Unit(); delete _Velocity; }
+	if (mm_AnimeModel != nullptr) { mm_AnimeModel->Unit(); delete mm_AnimeModel; }
+	if (m_Collision != nullptr) { m_Collision->Unit(); delete m_Collision; }
+	if (m_Sharder != nullptr) { m_Sharder->Unit(); delete m_Sharder; }
+	if (m_Velocity != nullptr) { m_Velocity->Unit(); delete m_Velocity; }
 
 }

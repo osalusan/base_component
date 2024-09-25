@@ -24,9 +24,9 @@ void Actor::Update()
 	Move();
 
 	// À•W‚ÌÝ’è
-	_TransForm->_Position.x += _Velocity->_Velocity.x;
-	_TransForm->_Position.y += _Velocity->_Velocity.y;
-	_TransForm->_Position.z += _Velocity->_Velocity.z;
+	_TransForm->_Position.x += m_Velocity->m_Velocity.x;
+	_TransForm->_Position.y += m_Velocity->m_Velocity.y;
+	_TransForm->_Position.z += m_Velocity->m_Velocity.z;
 
 	// “–‚½‚è”»’èˆ—
 	CollisionControl();
@@ -47,34 +47,34 @@ void Actor::Draw()
 }
 void Actor::InitComponent()
 {
-	_Velocity = new Velocity(this);
-	_Sharder = new Sharder(this);
-	_Velocity->Init();
-	_Sharder->Init();
+	m_Velocity = new Velocity(this);
+	m_Sharder = new Sharder(this);
+	m_Velocity->Init();
+	m_Sharder->Init();
 	LoadModel();
 }
 
 
 void Actor::UpdateComponent()
 {
-	 _Velocity->Update();
-	 _Sharder->Update(); 
-	if (_Model) { _Model->Update(); }
+	 m_Velocity->Update();
+	 m_Sharder->Update(); 
+	if (m_Model) { m_Model->Update(); }
 }
 
 void Actor::DrawComponent()
 {
-	if (_AnimeModel) { _AnimeModel->Draw(); }
-	if (_Model) { _Model->Draw(); }
-	 _Sharder->Draw();
+	if (m_AnimeModel) { m_AnimeModel->Draw(); }
+	if (m_Model) { m_Model->Draw(); }
+	 m_Sharder->Draw();
 }
 
 void Actor::RemoveComponent()
 {
-	if (_AnimeModel != nullptr)_AnimeModel->Unit(); delete _AnimeModel;
-	if (_Model != nullptr)_Model->Unit(); delete _Model;
-	_Sharder->Unit(); delete _Sharder;
-	_Velocity->Unit(); delete _Velocity;
+	if (m_AnimeModel != nullptr)m_AnimeModel->Unit(); delete m_AnimeModel;
+	if (m_Model != nullptr)m_Model->Unit(); delete m_Model;
+	m_Sharder->Unit(); delete m_Sharder;
+	m_Velocity->Unit(); delete m_Velocity;
 }
 
 Actor::~Actor()
@@ -84,13 +84,13 @@ Actor::~Actor()
 
 void Actor::LoadModel()
 {
-	//_Model = new ModelRenderer(this);
-	//_Model->Init();
-	//_Model->Load("asset\\model\\player.obj"); 
+	//m_Model = new ModelRenderer(this);
+	//m_Model->Init();
+	//m_Model->Load("asset\\model\\player.obj"); 
 
-	//_AnimeModel = new AnimationModel(this);
-	//_AnimeModel->Init();
-	//_AnimeModel->Load("asset\\model\\Akai.fbx");
+	//m_AnimeModel = new AnimationModel(this);
+	//m_AnimeModel->Init();
+	//m_AnimeModel->Load("asset\\model\\Akai.fbx");
 }
 
 void Actor::CollisionControl()

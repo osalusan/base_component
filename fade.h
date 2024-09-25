@@ -13,7 +13,7 @@ private:
 
 	VERTEX_3D vertex[4];
 
-	int _count;
+	int m_Count;
 
 	float _time = 120.0f;
 	float _udalfa = 0.0f;

@@ -18,7 +18,7 @@ protected:
 
 	// スプライトシートの画像枚数
 	XMINT2 _sprite = {};
-	int _count = 0;
+	int m_Count = 0;
 	unsigned int _animecount = 0;
 	int _maxcount = 0;
 	XMFLOAT2 _texTop = { 0.0f,0.0f };

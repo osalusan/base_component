@@ -5,8 +5,8 @@
 class SkyDome: public GameObject
 {
 protected:
-	Sharder* _Sharder{};
-	ModelRenderer* _ModelRenderer{};
+	Sharder* m_Sharder{};
+	ModelRenderer* m_ModelRenderer{};
 public:
 	SkyDome() {}
 	virtual void Init()override;

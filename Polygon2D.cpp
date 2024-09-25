@@ -16,117 +16,117 @@ Polygon2D::Polygon2D(XMFLOAT3 position, XMFLOAT3 size,int pivot)
 	_TransForm->_Scale = size;
 	if (pivot == 0)
 	{// 中央
-		vertex[0].Position = XMFLOAT3(position.x - (size.x * 0.5f), position.y - (size.y * 0.5f), 0.0f);
-		vertex[0].Normal = XMFLOAT3(0.0f, 0.0f, 0.0f);
-		vertex[0].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
-		vertex[0].TexCoord = XMFLOAT2(0.0f, 0.0f);
+		m_Vertex[0].Position = XMFLOAT3(position.x - (size.x * 0.5f), position.y - (size.y * 0.5f), 0.0f);
+		m_Vertex[0].Normal = XMFLOAT3(0.0f, 0.0f, 0.0f);
+		m_Vertex[0].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
+		m_Vertex[0].TexCoord = XMFLOAT2(0.0f, 0.0f);
 
-		vertex[1].Position = XMFLOAT3(position.x + (size.x * 0.5f), position.y - (size.y * 0.5f), 0.0f);
-		vertex[1].Normal = XMFLOAT3(0.0f, 0.0f, 0.0f);
-		vertex[1].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
-		vertex[1].TexCoord = XMFLOAT2(1.0f, 0.0f);
+		m_Vertex[1].Position = XMFLOAT3(position.x + (size.x * 0.5f), position.y - (size.y * 0.5f), 0.0f);
+		m_Vertex[1].Normal = XMFLOAT3(0.0f, 0.0f, 0.0f);
+		m_Vertex[1].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
+		m_Vertex[1].TexCoord = XMFLOAT2(1.0f, 0.0f);
 
-		vertex[2].Position = XMFLOAT3(position.x - (size.x * 0.5f), position.y + (size.y * 0.5f), 0.0f);
-		vertex[2].Normal = XMFLOAT3(0.0f, 0.0f, 0.0f);
-		vertex[2].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
-		vertex[2].TexCoord = XMFLOAT2(0.0f, 1.0f);
+		m_Vertex[2].Position = XMFLOAT3(position.x - (size.x * 0.5f), position.y + (size.y * 0.5f), 0.0f);
+		m_Vertex[2].Normal = XMFLOAT3(0.0f, 0.0f, 0.0f);
+		m_Vertex[2].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
+		m_Vertex[2].TexCoord = XMFLOAT2(0.0f, 1.0f);
 
-		vertex[3].Position = XMFLOAT3(position.x + (size.x * 0.5f), position.y + (size.y * 0.5f), 0.0f);
-		vertex[3].Normal = XMFLOAT3(0.0f, 0.0f, 0.0f);
-		vertex[3].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
-		vertex[3].TexCoord = XMFLOAT2(1.0f, 1.0f);
+		m_Vertex[3].Position = XMFLOAT3(position.x + (size.x * 0.5f), position.y + (size.y * 0.5f), 0.0f);
+		m_Vertex[3].Normal = XMFLOAT3(0.0f, 0.0f, 0.0f);
+		m_Vertex[3].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
+		m_Vertex[3].TexCoord = XMFLOAT2(1.0f, 1.0f);
 		return;
 	}
 	else if (pivot == 1)
 	{// 左上
-		vertex[0].Position = XMFLOAT3(position.x, position.y, 0.0f);
-		vertex[0].Normal = XMFLOAT3(0.0f, 0.0f, 0.0f);
-		vertex[0].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
-		vertex[0].TexCoord = XMFLOAT2(0.0f, 0.0f);
+		m_Vertex[0].Position = XMFLOAT3(position.x, position.y, 0.0f);
+		m_Vertex[0].Normal = XMFLOAT3(0.0f, 0.0f, 0.0f);
+		m_Vertex[0].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
+		m_Vertex[0].TexCoord = XMFLOAT2(0.0f, 0.0f);
 
-		vertex[1].Position = XMFLOAT3(position.x + size.x, position.y, 0.0f);
-		vertex[1].Normal = XMFLOAT3(0.0f, 0.0f, 0.0f);
-		vertex[1].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
-		vertex[1].TexCoord = XMFLOAT2(1.0f, 0.0f);
+		m_Vertex[1].Position = XMFLOAT3(position.x + size.x, position.y, 0.0f);
+		m_Vertex[1].Normal = XMFLOAT3(0.0f, 0.0f, 0.0f);
+		m_Vertex[1].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
+		m_Vertex[1].TexCoord = XMFLOAT2(1.0f, 0.0f);
 
-		vertex[2].Position = XMFLOAT3(position.x, position.y + size.y, 0.0f);
-		vertex[2].Normal = XMFLOAT3(0.0f, 0.0f, 0.0f);
-		vertex[2].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
-		vertex[2].TexCoord = XMFLOAT2(0.0f, 1.0f);
+		m_Vertex[2].Position = XMFLOAT3(position.x, position.y + size.y, 0.0f);
+		m_Vertex[2].Normal = XMFLOAT3(0.0f, 0.0f, 0.0f);
+		m_Vertex[2].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
+		m_Vertex[2].TexCoord = XMFLOAT2(0.0f, 1.0f);
 
-		vertex[3].Position = XMFLOAT3(position.x + size.x, position.y + size.y, 0.0f);
-		vertex[3].Normal = XMFLOAT3(0.0f, 0.0f, 0.0f);
-		vertex[3].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
-		vertex[3].TexCoord = XMFLOAT2(1.0f, 1.0f);
+		m_Vertex[3].Position = XMFLOAT3(position.x + size.x, position.y + size.y, 0.0f);
+		m_Vertex[3].Normal = XMFLOAT3(0.0f, 0.0f, 0.0f);
+		m_Vertex[3].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
+		m_Vertex[3].TexCoord = XMFLOAT2(1.0f, 1.0f);
 		return;
 	}
 	else if (pivot == 2)
 	{// 右上
-		vertex[0].Position = XMFLOAT3(position.x - size.x, position.y, 0.0f);
-		vertex[0].Normal = XMFLOAT3(0.0f, 0.0f, 0.0f);
-		vertex[0].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
-		vertex[0].TexCoord = XMFLOAT2(0.0f, 0.0f);
+		m_Vertex[0].Position = XMFLOAT3(position.x - size.x, position.y, 0.0f);
+		m_Vertex[0].Normal = XMFLOAT3(0.0f, 0.0f, 0.0f);
+		m_Vertex[0].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
+		m_Vertex[0].TexCoord = XMFLOAT2(0.0f, 0.0f);
 
-		vertex[1].Position = XMFLOAT3(position.x, position.y, 0.0f);
-		vertex[1].Normal = XMFLOAT3(0.0f, 0.0f, 0.0f);
-		vertex[1].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
-		vertex[1].TexCoord = XMFLOAT2(1.0f, 0.0f);
+		m_Vertex[1].Position = XMFLOAT3(position.x, position.y, 0.0f);
+		m_Vertex[1].Normal = XMFLOAT3(0.0f, 0.0f, 0.0f);
+		m_Vertex[1].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
+		m_Vertex[1].TexCoord = XMFLOAT2(1.0f, 0.0f);
 
-		vertex[2].Position = XMFLOAT3(position.x - size.x, position.y + size.y, 0.0f);
-		vertex[2].Normal = XMFLOAT3(0.0f, 0.0f, 0.0f);
-		vertex[2].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
-		vertex[2].TexCoord = XMFLOAT2(0.0f, 1.0f);
+		m_Vertex[2].Position = XMFLOAT3(position.x - size.x, position.y + size.y, 0.0f);
+		m_Vertex[2].Normal = XMFLOAT3(0.0f, 0.0f, 0.0f);
+		m_Vertex[2].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
+		m_Vertex[2].TexCoord = XMFLOAT2(0.0f, 1.0f);
 
-		vertex[3].Position = XMFLOAT3(position.x, position.y + size.y, 0.0f);
-		vertex[3].Normal = XMFLOAT3(0.0f, 0.0f, 0.0f);
-		vertex[3].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
-		vertex[3].TexCoord = XMFLOAT2(1.0f, 1.0f);
+		m_Vertex[3].Position = XMFLOAT3(position.x, position.y + size.y, 0.0f);
+		m_Vertex[3].Normal = XMFLOAT3(0.0f, 0.0f, 0.0f);
+		m_Vertex[3].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
+		m_Vertex[3].TexCoord = XMFLOAT2(1.0f, 1.0f);
 		return;
 	}
 	else if (pivot == 3)
 	{//左下
-		vertex[0].Position = XMFLOAT3(position.x, position.y - size.y, 0.0f);
-		vertex[0].Normal = XMFLOAT3(0.0f, 0.0f, 0.0f);
-		vertex[0].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
-		vertex[0].TexCoord = XMFLOAT2(0.0f, 0.0f);
+		m_Vertex[0].Position = XMFLOAT3(position.x, position.y - size.y, 0.0f);
+		m_Vertex[0].Normal = XMFLOAT3(0.0f, 0.0f, 0.0f);
+		m_Vertex[0].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
+		m_Vertex[0].TexCoord = XMFLOAT2(0.0f, 0.0f);
 
-		vertex[1].Position = XMFLOAT3(position.x + size.x, position.y - size.y, 0.0f);
-		vertex[1].Normal = XMFLOAT3(0.0f, 0.0f, 0.0f);
-		vertex[1].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
-		vertex[1].TexCoord = XMFLOAT2(1.0f, 0.0f);
+		m_Vertex[1].Position = XMFLOAT3(position.x + size.x, position.y - size.y, 0.0f);
+		m_Vertex[1].Normal = XMFLOAT3(0.0f, 0.0f, 0.0f);
+		m_Vertex[1].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
+		m_Vertex[1].TexCoord = XMFLOAT2(1.0f, 0.0f);
 
-		vertex[2].Position = XMFLOAT3(position.x, position.y, 0.0f);
-		vertex[2].Normal = XMFLOAT3(0.0f, 0.0f, 0.0f);
-		vertex[2].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
-		vertex[2].TexCoord = XMFLOAT2(0.0f, 1.0f);
+		m_Vertex[2].Position = XMFLOAT3(position.x, position.y, 0.0f);
+		m_Vertex[2].Normal = XMFLOAT3(0.0f, 0.0f, 0.0f);
+		m_Vertex[2].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
+		m_Vertex[2].TexCoord = XMFLOAT2(0.0f, 1.0f);
 
-		vertex[3].Position = XMFLOAT3(position.x + size.x, position.y, 0.0f);
-		vertex[3].Normal = XMFLOAT3(0.0f, 0.0f, 0.0f);
-		vertex[3].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
-		vertex[3].TexCoord = XMFLOAT2(1.0f, 1.0f);
+		m_Vertex[3].Position = XMFLOAT3(position.x + size.x, position.y, 0.0f);
+		m_Vertex[3].Normal = XMFLOAT3(0.0f, 0.0f, 0.0f);
+		m_Vertex[3].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
+		m_Vertex[3].TexCoord = XMFLOAT2(1.0f, 1.0f);
 		return;
 	}
 	else if (pivot == 4)
 	{// 右下
-		vertex[0].Position = XMFLOAT3(position.x - size.x, position.y - size.y, 0.0f);
-		vertex[0].Normal = XMFLOAT3(0.0f, 0.0f, 0.0f);
-		vertex[0].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
-		vertex[0].TexCoord = XMFLOAT2(0.0f, 0.0f);
+		m_Vertex[0].Position = XMFLOAT3(position.x - size.x, position.y - size.y, 0.0f);
+		m_Vertex[0].Normal = XMFLOAT3(0.0f, 0.0f, 0.0f);
+		m_Vertex[0].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
+		m_Vertex[0].TexCoord = XMFLOAT2(0.0f, 0.0f);
 
-		vertex[1].Position = XMFLOAT3(position.x, position.y - size.y, 0.0f);
-		vertex[1].Normal = XMFLOAT3(0.0f, 0.0f, 0.0f);
-		vertex[1].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
-		vertex[1].TexCoord = XMFLOAT2(1.0f, 0.0f);
+		m_Vertex[1].Position = XMFLOAT3(position.x, position.y - size.y, 0.0f);
+		m_Vertex[1].Normal = XMFLOAT3(0.0f, 0.0f, 0.0f);
+		m_Vertex[1].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
+		m_Vertex[1].TexCoord = XMFLOAT2(1.0f, 0.0f);
 
-		vertex[2].Position = XMFLOAT3(position.x - size.x, position.y, 0.0f);
-		vertex[2].Normal = XMFLOAT3(0.0f, 0.0f, 0.0f);
-		vertex[2].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
-		vertex[2].TexCoord = XMFLOAT2(0.0f, 1.0f);
+		m_Vertex[2].Position = XMFLOAT3(position.x - size.x, position.y, 0.0f);
+		m_Vertex[2].Normal = XMFLOAT3(0.0f, 0.0f, 0.0f);
+		m_Vertex[2].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
+		m_Vertex[2].TexCoord = XMFLOAT2(0.0f, 1.0f);
 
-		vertex[3].Position = XMFLOAT3(position.x, position.y, 0.0f);
-		vertex[3].Normal = XMFLOAT3(0.0f, 0.0f, 0.0f);
-		vertex[3].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
-		vertex[3].TexCoord = XMFLOAT2(1.0f, 1.0f);
+		m_Vertex[3].Position = XMFLOAT3(position.x, position.y, 0.0f);
+		m_Vertex[3].Normal = XMFLOAT3(0.0f, 0.0f, 0.0f);
+		m_Vertex[3].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
+		m_Vertex[3].TexCoord = XMFLOAT2(1.0f, 1.0f);
 		return;
 	}
 
@@ -146,7 +146,7 @@ void Polygon2D::Init()
 	bd.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
 
 	D3D11_SUBRESOURCE_DATA sd{};
-	sd.pSysMem = vertex;
+	sd.pSysMem = m_Vertex;
 
 	Renderer::GetDevice()->CreateBuffer(&bd, &sd, &m_VertexBuffer);
 
@@ -179,7 +179,7 @@ void Polygon2D::Draw()
 	//マテリアル設定
 	MATERIAL material;
 	ZeroMemory(&material, sizeof(material));
-	material.Diffuse = _color;
+	material.Diffuse = m_Color;
 	material.TextureEnable = true;
 	Renderer::SetMaterial(material);
 
@@ -197,24 +197,24 @@ void Polygon2D::Draw()
 
 void Polygon2D::InitComponent()
 {
-	_Sharder = new Sharder(this);
-	_Sharder->Init();
+	m_Sharder = new Sharder(this);
+	m_Sharder->Init();
 }
 
 void Polygon2D::UpdateComponent()
 {
-	_Sharder->Update();
+	m_Sharder->Update();
 }
 
 void Polygon2D::DrawComponent()
 {
-	_Sharder->Draw();
+	m_Sharder->Draw();
 }
 
 void Polygon2D::RemoveComponent()
 {
-	_Sharder->Unit();
-	delete _Sharder;
+	m_Sharder->Unit();
+	delete m_Sharder;
 }
 
 void Polygon2D::Load(const wchar_t* FileName)
@@ -236,117 +236,117 @@ void Polygon2D::SetSize(XMFLOAT3 position, XMFLOAT3 size, int pivot)
 	_TransForm->_Scale = size;
 	if (pivot == 0)
 	{// 中央
-		vertex[0].Position = XMFLOAT3(position.x - (size.x * 0.5f), position.y - (size.y * 0.5f), 0.0f);
-		vertex[0].Normal = XMFLOAT3(0.0f, 0.0f, 0.0f);
-		vertex[0].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
-		vertex[0].TexCoord = XMFLOAT2(0.0f, 0.0f);
+		m_Vertex[0].Position = XMFLOAT3(position.x - (size.x * 0.5f), position.y - (size.y * 0.5f), 0.0f);
+		m_Vertex[0].Normal = XMFLOAT3(0.0f, 0.0f, 0.0f);
+		m_Vertex[0].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
+		m_Vertex[0].TexCoord = XMFLOAT2(0.0f, 0.0f);
 
-		vertex[1].Position = XMFLOAT3(position.x + (size.x * 0.5f), position.y - (size.y * 0.5f), 0.0f);
-		vertex[1].Normal = XMFLOAT3(0.0f, 0.0f, 0.0f);
-		vertex[1].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
-		vertex[1].TexCoord = XMFLOAT2(1.0f, 0.0f);
+		m_Vertex[1].Position = XMFLOAT3(position.x + (size.x * 0.5f), position.y - (size.y * 0.5f), 0.0f);
+		m_Vertex[1].Normal = XMFLOAT3(0.0f, 0.0f, 0.0f);
+		m_Vertex[1].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
+		m_Vertex[1].TexCoord = XMFLOAT2(1.0f, 0.0f);
 
-		vertex[2].Position = XMFLOAT3(position.x - (size.x * 0.5f), position.y + (size.y * 0.5f), 0.0f);
-		vertex[2].Normal = XMFLOAT3(0.0f, 0.0f, 0.0f);
-		vertex[2].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
-		vertex[2].TexCoord = XMFLOAT2(0.0f, 1.0f);
+		m_Vertex[2].Position = XMFLOAT3(position.x - (size.x * 0.5f), position.y + (size.y * 0.5f), 0.0f);
+		m_Vertex[2].Normal = XMFLOAT3(0.0f, 0.0f, 0.0f);
+		m_Vertex[2].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
+		m_Vertex[2].TexCoord = XMFLOAT2(0.0f, 1.0f);
 
-		vertex[3].Position = XMFLOAT3(position.x + (size.x * 0.5f), position.y + (size.y * 0.5f), 0.0f);
-		vertex[3].Normal = XMFLOAT3(0.0f, 0.0f, 0.0f);
-		vertex[3].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
-		vertex[3].TexCoord = XMFLOAT2(1.0f, 1.0f);
+		m_Vertex[3].Position = XMFLOAT3(position.x + (size.x * 0.5f), position.y + (size.y * 0.5f), 0.0f);
+		m_Vertex[3].Normal = XMFLOAT3(0.0f, 0.0f, 0.0f);
+		m_Vertex[3].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
+		m_Vertex[3].TexCoord = XMFLOAT2(1.0f, 1.0f);
 		return;
 	}
 	else if (pivot == 1)
 	{// 左上
-		vertex[0].Position = XMFLOAT3(position.x, position.y, 0.0f);
-		vertex[0].Normal = XMFLOAT3(0.0f, 0.0f, 0.0f);
-		vertex[0].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
-		vertex[0].TexCoord = XMFLOAT2(0.0f, 0.0f);
+		m_Vertex[0].Position = XMFLOAT3(position.x, position.y, 0.0f);
+		m_Vertex[0].Normal = XMFLOAT3(0.0f, 0.0f, 0.0f);
+		m_Vertex[0].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
+		m_Vertex[0].TexCoord = XMFLOAT2(0.0f, 0.0f);
 
-		vertex[1].Position = XMFLOAT3(position.x + size.x, position.y, 0.0f);
-		vertex[1].Normal = XMFLOAT3(0.0f, 0.0f, 0.0f);
-		vertex[1].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
-		vertex[1].TexCoord = XMFLOAT2(1.0f, 0.0f);
+		m_Vertex[1].Position = XMFLOAT3(position.x + size.x, position.y, 0.0f);
+		m_Vertex[1].Normal = XMFLOAT3(0.0f, 0.0f, 0.0f);
+		m_Vertex[1].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
+		m_Vertex[1].TexCoord = XMFLOAT2(1.0f, 0.0f);
 
-		vertex[2].Position = XMFLOAT3(position.x, position.y + size.y, 0.0f);
-		vertex[2].Normal = XMFLOAT3(0.0f, 0.0f, 0.0f);
-		vertex[2].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
-		vertex[2].TexCoord = XMFLOAT2(0.0f, 1.0f);
+		m_Vertex[2].Position = XMFLOAT3(position.x, position.y + size.y, 0.0f);
+		m_Vertex[2].Normal = XMFLOAT3(0.0f, 0.0f, 0.0f);
+		m_Vertex[2].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
+		m_Vertex[2].TexCoord = XMFLOAT2(0.0f, 1.0f);
 
-		vertex[3].Position = XMFLOAT3(position.x + size.x, position.y + size.y, 0.0f);
-		vertex[3].Normal = XMFLOAT3(0.0f, 0.0f, 0.0f);
-		vertex[3].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
-		vertex[3].TexCoord = XMFLOAT2(1.0f, 1.0f);
+		m_Vertex[3].Position = XMFLOAT3(position.x + size.x, position.y + size.y, 0.0f);
+		m_Vertex[3].Normal = XMFLOAT3(0.0f, 0.0f, 0.0f);
+		m_Vertex[3].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
+		m_Vertex[3].TexCoord = XMFLOAT2(1.0f, 1.0f);
 		return;
 	}
 	else if (pivot == 2)
 	{// 右上
-		vertex[0].Position = XMFLOAT3(position.x - size.x, position.y, 0.0f);
-		vertex[0].Normal = XMFLOAT3(0.0f, 0.0f, 0.0f);
-		vertex[0].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
-		vertex[0].TexCoord = XMFLOAT2(0.0f, 0.0f);
+		m_Vertex[0].Position = XMFLOAT3(position.x - size.x, position.y, 0.0f);
+		m_Vertex[0].Normal = XMFLOAT3(0.0f, 0.0f, 0.0f);
+		m_Vertex[0].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
+		m_Vertex[0].TexCoord = XMFLOAT2(0.0f, 0.0f);
 
-		vertex[1].Position = XMFLOAT3(position.x, position.y, 0.0f);
-		vertex[1].Normal = XMFLOAT3(0.0f, 0.0f, 0.0f);
-		vertex[1].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
-		vertex[1].TexCoord = XMFLOAT2(1.0f, 0.0f);
+		m_Vertex[1].Position = XMFLOAT3(position.x, position.y, 0.0f);
+		m_Vertex[1].Normal = XMFLOAT3(0.0f, 0.0f, 0.0f);
+		m_Vertex[1].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
+		m_Vertex[1].TexCoord = XMFLOAT2(1.0f, 0.0f);
 
-		vertex[2].Position = XMFLOAT3(position.x - size.x, position.y + size.y, 0.0f);
-		vertex[2].Normal = XMFLOAT3(0.0f, 0.0f, 0.0f);
-		vertex[2].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
-		vertex[2].TexCoord = XMFLOAT2(0.0f, 1.0f);
+		m_Vertex[2].Position = XMFLOAT3(position.x - size.x, position.y + size.y, 0.0f);
+		m_Vertex[2].Normal = XMFLOAT3(0.0f, 0.0f, 0.0f);
+		m_Vertex[2].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
+		m_Vertex[2].TexCoord = XMFLOAT2(0.0f, 1.0f);
 
-		vertex[3].Position = XMFLOAT3(position.x, position.y + size.y, 0.0f);
-		vertex[3].Normal = XMFLOAT3(0.0f, 0.0f, 0.0f);
-		vertex[3].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
-		vertex[3].TexCoord = XMFLOAT2(1.0f, 1.0f);
+		m_Vertex[3].Position = XMFLOAT3(position.x, position.y + size.y, 0.0f);
+		m_Vertex[3].Normal = XMFLOAT3(0.0f, 0.0f, 0.0f);
+		m_Vertex[3].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
+		m_Vertex[3].TexCoord = XMFLOAT2(1.0f, 1.0f);
 		return;
 	}
 	else if (pivot == 3)
 	{//左下
-		vertex[0].Position = XMFLOAT3(position.x, position.y - size.y, 0.0f);
-		vertex[0].Normal = XMFLOAT3(0.0f, 0.0f, 0.0f);
-		vertex[0].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
-		vertex[0].TexCoord = XMFLOAT2(0.0f, 0.0f);
+		m_Vertex[0].Position = XMFLOAT3(position.x, position.y - size.y, 0.0f);
+		m_Vertex[0].Normal = XMFLOAT3(0.0f, 0.0f, 0.0f);
+		m_Vertex[0].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
+		m_Vertex[0].TexCoord = XMFLOAT2(0.0f, 0.0f);
 
-		vertex[1].Position = XMFLOAT3(position.x + size.x, position.y - size.y, 0.0f);
-		vertex[1].Normal = XMFLOAT3(0.0f, 0.0f, 0.0f);
-		vertex[1].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
-		vertex[1].TexCoord = XMFLOAT2(1.0f, 0.0f);
+		m_Vertex[1].Position = XMFLOAT3(position.x + size.x, position.y - size.y, 0.0f);
+		m_Vertex[1].Normal = XMFLOAT3(0.0f, 0.0f, 0.0f);
+		m_Vertex[1].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
+		m_Vertex[1].TexCoord = XMFLOAT2(1.0f, 0.0f);
 
-		vertex[2].Position = XMFLOAT3(position.x, position.y, 0.0f);
-		vertex[2].Normal = XMFLOAT3(0.0f, 0.0f, 0.0f);
-		vertex[2].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
-		vertex[2].TexCoord = XMFLOAT2(0.0f, 1.0f);
+		m_Vertex[2].Position = XMFLOAT3(position.x, position.y, 0.0f);
+		m_Vertex[2].Normal = XMFLOAT3(0.0f, 0.0f, 0.0f);
+		m_Vertex[2].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
+		m_Vertex[2].TexCoord = XMFLOAT2(0.0f, 1.0f);
 
-		vertex[3].Position = XMFLOAT3(position.x + size.x, position.y, 0.0f);
-		vertex[3].Normal = XMFLOAT3(0.0f, 0.0f, 0.0f);
-		vertex[3].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
-		vertex[3].TexCoord = XMFLOAT2(1.0f, 1.0f);
+		m_Vertex[3].Position = XMFLOAT3(position.x + size.x, position.y, 0.0f);
+		m_Vertex[3].Normal = XMFLOAT3(0.0f, 0.0f, 0.0f);
+		m_Vertex[3].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
+		m_Vertex[3].TexCoord = XMFLOAT2(1.0f, 1.0f);
 		return;
 	}
 	else if (pivot == 4)
 	{// 右下
-		vertex[0].Position = XMFLOAT3(position.x - size.x, position.y - size.y, 0.0f);
-		vertex[0].Normal = XMFLOAT3(0.0f, 0.0f, 0.0f);
-		vertex[0].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
-		vertex[0].TexCoord = XMFLOAT2(0.0f, 0.0f);
+		m_Vertex[0].Position = XMFLOAT3(position.x - size.x, position.y - size.y, 0.0f);
+		m_Vertex[0].Normal = XMFLOAT3(0.0f, 0.0f, 0.0f);
+		m_Vertex[0].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
+		m_Vertex[0].TexCoord = XMFLOAT2(0.0f, 0.0f);
 
-		vertex[1].Position = XMFLOAT3(position.x, position.y - size.y, 0.0f);
-		vertex[1].Normal = XMFLOAT3(0.0f, 0.0f, 0.0f);
-		vertex[1].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
-		vertex[1].TexCoord = XMFLOAT2(1.0f, 0.0f);
+		m_Vertex[1].Position = XMFLOAT3(position.x, position.y - size.y, 0.0f);
+		m_Vertex[1].Normal = XMFLOAT3(0.0f, 0.0f, 0.0f);
+		m_Vertex[1].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
+		m_Vertex[1].TexCoord = XMFLOAT2(1.0f, 0.0f);
 
-		vertex[2].Position = XMFLOAT3(position.x - size.x, position.y, 0.0f);
-		vertex[2].Normal = XMFLOAT3(0.0f, 0.0f, 0.0f);
-		vertex[2].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
-		vertex[2].TexCoord = XMFLOAT2(0.0f, 1.0f);
+		m_Vertex[2].Position = XMFLOAT3(position.x - size.x, position.y, 0.0f);
+		m_Vertex[2].Normal = XMFLOAT3(0.0f, 0.0f, 0.0f);
+		m_Vertex[2].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
+		m_Vertex[2].TexCoord = XMFLOAT2(0.0f, 1.0f);
 
-		vertex[3].Position = XMFLOAT3(position.x, position.y, 0.0f);
-		vertex[3].Normal = XMFLOAT3(0.0f, 0.0f, 0.0f);
-		vertex[3].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
-		vertex[3].TexCoord = XMFLOAT2(1.0f, 1.0f);
+		m_Vertex[3].Position = XMFLOAT3(position.x, position.y, 0.0f);
+		m_Vertex[3].Normal = XMFLOAT3(0.0f, 0.0f, 0.0f);
+		m_Vertex[3].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
+		m_Vertex[3].TexCoord = XMFLOAT2(1.0f, 1.0f);
 		return;
 	}
 }

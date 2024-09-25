@@ -81,9 +81,9 @@ void BillBoard::Uninit()
 
 void BillBoard::Update()
 {
-	if (_count >= _maxcount) { _animecount++; _count = 0; }
+	if (m_Count >= _maxcount) { _animecount++; m_Count = 0; }
 	if (_animecount >= 4094967295) { _animecount = 0; }
-	_count++;
+	m_Count++;
 }
 
 void BillBoard::Draw()

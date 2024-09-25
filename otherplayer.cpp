@@ -24,11 +24,11 @@ void OtherPlayer::Update()
 {
 
 	//À•W‚ÌÝ’è
-	if (_Velocity)
+	if (m_Velocity)
 	{
-		_TransForm->_Position.x += _Velocity->_Velocity.x;
-		_TransForm->_Position.y += _Velocity->_Velocity.y;
-		_TransForm->_Position.z += _Velocity->_Velocity.z;
+		_TransForm->_Position.x += m_Velocity->m_Velocity.x;
+		_TransForm->_Position.y += m_Velocity->m_Velocity.y;
+		_TransForm->_Position.z += m_Velocity->m_Velocity.z;
 	}
 
 	
@@ -94,14 +94,14 @@ void OtherPlayer::Draw()
 
 void OtherPlayer::InitComponent()
 {
-	_Velocity = new Velocity(this);
-	_Sharder = new Sharder(this);
+	m_Velocity = new Velocity(this);
+	m_Sharder = new Sharder(this);
 	for (int i = 0; i < MAX_PARTS; i++) { _partsTransFomr[i] = new TransForm(this); }
 	for (int i = 0; i < MAX_PARTS; i++) { _partsModel[i] = new ModelRenderer(this); }
 	for (int i = 0; i < MAX_PARTS; i++) { _partsAnimation[i] = new Animation(this); }
 
-	_Velocity->Init();
-	_Sharder->Init();
+	m_Velocity->Init();
+	m_Sharder->Init();
 
 	_partsTransFomr[0]->Init(); _partsTransFomr[0]->_Position.y = 2.5f;
 	_partsTransFomr[1]->Init();
@@ -118,13 +118,13 @@ void OtherPlayer::InitComponent()
 
 void OtherPlayer::UpdateComponent()
 {
-	if (_Velocity) { _Velocity->Update(); };
-	if (_Sharder) { _Sharder->Update(); }
+	if (m_Velocity) { m_Velocity->Update(); };
+	if (m_Sharder) { m_Sharder->Update(); }
 }
 
 void OtherPlayer::DrawComponent()
 {
-	if (_Sharder) { _Sharder->Draw(); }
+	if (m_Sharder) { m_Sharder->Draw(); }
 }
 
 void OtherPlayer::RemoveComponent()
@@ -132,8 +132,8 @@ void OtherPlayer::RemoveComponent()
 	for (int i = 0; i < MAX_PARTS; i++) { if (_partsAnimation[i] != nullptr) { _partsAnimation[i]->Unit(); delete[] _partsAnimation[i]; } }
 	for (int i = 0; i < MAX_PARTS; i++) { if (_partsModel[i] != nullptr) { _partsModel[i]->Unit(); delete[] _partsModel[i]; } }
 	for (int i = 0; i < MAX_PARTS; i++) { if (_partsTransFomr[i] != nullptr) { _partsTransFomr[i]->Unit(); delete[] _partsTransFomr[i]; } }
-	if (_Sharder != nullptr) { _Sharder->Unit(); delete _Sharder; }
-	if (_Velocity != nullptr) { _Velocity->Unit(); delete _Velocity; }
+	if (m_Sharder != nullptr) { m_Sharder->Unit(); delete m_Sharder; }
+	if (m_Velocity != nullptr) { m_Velocity->Unit(); delete m_Velocity; }
 }
 
 void OtherPlayer::SetState(PLAYER_STATE state)
@@ -142,7 +142,7 @@ void OtherPlayer::SetState(PLAYER_STATE state)
 	{
 		_state = state;
 
-		for (int i = 0; i < MAX_PARTS; i++) { _partsAnimation[i]->_count = 0; }
+		for (int i = 0; i < MAX_PARTS; i++) { _partsAnimation[i]->m_Count = 0; }
 
 	}
 }

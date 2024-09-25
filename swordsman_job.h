@@ -7,7 +7,7 @@ private:
 public:
 	using Job::Job;
 	virtual void Init()override {
-		_job = JOB::Job_Swordsman;
+		m_Job = JOB::Job_Swordsman;
 	};
 	virtual void Unit()override {};
 	virtual void Update()override {};

@@ -4,8 +4,8 @@
 
 void SkyDome::Init()
 {
-	_Sharder = new Sharder(this);
-	_ModelRenderer = new ModelRenderer(this);
+	m_Sharder = new Sharder(this);
+	m_ModelRenderer = new ModelRenderer(this);
 	_TransForm->_Position = { 0.0f,0.0f,0.0f };
 	_TransForm->_Scale = { 500.0f,500.0f,500.0f };
 	_TransForm->_Rotation = { 0.0f,0.0f,0.0f };
@@ -41,34 +41,34 @@ void SkyDome::Draw()
 
 void SkyDome::InitComponent()
 {
-	_Sharder->Init();
-	_ModelRenderer->Init();
+	m_Sharder->Init();
+	m_ModelRenderer->Init();
 }
 
 void SkyDome::UpdateComponent()
 {
-	_Sharder->Update();
-	_ModelRenderer->Update();
+	m_Sharder->Update();
+	m_ModelRenderer->Update();
 }
 
 void SkyDome::DrawComponent()
 {
-	_Sharder->Draw();
-	_ModelRenderer->Draw();
+	m_Sharder->Draw();
+	m_ModelRenderer->Draw();
 }
 
 void SkyDome::RemoveComponent()
 {
-	if (_Sharder != nullptr)_Sharder->Unit(); delete _Sharder;
-	if (_ModelRenderer != nullptr)_ModelRenderer->Unit(); delete _ModelRenderer;
+	if (m_Sharder != nullptr)m_Sharder->Unit(); delete m_Sharder;
+	if (m_ModelRenderer != nullptr)m_ModelRenderer->Unit(); delete m_ModelRenderer;
 }
 
 void SkyDome::LoadSkyDome()
 {
-	_ModelRenderer->Load("asset\\model\\sky.obj");
+	m_ModelRenderer->Load("asset\\model\\sky.obj");
 }
 
 void SkyDome::LoadTextureSkyDome()
 {
-	//_ModelRenderer->LoadTexture("asset\\model\\partly_cloudy_puresky.jpg");
+	//m_ModelRenderer->LoadTexture("asset\\model\\partly_cloudy_puresky.jpg");
 }

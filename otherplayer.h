@@ -2,8 +2,8 @@
 #include "player.h"
 class OtherPlayer :public GameObject {
 private:
-	Velocity* _Velocity = {};
-	Sharder* _Sharder = {};
+	Velocity* m_Velocity = {};
+	Sharder* m_Sharder = {};
 
 	//０：頭　１：体　２：左手　３：右手　４：左足　５：右足
 	ModelRenderer* _partsModel[MAX_PARTS] = {};

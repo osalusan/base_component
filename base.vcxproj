@@ -200,7 +200,6 @@
     <ClInclude Include="game_skydome.h" />
     <ClInclude Include="grass.h" />
     <ClInclude Include="input.h" />
-    <ClInclude Include="job.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="manager.h" />
     <ClInclude Include="meshfiled.h" />

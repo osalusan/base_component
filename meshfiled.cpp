@@ -203,7 +203,7 @@ void MeshFiled::Draw()
 
 	//テクスチャ設定
 	Renderer::GetDeviceContext()->PSSetShaderResources(0, 1, &_texture);
-	Renderer::GetDeviceContext()->PSSetShaderResources(1, 1, &_normal);
+	//Renderer::GetDeviceContext()->PSSetShaderResources(1, 1, &_normal);
 
 	//プリミティブポロジ設定
 	Renderer::GetDeviceContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
@@ -217,22 +217,22 @@ void MeshFiled::Draw()
 
 void MeshFiled::InitComponent()
 {
-	_sharder = new Sharder(this); _sharder->_usesharder = 1; _sharder->Init();
+	m_Sharder = new Sharder(this); m_Sharder->_usesharder = 1; m_Sharder->Init();
 }
 
 void MeshFiled::UpdateComponent()
 {
-	_sharder->Update();
+	m_Sharder->Update();
 }
 
 void MeshFiled::DrawComponent()
 {
-	_sharder->Draw();
+	m_Sharder->Draw();
 }
 
 void MeshFiled::RemoveComponent()
 {
-	_sharder->Unit(); delete _sharder;
+	m_Sharder->Unit(); delete m_Sharder;
 }
 
 float MeshFiled::GetHeight(XMFLOAT3 position)
