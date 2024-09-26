@@ -73,6 +73,9 @@
     <Filter Include="ソース ファイル\actor">
       <UniqueIdentifier>{449cdfb1-bb15-4760-a3bb-cf755643b87b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\actor">
+      <UniqueIdentifier>{d2d07d31-40a3-4825-86d1-0e96aa2308cb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -287,9 +290,6 @@
     <ClInclude Include="collision.h">
       <Filter>ヘッダー ファイル\component</Filter>
     </ClInclude>
-    <ClInclude Include="firepillar.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="animationModel.h">
       <Filter>ヘッダー ファイル\component</Filter>
     </ClInclude>
@@ -328,6 +328,12 @@
     </ClInclude>
     <ClInclude Include="grass.h">
       <Filter>ヘッダー ファイル\billboard</Filter>
+    </ClInclude>
+    <ClInclude Include="firepillar.h">
+      <Filter>ヘッダー ファイル\actor</Filter>
+    </ClInclude>
+    <ClInclude Include="rock.h">
+      <Filter>ヘッダー ファイル\actor</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

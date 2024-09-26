@@ -6,9 +6,9 @@ void SkyDome::Init()
 {
 	m_Sharder = new Sharder(this);
 	m_ModelRenderer = new ModelRenderer(this);
-	m_TransForm->_Position = { 0.0f,0.0f,0.0f };
-	m_TransForm->_Scale = { 500.0f,500.0f,500.0f };
-	m_TransForm->_Rotation = { 0.0f,0.0f,0.0f };
+	m_TransForm->m_Position = { 0.0f,0.0f,0.0f };
+	m_TransForm->m_Scale = { 500.0f,500.0f,500.0f };
+	m_TransForm->m_Rotation = { 0.0f,0.0f,0.0f };
 	InitComponents();
 	LoadTextureSkyDome();
 	LoadSkyDome();
@@ -22,7 +22,7 @@ void SkyDome::Uninit()
 
 void SkyDome::Update()
 {
-	m_TransForm->_Position = Manager::GetScene()->GetPlayerCharcter()->m_TransForm->_Position;
+	m_TransForm->m_Position = Manager::GetScene()->GetPlayerCharcter()->m_TransForm->m_Position;
 	UpdateComponents();
 }
 
@@ -30,9 +30,9 @@ void SkyDome::Draw()
 {
 	//ワールドマトリクス設定
 	XMMATRIX world, scl, rot, trans;
-	scl = XMMatrixScaling(m_TransForm->_Scale.x, m_TransForm->_Scale.y, m_TransForm->_Scale.z);
-	rot = XMMatrixRotationRollPitchYaw(m_TransForm->_Rotation.x, m_TransForm->_Rotation.y, m_TransForm->_Rotation.z);
-	trans = XMMatrixTranslation(m_TransForm->_Position.x, m_TransForm->_Position.y, m_TransForm->_Position.z);
+	scl = XMMatrixScaling(m_TransForm->m_Scale.x, m_TransForm->m_Scale.y, m_TransForm->m_Scale.z);
+	rot = XMMatrixRotationRollPitchYaw(m_TransForm->m_Rotation.x, m_TransForm->m_Rotation.y, m_TransForm->m_Rotation.z);
+	trans = XMMatrixTranslation(m_TransForm->m_Position.x, m_TransForm->m_Position.y, m_TransForm->m_Position.z);
 	world = scl * rot * trans;
 	Renderer::SetWorldMatrix(world);
 

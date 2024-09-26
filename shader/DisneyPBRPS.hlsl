@@ -24,7 +24,7 @@ void main(in PS_IN In, out float4 outDiffuse : SV_Target)
     
     float3 specColor = albedoColor;
     
-    float metalic = 0.5f;
+    float metalic = 0.8f;
     float smooth = 0.8f;
 
     float3 toEye = CameraPosition.xyz - In.WorldPosition.xyz;

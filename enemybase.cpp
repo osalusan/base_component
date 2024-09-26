@@ -30,9 +30,9 @@ void EnemyBase::Update()
 	AnimationControl();
 
 	//座標の設定
-	m_TransForm->_Position.x += m_Velocity->m_Velocity.x;
-	m_TransForm->_Position.y += m_Velocity->m_Velocity.y;
-	m_TransForm->_Position.z += m_Velocity->m_Velocity.z;
+	m_TransForm->m_Position.x += m_Velocity->m_Velocity.x;
+	m_TransForm->m_Position.y += m_Velocity->m_Velocity.y;
+	m_TransForm->m_Position.z += m_Velocity->m_Velocity.z;
 
 	m_Count++;
 }
@@ -41,9 +41,9 @@ void EnemyBase::Draw()
 {
 	// ワールドマトリクス設定
 	XMMATRIX world, scl, rot, trans;
-	scl = XMMatrixScaling(m_TransForm->_Scale.x, m_TransForm->_Scale.y, m_TransForm->_Scale.z);
-	rot = XMMatrixRotationRollPitchYaw(m_TransForm->_Rotation.x, m_TransForm->_Rotation.y, m_TransForm->_Rotation.z);
-	trans = XMMatrixTranslation(m_TransForm->_Position.x, m_TransForm->_Position.y, m_TransForm->_Position.z);
+	scl = XMMatrixScaling(m_TransForm->m_Scale.x, m_TransForm->m_Scale.y, m_TransForm->m_Scale.z);
+	rot = XMMatrixRotationRollPitchYaw(m_TransForm->m_Rotation.x, m_TransForm->m_Rotation.y, m_TransForm->m_Rotation.z);
+	trans = XMMatrixTranslation(m_TransForm->m_Position.x, m_TransForm->m_Position.y, m_TransForm->m_Position.z);
 	world = scl * rot * trans;
 	Renderer::SetWorldMatrix(world);
 	DrawComponents();
@@ -216,7 +216,7 @@ void EnemyBase::SetDebugState(ENEMY_STATE state, int paturn)
 //---------------------------------------Enemy個々の処理---------------------------------------------
 void EnemyBase::LoadModel()
 {
-	m_TransForm->_Scale = { 5.0f,2.0f,5.0f };
+	m_TransForm->m_Scale = { 5.0f,2.0f,5.0f };
 	//m_Model = new ModelRenderer(this);
 	//m_Model->Init();
 	//m_Model->Load("asset\\model\\cylinder.obj");

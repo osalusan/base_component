@@ -12,7 +12,7 @@ void Player_Camera::Init()
 }
 void Player_Camera::Update()
 {
-	/*SetTarget(Manager::GetScene()->GetGameObject<Player>()->m_TransForm->_Position);*/
+	/*SetTarget(Manager::GetScene()->GetGameObject<Player>()->m_TransForm->m_Position);*/
 	POINT MousePos{};
 	GetCursorPos(&MousePos);
 
@@ -45,20 +45,20 @@ void Player_Camera::Update()
 #endif // _DEBUG
 
 	//マウスの横移動処理
-	m_TransForm->_Rotation.y += (_MousePos.x - _OldMousePos.x) * 0.005f;
+	m_TransForm->m_Rotation.y += (_MousePos.x - _OldMousePos.x) * 0.005f;
 	//マウスの縦移動処理
-	m_TransForm->_Rotation.x -= (_MousePos.y - _OldMousePos.y) * 0.005f;
+	m_TransForm->m_Rotation.x -= (_MousePos.y - _OldMousePos.y) * 0.005f;
 	//マウスの上下制限
-	if (m_TransForm->_Rotation.x > 1.14f)m_TransForm->_Rotation.x = 1.14f;
-	if (m_TransForm->_Rotation.x < -1.14f)m_TransForm->_Rotation.x = -1.14f;
+	if (m_TransForm->m_Rotation.x > 1.14f)m_TransForm->m_Rotation.x = 1.14f;
+	if (m_TransForm->m_Rotation.x < -1.14f)m_TransForm->m_Rotation.x = -1.14f;
 
-	if(_Player !=nullptr)_Target = _Player->m_TransForm->_RecordPosition;
+	if(_Player !=nullptr)_Target = _Player->m_TransForm->m_RecordPosition;
 
 	//カメラの移動処理
-	m_TransForm->_Position.x = _Target.x - sinf(m_TransForm->_Rotation.y) * _length;
-	m_TransForm->_Position.z = _Target.z - cosf(m_TransForm->_Rotation.y) * _length;
+	m_TransForm->m_Position.x = _Target.x - sinf(m_TransForm->m_Rotation.y) * _length;
+	m_TransForm->m_Position.z = _Target.z - cosf(m_TransForm->m_Rotation.y) * _length;
 
-	m_TransForm->_Position.y = _Target.y - sinf(m_TransForm->_Rotation.x) * _length;
+	m_TransForm->m_Position.y = _Target.y - sinf(m_TransForm->m_Rotation.x) * _length;
 
 
 	_OldMousePos = _MousePos;

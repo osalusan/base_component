@@ -5,8 +5,8 @@ class Collision :public Component
 {
 
 public:
-	XMFLOAT3 _Position = {};
-	XMFLOAT3 _Scale = {};
+	XMFLOAT3 m_Position = {};
+	XMFLOAT3 m_Scale = {};
 	bool _hit = false;			// メッシュに当たった
 	bool _groundHit = false;	// メッシュの上部分に当たった
 	float _groundHeight = 0.0f;

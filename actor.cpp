@@ -24,9 +24,9 @@ void Actor::Update()
 	Move();
 
 	// 座標の設定
-	m_TransForm->_Position.x += m_Velocity->m_Velocity.x;
-	m_TransForm->_Position.y += m_Velocity->m_Velocity.y;
-	m_TransForm->_Position.z += m_Velocity->m_Velocity.z;
+	m_TransForm->m_Position.x += m_Velocity->m_Velocity.x;
+	m_TransForm->m_Position.y += m_Velocity->m_Velocity.y;
+	m_TransForm->m_Position.z += m_Velocity->m_Velocity.z;
 
 	// 当たり判定処理
 	CollisionControl();
@@ -39,16 +39,16 @@ void Actor::Draw()
 	DrawComponents();
 	//ワールドマトリクス設定
 	XMMATRIX world, scl, rot, trans;
-	scl = XMMatrixScaling(m_TransForm->_Scale.x, m_TransForm->_Scale.y, m_TransForm->_Scale.z);
-	rot = XMMatrixRotationRollPitchYaw(m_TransForm->_Rotation.x, m_TransForm->_Rotation.y, m_TransForm->_Rotation.z);
-	trans = XMMatrixTranslation(m_TransForm->_Position.x, m_TransForm->_Position.y, m_TransForm->_Position.z);
+	scl = XMMatrixScaling(m_TransForm->m_Scale.x, m_TransForm->m_Scale.y, m_TransForm->m_Scale.z);
+	rot = XMMatrixRotationRollPitchYaw(m_TransForm->m_Rotation.x, m_TransForm->m_Rotation.y, m_TransForm->m_Rotation.z);
+	trans = XMMatrixTranslation(m_TransForm->m_Position.x, m_TransForm->m_Position.y, m_TransForm->m_Position.z);
 	world = scl * rot * trans;
 	Renderer::SetWorldMatrix(world);
 }
 void Actor::InitComponents()
 {
 	m_Velocity = new Velocity(this);
-	m_Sharder = new Sharder(this);
+	if (!m_Sharder) { m_Sharder = new Sharder(this); }
 	m_Velocity->Init();
 	m_Sharder->Init();
 	LoadModel();

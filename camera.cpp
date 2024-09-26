@@ -2,8 +2,8 @@
 
 Camera::Camera(XMFLOAT3 position, XMFLOAT3 rotation )
 {
-	m_TransForm->_Position = position;
-	m_TransForm->_Rotation = rotation;
+	m_TransForm->m_Position = position;
+	m_TransForm->m_Rotation = rotation;
 }
 
 void Camera::Init()
@@ -25,7 +25,7 @@ void Camera::Draw()
 {
 
 	XMFLOAT3 up = { 0.0f,1.0f,0.0f };
-	XMFLOAT3 position = m_TransForm->_Position;
+	XMFLOAT3 position = m_TransForm->m_Position;
 
 	XMMATRIX viewMatrix = XMMatrixLookAtLH(XMLoadFloat3(&position), XMLoadFloat3(&_Target), XMLoadFloat3(&up));
 

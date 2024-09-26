@@ -12,8 +12,8 @@ Polygon2D::Polygon2D(XMFLOAT3 position, XMFLOAT3 size,int pivot)
 {
 
 	if (pivot < 0 && pivot > 4)return;
-	m_TransForm->_Position = position;
-	m_TransForm->_Scale = size;
+	m_TransForm->m_Position = position;
+	m_TransForm->m_Scale = size;
 	if (pivot == 0)
 	{// ’†‰›
 		m_Vertex[0].Position = XMFLOAT3(position.x - (size.x * 0.5f), position.y - (size.y * 0.5f), 0.0f);
@@ -232,8 +232,8 @@ void Polygon2D::SetSize(XMFLOAT3 position, XMFLOAT3 size, int pivot)
 {
 	if (pivot < 0 && pivot > 4)return;
 
-	m_TransForm->_Position = position;
-	m_TransForm->_Scale = size;
+	m_TransForm->m_Position = position;
+	m_TransForm->m_Scale = size;
 	if (pivot == 0)
 	{// ’†‰›
 		m_Vertex[0].Position = XMFLOAT3(position.x - (size.x * 0.5f), position.y - (size.y * 0.5f), 0.0f);

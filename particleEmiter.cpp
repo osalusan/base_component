@@ -68,11 +68,11 @@ void ParticleEmiter::Update()
 	//	if (!m_Particle[i].Enable)
 	//	{
 	//		m_Particle[i].Enable = true;
-	//		m_Particle[i].position = m_TransForm->_Position;
+	//		m_Particle[i].position = m_TransForm->m_Position;
 	//		m_Particle[i].velocity.x = (rand() % 100 - 50) * 0.003f;
 	//		m_Particle[i].velocity.y = (rand() % 100 - 50) * 0.003f;
 	//		m_Particle[i].velocity.z = (rand() % 100 - 50) * 0.003f;
-	//		m_Particle[i].scale = m_TransForm->_Scale;
+	//		m_Particle[i].scale = m_TransForm->m_Scale;
 	//		m_Particle[i].lifetime = 220.0f;
 	//		break;
 	//	}

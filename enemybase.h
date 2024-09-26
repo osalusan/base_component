@@ -99,9 +99,9 @@ public:
 		float cRot = 6.28f / 4.0f;
 		float rotation = 0.0f;
 
-		rotation = atan2f(m_TransForm->GetTargetDirection(_player->m_TransForm->_Position).z, m_TransForm->GetTargetDirection(_player->m_TransForm->_Position).x) * -1.0f - cRot ;
-		float interpolatedRotation = Lerp_R(m_TransForm->_Rotation.y, rotation, _lerpValue);
-		m_TransForm->_Rotation.y = interpolatedRotation;
+		rotation = atan2f(m_TransForm->GetTargetDirection(_player->m_TransForm->m_Position).z, m_TransForm->GetTargetDirection(_player->m_TransForm->m_Position).x) * -1.0f - cRot ;
+		float interpolatedRotation = Lerp_R(m_TransForm->m_Rotation.y, rotation, _lerpValue);
+		m_TransForm->m_Rotation.y = interpolatedRotation;
 	}
 
 	virtual void RotationTargetPlayer() 
@@ -109,8 +109,8 @@ public:
 		float cRot = 6.28f / 4.0f;
 		float rotation = 0.0f;
 
-		rotation = atan2f(m_TransForm->GetTargetDirection(_player->m_TransForm->_Position).z, m_TransForm->GetTargetDirection(_player->m_TransForm->_Position).x) * -1.0f - cRot;
-		m_TransForm->_Rotation.y = rotation;
+		rotation = atan2f(m_TransForm->GetTargetDirection(_player->m_TransForm->m_Position).z, m_TransForm->GetTargetDirection(_player->m_TransForm->m_Position).x) * -1.0f - cRot;
+		m_TransForm->m_Rotation.y = rotation;
 	}
 
 	// ‰ñ“]—p‚ÌüŒ`•âŠÔ

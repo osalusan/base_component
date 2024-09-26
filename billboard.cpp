@@ -132,8 +132,8 @@ void BillBoard::Draw()
 
 	//ワールドマトリクス設定
 	XMMATRIX world, scale, rot, trans;
-	scale = XMMatrixScaling(m_TransForm->_Scale.x, m_TransForm->_Scale.y, m_TransForm->_Scale.z);
-	trans = XMMatrixTranslation(m_TransForm->_Position.x + m_Position.x,m_TransForm->_Position.y + m_Position.y, m_TransForm->_Position.z + m_Position.z);
+	scale = XMMatrixScaling(m_TransForm->m_Scale.x, m_TransForm->m_Scale.y, m_TransForm->m_Scale.z);
+	trans = XMMatrixTranslation(m_TransForm->m_Position.x + mm_Position.x,m_TransForm->m_Position.y + mm_Position.y, m_TransForm->m_Position.z + mm_Position.z);
 	world = scale * invView * trans;
 	Renderer::SetWorldMatrix(world);
 
@@ -184,7 +184,7 @@ void BillBoard::RemoveComponents()
 
 void BillBoard::SetSize(XMFLOAT3 size)
 {
-	m_TransForm->_Scale = size;
+	m_TransForm->m_Scale = size;
 }
 
 void BillBoard::Load(const wchar_t* FileName)

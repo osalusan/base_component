@@ -8,7 +8,7 @@ protected:
 	ID3D11Buffer* m_VertexBuffer = nullptr;
 	ID3D11ShaderResourceView* m_Texture = nullptr;
 
-	XMFLOAT3 m_Position = {};
+	XMFLOAT3 mm_Position = {};
 
 	VERTEX_3D m_Vertex[4];
 	Sharder* m_Sharder = nullptr;
@@ -22,9 +22,9 @@ protected:
 public:
 	//using Component::Component;
 	// インスタンス化の時に呼ぶ
-	void SetBillBoard(XMFLOAT3 position, XMFLOAT3 size) { m_Position = position; m_TransForm->_Scale = size; };
+	void SetBillBoard(XMFLOAT3 position, XMFLOAT3 size) { mm_Position = position; m_TransForm->m_Scale = size; };
 	void SetAnimation(int maxX, int maxY, int maxT) { m_Sprite.x = maxX; m_Sprite.y = maxY; m_Maxcount = maxT; }
-	void SetBillBoardAnimation(XMFLOAT3 position, XMFLOAT3 size, int maxX, int maxY, int maxT) { m_Position = position; m_TransForm->_Scale = size; m_Sprite.x = maxX; m_Sprite.y = maxY; m_Maxcount = maxT; }
+	void SetBillBoardAnimation(XMFLOAT3 position, XMFLOAT3 size, int maxX, int maxY, int maxT) { mm_Position = position; m_TransForm->m_Scale = size; m_Sprite.x = maxX; m_Sprite.y = maxY; m_Maxcount = maxT; }
 
 	virtual void Init()override;
 	virtual void Uninit()override;

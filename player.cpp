@@ -13,7 +13,7 @@
 void Player::Init()
 {
 	InitComponents();
-	m_TransForm->_Scale = {0.03f,0.03f,0.03f};
+	m_TransForm->m_Scale = {0.03f,0.03f,0.03f};
 	Manager::GetScene()->AddGameObject_T<Player_Hp>(Draw_Polygon2D);
 	Manager::GetScene()->AddGameObject_T<Player_Stamina>(Draw_Polygon2D);
 }
@@ -26,16 +26,16 @@ void Player::Uninit()
 void Player::Update()
 {
 	//過去座標登録
-	m_TransForm->_RecordPosition = m_TransForm->_Position;
+	m_TransForm->m_RecordPosition = m_TransForm->m_Position;
 	//移動
 	Move();
 
 	//座標の設定
 	if (m_Hp > 0.0f)
 	{
-		m_TransForm->_Position.x += m_Velocity->m_Velocity.x;
-		m_TransForm->_Position.y += m_Velocity->m_Velocity.y;
-		m_TransForm->_Position.z += m_Velocity->m_Velocity.z;
+		m_TransForm->m_Position.x += m_Velocity->m_Velocity.x;
+		m_TransForm->m_Position.y += m_Velocity->m_Velocity.y;
+		m_TransForm->m_Position.z += m_Velocity->m_Velocity.z;
 	}
 	
 
@@ -57,7 +57,7 @@ void Player::Move()
 {
 	float dt = 1.0f / 60.0f;
 	//サーバーにプレイヤーデータを送る
-	//if (Manager::GetUDPClient()){Manager::GetUDPClient()->SendMyPlayerData({m_TransForm->_Position.x,m_TransForm->_Position.y,m_TransForm->_Position.z },_state);}
+	//if (Manager::GetUDPClient()){Manager::GetUDPClient()->SendMyPlayerData({m_TransForm->m_Position.x,m_TransForm->m_Position.y,m_TransForm->m_Position.z },_state);}
 
 	m_Velocity->m_Velocity.x = { 0.0f };
 	m_Velocity->m_Velocity.z = { 0.0f };
@@ -160,8 +160,8 @@ void Player::Move()
 	if (m_NextanimationName != "Idle")
 	{
 		rotation = atan2f(m_TransForm->GetDirection(m_Velocity->m_Velocity).z, m_TransForm->GetDirection(m_Velocity->m_Velocity).x) * -1.0f + cRot;
-		float interpolatedRotation = Lerp_R(m_TransForm->_Rotation.y, rotation, _lerpValue);
-		m_TransForm->_Rotation.y = interpolatedRotation;
+		float interpolatedRotation = Lerp_R(m_TransForm->m_Rotation.y, rotation, _lerpValue);
+		m_TransForm->m_Rotation.y = interpolatedRotation;
 	}
 
 }
@@ -174,22 +174,22 @@ void Player::CollisionControl()
 
 	if (m_Collision->_hit)
 	{
-		m_TransForm->_Position.x = m_TransForm->_RecordPosition.x;
-		m_TransForm->_Position.z = m_TransForm->_RecordPosition.z;
+		m_TransForm->m_Position.x = m_TransForm->m_RecordPosition.x;
+		m_TransForm->m_Position.z = m_TransForm->m_RecordPosition.z;
 		//// 向こうから当たってきたら押される
-		//if (m_Collision->_otherActor->m_TransForm->_Position.x != m_Collision->_otherActor->m_TransForm->_RecordPosition.x||
-		//	m_Collision->_otherActor->m_TransForm->_Position.y != m_Collision->_otherActor->m_TransForm->_RecordPosition.y||
-		//	m_Collision->_otherActor->m_TransForm->_Position.z != m_Collision->_otherActor->m_TransForm->_RecordPosition.z) 
+		//if (m_Collision->_otherActor->m_TransForm->m_Position.x != m_Collision->_otherActor->m_TransForm->m_RecordPosition.x||
+		//	m_Collision->_otherActor->m_TransForm->m_Position.y != m_Collision->_otherActor->m_TransForm->m_RecordPosition.y||
+		//	m_Collision->_otherActor->m_TransForm->m_Position.z != m_Collision->_otherActor->m_TransForm->m_RecordPosition.z) 
 		//{
 		//	XMFLOAT3 scale = { 0.0f,0.0f,0.0f };
 
-		//	if (m_Collision->_direction.x >= 0.0f) { scale.x = m_Collision->_otherActor->m_TransForm->_Scale.x; }
-		//	else { scale.x = -m_Collision->_otherActor->m_TransForm->_Scale.x; }
-		//	if (m_Collision->_direction.z >= 0.0f) { scale.z = m_Collision->_otherActor->m_TransForm->_Scale.z ; }
-		//	else { scale.z = -m_Collision->_otherActor->m_TransForm->_Scale.z; }
+		//	if (m_Collision->_direction.x >= 0.0f) { scale.x = m_Collision->_otherActor->m_TransForm->m_Scale.x; }
+		//	else { scale.x = -m_Collision->_otherActor->m_TransForm->m_Scale.x; }
+		//	if (m_Collision->_direction.z >= 0.0f) { scale.z = m_Collision->_otherActor->m_TransForm->m_Scale.z ; }
+		//	else { scale.z = -m_Collision->_otherActor->m_TransForm->m_Scale.z; }
 
-		//	m_TransForm->_Position.x = m_Collision->_otherActor->m_TransForm->_Position.x + scale.x;
-		//	m_TransForm->_Position.z = m_Collision->_otherActor->m_TransForm->_Position.z + scale.z;
+		//	m_TransForm->m_Position.x = m_Collision->_otherActor->m_TransForm->m_Position.x + scale.x;
+		//	m_TransForm->m_Position.z = m_Collision->_otherActor->m_TransForm->m_Position.z + scale.z;
 		//}
 	}
 	else if (m_Collision->_groundHit)
@@ -197,14 +197,14 @@ void Player::CollisionControl()
 		groundHeight = m_Collision->_groundHeight;
 	}
 	// オブジェクトに乗らなかったらフィールド優先
-	float filedheight = Manager::GetScene()->GetGameObject<MeshFiled>()->GetHeight(m_TransForm->_Position);
+	float filedheight = Manager::GetScene()->GetGameObject<MeshFiled>()->GetHeight(m_TransForm->m_Position);
 	if (groundHeight < filedheight) { groundHeight = filedheight; }
 
 
 	// 地面
-	if (m_TransForm->_Position.y < groundHeight)
+	if (m_TransForm->m_Position.y < groundHeight)
 	{
-		m_TransForm->_Position.y = groundHeight;
+		m_TransForm->m_Position.y = groundHeight;
 		m_Velocity->m_Velocity.y = 0.0f;
 	}
 
@@ -249,15 +249,15 @@ void Player::Attack()
 	}
 	//if (!_atkFlag && !_useAttack) { _punchi = nullptr; }
 	//if (_punchi != nullptr && _atkFlag) {
-	//	_punchi->m_TransForm->_Position = m_TransForm->_Position;
-	//	//_punchi->m_TransForm->_Position.x = m_TransForm->_Position.x + (Camera->m_TransForm->GetForward().x * 5.5f);
-	//	//_punchi->m_TransForm->_Position.y = m_TransForm->_Position.y + (3.5f);
-	//	//_punchi->m_TransForm->_Position.z = m_TransForm->_Position.z + (Camera->m_TransForm->GetForward().z * 5.5f);
+	//	_punchi->m_TransForm->m_Position = m_TransForm->m_Position;
+	//	//_punchi->m_TransForm->m_Position.x = m_TransForm->m_Position.x + (Camera->m_TransForm->GetForward().x * 5.5f);
+	//	//_punchi->m_TransForm->m_Position.y = m_TransForm->m_Position.y + (3.5f);
+	//	//_punchi->m_TransForm->m_Position.z = m_TransForm->m_Position.z + (Camera->m_TransForm->GetForward().z * 5.5f);
 	//}
 
 	if (m_NextanimationName == "Attack"&& m_AtkCount<= m_AtkTime)
 	{
-		m_TransForm->_Rotation.y = Camera->m_TransForm->_Rotation.y;
+		m_TransForm->m_Rotation.y = Camera->m_TransForm->m_Rotation.y;
 		m_AtkCount++;
 	}
 	if (m_AtkCount >= m_AtkTime) { m_AtkFlag = false; m_UseAttack = false;}
@@ -279,9 +279,9 @@ void Player::Draw()
 
 	XMMATRIX world, scl, rot, trans;
 
-	scl = XMMatrixScaling(m_TransForm->_Scale.x, m_TransForm->_Scale.y, m_TransForm->_Scale.z);
-	rot = XMMatrixRotationRollPitchYaw(m_TransForm->_Rotation.x, m_TransForm->_Rotation.y, m_TransForm->_Rotation.z);
-	trans = XMMatrixTranslation(m_TransForm->_Position.x , m_TransForm->_Position.y, m_TransForm->_Position.z);
+	scl = XMMatrixScaling(m_TransForm->m_Scale.x, m_TransForm->m_Scale.y, m_TransForm->m_Scale.z);
+	rot = XMMatrixRotationRollPitchYaw(m_TransForm->m_Rotation.x, m_TransForm->m_Rotation.y, m_TransForm->m_Rotation.z);
+	trans = XMMatrixTranslation(m_TransForm->m_Position.x , m_TransForm->m_Position.y, m_TransForm->m_Position.z);
 	world = scl * rot * trans;
 	Renderer::SetWorldMatrix(world);
 
