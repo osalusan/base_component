@@ -136,7 +136,7 @@ void SetBorderlessWindow(HWND hwnd)
 int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-	//_CrtSetBreakAlloc(288);
+	//_CrtSetBreakAlloc(595);
 
 	// —”‚ÌƒV[ƒh‚ğİ’è
 	srand(static_cast<unsigned int>(time(0)));

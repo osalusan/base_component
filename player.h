@@ -36,7 +36,7 @@ private:
 	Velocity* m_Velocity = {};
 	Sharder* m_Sharder = {};
 	Collision* m_Collision = {};
-	AnimationModel* mm_AnimeModel = {};
+	AnimationModel* m_AnimeModel = {};
 	Audio* m_AttackSE = {};
 
 

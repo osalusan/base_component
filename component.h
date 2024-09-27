@@ -11,7 +11,7 @@ public:
 	Component(GameObject* object) {
 		_GameObject = object;
 	}
-	virtual ~Component() {}
+	virtual ~Component() { _GameObject = nullptr; }
 
 	virtual void Init() {};
 	virtual void Unit() {};
