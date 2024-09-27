@@ -266,7 +266,7 @@ void Player::Attack()
 
 void Player::LoadModel()
 {
-	m_AnimeModel->Load("asset\\model\\knight2_u.fbx");
+	m_AnimeModel->Load("asset\\model\\Akai.fbx");
 	m_AnimeModel->LoadAnimation("asset\\model\\Akai_Idle.fbx", "Idle");
 	m_AnimeModel->LoadAnimation("asset\\model\\Akai_Run.fbx", "Run");
 	m_AnimeModel->LoadAnimation("asset\\model\\HurricaneKick.fbx", "Attack");
