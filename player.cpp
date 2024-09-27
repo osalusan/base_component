@@ -13,7 +13,7 @@
 void Player::Init()
 {
 	InitComponents();
-	m_TransForm->m_Scale = {1.03f,1.03f,1.03f};
+	m_TransForm->m_Scale = {0.03f,0.03f,0.03f};
 	Manager::GetScene()->AddGameObject_T<Player_Hp>(Draw_Polygon2D);
 	Manager::GetScene()->AddGameObject_T<Player_Stamina>(Draw_Polygon2D);
 }
@@ -266,7 +266,7 @@ void Player::Attack()
 
 void Player::LoadModel()
 {
-	m_AnimeModel->Load("asset\\model\\Akai.fbx");
+	m_AnimeModel->Load("asset\\model\\knight2_u.fbx");
 	m_AnimeModel->LoadAnimation("asset\\model\\Akai_Idle.fbx", "Idle");
 	m_AnimeModel->LoadAnimation("asset\\model\\Akai_Run.fbx", "Run");
 	m_AnimeModel->LoadAnimation("asset\\model\\HurricaneKick.fbx", "Attack");

@@ -48,7 +48,7 @@ void Actor::Draw()
 void Actor::InitComponents()
 {
 	m_Velocity = new Velocity(this);
-	if (!m_Sharder) { m_Sharder = new Sharder(this); }
+	if (m_Sharder == nullptr) { m_Sharder = new Sharder(this); }
 	m_Velocity->Init();
 	m_Sharder->Init();
 	LoadModel();
