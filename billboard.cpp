@@ -133,7 +133,7 @@ void BillBoard::Draw()
 	//ワールドマトリクス設定
 	XMMATRIX world, scale, rot, trans;
 	scale = XMMatrixScaling(m_TransForm->m_Scale.x, m_TransForm->m_Scale.y, m_TransForm->m_Scale.z);
-	trans = XMMatrixTranslation(m_TransForm->m_Position.x + mm_Position.x,m_TransForm->m_Position.y + mm_Position.y, m_TransForm->m_Position.z + mm_Position.z);
+	trans = XMMatrixTranslation(m_TransForm->m_Position.x + m_Position.x,m_TransForm->m_Position.y + m_Position.y, m_TransForm->m_Position.z + m_Position.z);
 	world = scale * invView * trans;
 	Renderer::SetWorldMatrix(world);
 
