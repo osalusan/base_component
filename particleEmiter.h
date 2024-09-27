@@ -7,7 +7,7 @@ protected:
 	ID3D11Buffer* m_VertexBuffer = NULL;
 	ID3D11ShaderResourceView* m_Texture = NULL;
 
-	Sharder* _Sharder = {};
+	Sharder* m_Sharder = {};
 
 	struct PARTICLE {
 		bool Enable;
@@ -23,20 +23,20 @@ protected:
 	};
 
 	static const int PARTICLE_MAX = 1000;
-	PARTICLE _particle[PARTICLE_MAX] = {};
+	PARTICLE m_Particle[PARTICLE_MAX] = {};
 
-	bool _mix = false;//加算合成のオンオフ
-	float _count = 0;
+	bool m_Mix = false;//加算合成のオンオフ
+	float m_Count = 0;
 public:
 	ParticleEmiter() {};
 	void Init()override;
 	void Uninit()override;
 	void Update()override;
 	void Draw()override;
-	virtual void InitComponent()override;
-	virtual void UpdateComponent()override;
-	virtual void DrawComponent()override;
-	virtual void RemoveComponent()override;
+	virtual void InitComponents()override;
+	virtual void UpdateComponents()override;
+	virtual void DrawComponents()override;
+	virtual void RemoveComponents()override;
 
 	virtual void Load(const wchar_t* FileName);
 

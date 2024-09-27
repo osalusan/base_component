@@ -6,7 +6,7 @@ class Velocity :public Component
 public:
 	
 public:
-	XMFLOAT3 _Velocity = XMFLOAT3(0.0f, 0.0f, 0.0f);
+	XMFLOAT3 m_Velocity = XMFLOAT3(0.0f, 0.0f, 0.0f);
 	using Component::Component;
 
 	void Init()override {};

@@ -54,13 +54,13 @@ class ModelRenderer : public Component
 {
 private:
 
-	static std::unordered_map<std::string, MODEL*> m_ModelPool;
+	static std::unordered_map<std::string, MODEL*> mm_ModelPool;
 
 	static void LoadModel(const char *FileName, MODEL *Model);
 	static void LoadObj( const char *FileName, MODEL_OBJ *ModelObj );
 	static void LoadMaterial( const char *FileName, MODEL_MATERIAL **MaterialArray, unsigned int *MaterialNum );
 
-	MODEL* m_Model{};
+	MODEL* mm_Model{};
 	//std::string * _chengeTexture;
 	
 public:

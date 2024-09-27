@@ -5,8 +5,8 @@ class FirePillar : public Actor
 private:
 	void Init()override;
 	void LoadModel()override {
-		_Model = new ModelRenderer(this);
-		_Model->Init();
-		_Model->Load("asset\\model\\fire_pillar.obj");
+		m_Model = new ModelRenderer(this);
+		m_Model->Init();
+		m_Model->Load("asset\\model\\fire_pillar.obj");
 	}
 };

@@ -2,8 +2,8 @@
 #include "player.h"
 class OtherPlayer :public GameObject {
 private:
-	Velocity* _Velocity = {};
-	Sharder* _Sharder = {};
+	Velocity* m_Velocity = {};
+	Sharder* m_Sharder = {};
 
 	//０：頭　１：体　２：左手　３：右手　４：左足　５：右足
 	ModelRenderer* _partsModel[MAX_PARTS] = {};
@@ -20,10 +20,10 @@ public:
 	virtual void Uninit()override;
 	virtual void Update()override;
 	virtual void Draw()override;
-	virtual void InitComponent()override;
-	virtual void UpdateComponent()override;
-	virtual void DrawComponent()override;
-	virtual void RemoveComponent()override;
+	virtual void InitComponents()override;
+	virtual void UpdateComponents()override;
+	virtual void DrawComponents()override;
+	virtual void RemoveComponents()override;
 
 	void SetState(PLAYER_STATE state);
 	void AnimationState();

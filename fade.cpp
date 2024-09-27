@@ -55,9 +55,9 @@ void Fade::Uninit()
 void Fade::Update()
 {
 	if (_used) {
-		_count++;
+		m_Count++;
 		_alfa += _udalfa;
-		if (_count >= _time) { _count = 0; _used = false; }
+		if (m_Count >= _time) { m_Count = 0; _used = false; }
 	}
 }
 
@@ -106,10 +106,10 @@ void Fade::Load(const wchar_t* FileName)
 }
 void Fade::StartFadeIn()
 {
-	if (_count == 0 && _alfa == 0.0f) { _used = true; _alfa = 0.0f;	_udalfa = 1.0f / _time;}
+	if (m_Count == 0 && _alfa == 0.0f) { _used = true; _alfa = 0.0f;	_udalfa = 1.0f / _time;}
 }
 
 void Fade::StartFadeOut()
 {
-	if (_count == 0) { _used = true; _alfa = 1.0f; 	_udalfa = -(1.0f / _time);}
+	if (m_Count == 0) { _used = true; _alfa = 1.0f; 	_udalfa = -(1.0f / _time);}
 }

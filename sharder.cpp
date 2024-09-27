@@ -3,10 +3,27 @@
 
 void Sharder::Init()
 {
-	Renderer::CreateVertexShader(&m_VertexShader, &m_VertexLayout,
-		"Shader\\unlitTextureVS.cso");
-	Renderer::CreatePixelShader(&m_PixelShader,
-		"Shader\\unlitTexturePS.cso");
+	if (m_Usesharder == 0)
+	{
+		Renderer::CreateVertexShader(&m_VertexShader, &m_VertexLayout,
+			"Shader\\unlitTextureVS.cso");
+		Renderer::CreatePixelShader(&m_PixelShader,
+			"Shader\\unlitTexturePS.cso");
+	}
+	else if (m_Usesharder == 1)
+	{
+		Renderer::CreateVertexShader(&m_VertexShader, &m_VertexLayout,
+			"Shader\\BumpTangentVS.cso");
+		Renderer::CreatePixelShader(&m_PixelShader,
+			"Shader\\BumpTangentPS.cso");
+	}
+	else if (m_Usesharder == 2)
+	{
+		Renderer::CreateVertexShader(&m_VertexShader, &m_VertexLayout,
+			"Shader\\DisneyPBRVS.cso");
+		Renderer::CreatePixelShader(&m_PixelShader,
+			"Shader\\DisneyPBRPS.cso");
+	}
 }
 
 void Sharder::Unit()

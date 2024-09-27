@@ -9,10 +9,10 @@ protected:
 	ID3D11ShaderResourceView*	m_Texture = NULL;
 
 	//コンポーネント
-	Sharder* _Sharder{};
+	Sharder* m_Sharder{};
 
-	VERTEX_3D vertex[4]{};
-	XMFLOAT4 _color = {1.0f,1.0f,1.0f,1.0f};
+	VERTEX_3D m_Vertex[4]{};
+	XMFLOAT4 m_Color = {1.0f,1.0f,1.0f,1.0f};
 public:
 	Polygon2D() {}
 	Polygon2D(XMFLOAT3 position, XMFLOAT3 size,int pivot);
@@ -20,10 +20,10 @@ public:
 	void Uninit()override;
 	void Update()override;
 	void Draw()override;
-	virtual void InitComponent()override;
-	virtual void UpdateComponent()override;
-	virtual void DrawComponent()override;
-	virtual void RemoveComponent()override;
+	virtual void InitComponents()override;
+	virtual void UpdateComponents()override;
+	virtual void DrawComponents()override;
+	virtual void RemoveComponents()override;
 	virtual void Load(const wchar_t* FileName);
 	virtual void SetSize(XMFLOAT3 pos, XMFLOAT3 size, int pivot);
 	virtual void LoadTexture();

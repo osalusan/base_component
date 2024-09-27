@@ -9,7 +9,7 @@ typedef enum{
 	Draw_Filed,
 	Draw_Actor,
 	Draw_Effect,
-	Draw_BillBoard,
+	Drawm_BillBoard,
 	Draw_Polygon2D,
 	Draw_Max
 

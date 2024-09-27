@@ -137,7 +137,7 @@ void UDP_Client::ReflectOtherPlayer()
 {
     for (auto otherplayer : Manager::GetScene()->GetGameObjects<OtherPlayer>())
     {
-        otherplayer->_TransForm->_Position = _OtherPlayerData[otherplayer->playerID].pos;
+        otherplayer->m_TransForm->m_Position = _OtherPlayerData[otherplayer->playerID].pos;
         otherplayer->_state = _OtherPlayerData[otherplayer->playerID].playerState;
     }
 }

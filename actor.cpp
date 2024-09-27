@@ -6,14 +6,14 @@ void Actor::Init()
 {
 	// components
 
-	InitComponent();
+	InitComponents();
 }
 
 void Actor::Uninit()
 {
 
 	// components
-	RemoveComponent();
+	RemoveComponents();
 
 }
 
@@ -24,57 +24,57 @@ void Actor::Update()
 	Move();
 
 	// 座標の設定
-	_TransForm->_Position.x += _Velocity->_Velocity.x;
-	_TransForm->_Position.y += _Velocity->_Velocity.y;
-	_TransForm->_Position.z += _Velocity->_Velocity.z;
+	m_TransForm->m_Position.x += m_Velocity->m_Velocity.x;
+	m_TransForm->m_Position.y += m_Velocity->m_Velocity.y;
+	m_TransForm->m_Position.z += m_Velocity->m_Velocity.z;
 
 	// 当たり判定処理
 	CollisionControl();
 
-	UpdateComponent();
+	UpdateComponents();
 }
 
 void Actor::Draw()
 {
+	DrawComponents();
 	//ワールドマトリクス設定
 	XMMATRIX world, scl, rot, trans;
-	scl = XMMatrixScaling(_TransForm->_Scale.x, _TransForm->_Scale.y, _TransForm->_Scale.z);
-	rot = XMMatrixRotationRollPitchYaw(_TransForm->_Rotation.x, _TransForm->_Rotation.y, _TransForm->_Rotation.z);
-	trans = XMMatrixTranslation(_TransForm->_Position.x, _TransForm->_Position.y, _TransForm->_Position.z);
+	scl = XMMatrixScaling(m_TransForm->m_Scale.x, m_TransForm->m_Scale.y, m_TransForm->m_Scale.z);
+	rot = XMMatrixRotationRollPitchYaw(m_TransForm->m_Rotation.x, m_TransForm->m_Rotation.y, m_TransForm->m_Rotation.z);
+	trans = XMMatrixTranslation(m_TransForm->m_Position.x, m_TransForm->m_Position.y, m_TransForm->m_Position.z);
 	world = scl * rot * trans;
 	Renderer::SetWorldMatrix(world);
-	DrawComponent();
 }
-void Actor::InitComponent()
+void Actor::InitComponents()
 {
-	_Velocity = new Velocity(this);
-	_Sharder = new Sharder(this);
-	_Velocity->Init();
-	_Sharder->Init();
+	m_Velocity = new Velocity(this);
+	if (!m_Sharder) { m_Sharder = new Sharder(this); }
+	m_Velocity->Init();
+	m_Sharder->Init();
 	LoadModel();
 }
 
 
-void Actor::UpdateComponent()
+void Actor::UpdateComponents()
 {
-	 _Velocity->Update();
-	 _Sharder->Update(); 
-	if (_Model) { _Model->Update(); }
+	 m_Velocity->Update();
+	 m_Sharder->Update(); 
+	if (m_Model) { m_Model->Update(); }
 }
 
-void Actor::DrawComponent()
+void Actor::DrawComponents()
 {
-	if (_AnimeModel) { _AnimeModel->Draw(); }
-	if (_Model) { _Model->Draw(); }
-	 _Sharder->Draw();
+	if (m_AnimeModel) { m_AnimeModel->Draw(); }
+	if (m_Model) { m_Model->Draw(); }
+	 m_Sharder->Draw();
 }
 
-void Actor::RemoveComponent()
+void Actor::RemoveComponents()
 {
-	if (_AnimeModel != nullptr)_AnimeModel->Unit(); delete _AnimeModel;
-	if (_Model != nullptr)_Model->Unit(); delete _Model;
-	_Sharder->Unit(); delete _Sharder;
-	_Velocity->Unit(); delete _Velocity;
+	if (m_AnimeModel != nullptr)m_AnimeModel->Unit(); delete m_AnimeModel;
+	if (m_Model != nullptr)m_Model->Unit(); delete m_Model;
+	m_Sharder->Unit(); delete m_Sharder;
+	m_Velocity->Unit(); delete m_Velocity;
 }
 
 Actor::~Actor()
@@ -84,13 +84,13 @@ Actor::~Actor()
 
 void Actor::LoadModel()
 {
-	//_Model = new ModelRenderer(this);
-	//_Model->Init();
-	//_Model->Load("asset\\model\\player.obj"); 
+	//m_Model = new ModelRenderer(this);
+	//m_Model->Init();
+	//m_Model->Load("asset\\model\\player.obj"); 
 
-	//_AnimeModel = new AnimationModel(this);
-	//_AnimeModel->Init();
-	//_AnimeModel->Load("asset\\model\\Akai.fbx");
+	//m_AnimeModel = new AnimationModel(this);
+	//m_AnimeModel->Init();
+	//m_AnimeModel->Load("asset\\model\\Akai.fbx");
 }
 
 void Actor::CollisionControl()

@@ -7,9 +7,9 @@ void Player_Hp::Init()
 	Polygon2D::Init();
 	_player = Manager::GetScene()->GetPlayerCharcter();
 
-	_TransForm->_Position = { SCREEN_WIDTH * 0.02f,SCREEN_HEIGHT * 0.02f,0.0f };
-	_TransForm->_Scale = {SCREEN_WIDTH * 0.5f,SCREEN_HEIGHT * 0.03f,0.0f};
-	_maxhp = _player->_hp;
+	m_TransForm->m_Position = { SCREEN_WIDTH * 0.02f,SCREEN_HEIGHT * 0.02f,0.0f };
+	m_TransForm->m_Scale = {SCREEN_WIDTH * 0.5f,SCREEN_HEIGHT * 0.03f,0.0f};
+	_maxhp = _player->m_Hp;
 }
 
 void Player_Hp::Update()
@@ -19,7 +19,7 @@ void Player_Hp::Update()
 
 void Player_Hp::Draw()
 {
-	float x = _player->_hp / _maxhp;
+	float x = _player->m_Hp / _maxhp;
 	float xrp = (SCREEN_WIDTH * 0.5f) * x +SCREEN_WIDTH * 0.02f;
 	//頂点データ書き換え
 	D3D11_MAPPED_SUBRESOURCE msr;
@@ -27,22 +27,22 @@ void Player_Hp::Draw()
 
 	VERTEX_3D* vertex = (VERTEX_3D*)msr.pData;
 
-	vertex[0].Position = XMFLOAT3(_TransForm->_Position.x, _TransForm->_Position.y, 0.0f);
+	vertex[0].Position = XMFLOAT3(m_TransForm->m_Position.x, m_TransForm->m_Position.y, 0.0f);
 	vertex[0].Normal = XMFLOAT3(0.0f, 0.0f, 0.0f);
 	vertex[0].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
 	vertex[0].TexCoord = XMFLOAT2(0.0f, 0.0f);
 
-	vertex[1].Position = XMFLOAT3(xrp, _TransForm->_Position.y, 0.0f);
+	vertex[1].Position = XMFLOAT3(xrp, m_TransForm->m_Position.y, 0.0f);
 	vertex[1].Normal = XMFLOAT3(0.0f, 0.0f, 0.0f);
 	vertex[1].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
 	vertex[1].TexCoord = XMFLOAT2(x, 0.0f);
 
-	vertex[2].Position = XMFLOAT3(_TransForm->_Position.x, _TransForm->_Position.y + _TransForm->_Scale.y, 0.0f);
+	vertex[2].Position = XMFLOAT3(m_TransForm->m_Position.x, m_TransForm->m_Position.y + m_TransForm->m_Scale.y, 0.0f);
 	vertex[2].Normal = XMFLOAT3(0.0f, 0.0f, 0.0f);
 	vertex[2].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
 	vertex[2].TexCoord = XMFLOAT2(0.0f, 1.0f);
 
-	vertex[3].Position = XMFLOAT3(xrp, _TransForm->_Position.y + _TransForm->_Scale.y, 0.0f);
+	vertex[3].Position = XMFLOAT3(xrp, m_TransForm->m_Position.y + m_TransForm->m_Scale.y, 0.0f);
 	vertex[3].Normal = XMFLOAT3(0.0f, 0.0f, 0.0f);
 	vertex[3].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
 	vertex[3].TexCoord = XMFLOAT2(x, 1.0f);
@@ -62,8 +62,8 @@ void Player_HpFrame::Init()
 {
 	//Polygon2D::Init();
 
-	//_TransForm->_Position = { SCREEN_WIDTH * 0.05f,SCREEN_HEIGHT * 0.5f,0.0f };
-	//_TransForm->_Scale = { SCREEN_WIDTH * 0.8f,SCREEN_HEIGHT * 0.15f,0.0f };
+	//m_TransForm->m_Position = { SCREEN_WIDTH * 0.05f,SCREEN_HEIGHT * 0.5f,0.0f };
+	//m_TransForm->m_Scale = { SCREEN_WIDTH * 0.8f,SCREEN_HEIGHT * 0.15f,0.0f };
 }
 
 void Player_HpFrame::LoadTexture()
@@ -76,9 +76,9 @@ void Player_Stamina::Init()
 	Polygon2D::Init();
 	_player = Manager::GetScene()->GetPlayerCharcter();
 
-	_TransForm->_Position = { SCREEN_WIDTH * 0.02f,SCREEN_HEIGHT * 0.06f,0.0f };
-	_TransForm->_Scale = { SCREEN_WIDTH * 0.5f,SCREEN_HEIGHT * 0.03f,0.0f };
-	_maxstamina = _player->_stamina;
+	m_TransForm->m_Position = { SCREEN_WIDTH * 0.02f,SCREEN_HEIGHT * 0.06f,0.0f };
+	m_TransForm->m_Scale = { SCREEN_WIDTH * 0.5f,SCREEN_HEIGHT * 0.03f,0.0f };
+	_maxstamina = _player->m_Stamina;
 }
 
 void Player_Stamina::Update()
@@ -88,7 +88,7 @@ void Player_Stamina::Update()
 
 void Player_Stamina::Draw()
 {
-	float x = _player->_stamina / _maxstamina;
+	float x = _player->m_Stamina / _maxstamina;
 	float xrp = (SCREEN_WIDTH * 0.5f) * x + SCREEN_WIDTH * 0.02f;
 	//頂点データ書き換え
 	D3D11_MAPPED_SUBRESOURCE msr;
@@ -96,22 +96,22 @@ void Player_Stamina::Draw()
 
 	VERTEX_3D* vertex = (VERTEX_3D*)msr.pData;
 
-	vertex[0].Position = XMFLOAT3(_TransForm->_Position.x, _TransForm->_Position.y, 0.0f);
+	vertex[0].Position = XMFLOAT3(m_TransForm->m_Position.x, m_TransForm->m_Position.y, 0.0f);
 	vertex[0].Normal = XMFLOAT3(0.0f, 0.0f, 0.0f);
 	vertex[0].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
 	vertex[0].TexCoord = XMFLOAT2(0.0f, 0.0f);
 
-	vertex[1].Position = XMFLOAT3(xrp, _TransForm->_Position.y, 0.0f);
+	vertex[1].Position = XMFLOAT3(xrp, m_TransForm->m_Position.y, 0.0f);
 	vertex[1].Normal = XMFLOAT3(0.0f, 0.0f, 0.0f);
 	vertex[1].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
 	vertex[1].TexCoord = XMFLOAT2(x, 0.0f);
 
-	vertex[2].Position = XMFLOAT3(_TransForm->_Position.x, _TransForm->_Position.y + _TransForm->_Scale.y, 0.0f);
+	vertex[2].Position = XMFLOAT3(m_TransForm->m_Position.x, m_TransForm->m_Position.y + m_TransForm->m_Scale.y, 0.0f);
 	vertex[2].Normal = XMFLOAT3(0.0f, 0.0f, 0.0f);
 	vertex[2].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
 	vertex[2].TexCoord = XMFLOAT2(0.0f, 1.0f);
 
-	vertex[3].Position = XMFLOAT3(xrp, _TransForm->_Position.y + _TransForm->_Scale.y, 0.0f);
+	vertex[3].Position = XMFLOAT3(xrp, m_TransForm->m_Position.y + m_TransForm->m_Scale.y, 0.0f);
 	vertex[3].Normal = XMFLOAT3(0.0f, 0.0f, 0.0f);
 	vertex[3].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
 	vertex[3].TexCoord = XMFLOAT2(x, 1.0f);

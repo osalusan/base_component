@@ -30,10 +30,17 @@ struct MATERIAL
 struct LIGHT
 {
 	BOOL		Enable;
-	BOOL		Dummy[3];
+	BOOL		Dummy[3];//16byte境界用
 	XMFLOAT4	Direction;
 	XMFLOAT4	Diffuse;
 	XMFLOAT4	Ambient;
+	XMFLOAT4 SkyColor;//空の色
+	XMFLOAT4 GroundColor;//地面の色
+	XMFLOAT4 GroundNormal;//地面の法線
+
+	XMFLOAT4 Position;//光の座標
+	XMFLOAT4 PointLightParam;
+	XMFLOAT4 Angle;//スポットライトの範囲
 };
 
 

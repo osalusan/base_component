@@ -46,14 +46,14 @@ class Animation :public Component
 
 public:
 	//フレーム単位
-	int _count = 0;						//時間のカウント
+	int m_Count = 0;						//時間のカウント
 	float _maxTime = 60.0f;				//最大時間
 	float _minValue = -1.0f;			//最小数値
 	float _maxValue = 1.0f;				//最大数値
 	float _value = 0.0f;				//１フレームで変化する値
 	float _easingTime = 0.0f;			//０～１の数値
 	float _easingValue = 0.0f;			//easing関数のリターん値を格納する
-	bool _reverse = false;				//_countが0とmaxTimeになった時に_directionが反転する
+	bool _reverse = false;				//m_Countが0とmaxTimeになった時に_directionが反転する
 	bool _animationFlag = true;			//アニメーションするかしないか
 	bool _animationRecord = false;		//前フレームでアニメーションをしているかどうか
 	float _loop = true;					//ループするかの設定

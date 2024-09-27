@@ -10,7 +10,7 @@ EnemyBase::EnemyBase()
 void EnemyBase::Init()
 {
 	// components
-	InitComponent();
+	InitComponents();
 	SetState(ENEMY_STATE::Enemy_Idel);
 	SetMaxPaturn();
 
@@ -19,72 +19,72 @@ void EnemyBase::Init()
 void EnemyBase::Uninit()
 {
 	// components
-	RemoveComponent();
+	RemoveComponents();
 }
 
 void EnemyBase::Update()
 {
 	EnemyStateControl();
 	StateControl();
-	UpdateComponent();
+	UpdateComponents();
 	AnimationControl();
 
 	//座標の設定
-	_TransForm->_Position.x += _Velocity->_Velocity.x;
-	_TransForm->_Position.y += _Velocity->_Velocity.y;
-	_TransForm->_Position.z += _Velocity->_Velocity.z;
+	m_TransForm->m_Position.x += m_Velocity->m_Velocity.x;
+	m_TransForm->m_Position.y += m_Velocity->m_Velocity.y;
+	m_TransForm->m_Position.z += m_Velocity->m_Velocity.z;
 
-	_count++;
+	m_Count++;
 }
 
 void EnemyBase::Draw()
 {
 	// ワールドマトリクス設定
 	XMMATRIX world, scl, rot, trans;
-	scl = XMMatrixScaling(_TransForm->_Scale.x, _TransForm->_Scale.y, _TransForm->_Scale.z);
-	rot = XMMatrixRotationRollPitchYaw(_TransForm->_Rotation.x, _TransForm->_Rotation.y, _TransForm->_Rotation.z);
-	trans = XMMatrixTranslation(_TransForm->_Position.x, _TransForm->_Position.y, _TransForm->_Position.z);
+	scl = XMMatrixScaling(m_TransForm->m_Scale.x, m_TransForm->m_Scale.y, m_TransForm->m_Scale.z);
+	rot = XMMatrixRotationRollPitchYaw(m_TransForm->m_Rotation.x, m_TransForm->m_Rotation.y, m_TransForm->m_Rotation.z);
+	trans = XMMatrixTranslation(m_TransForm->m_Position.x, m_TransForm->m_Position.y, m_TransForm->m_Position.z);
 	world = scl * rot * trans;
 	Renderer::SetWorldMatrix(world);
-	DrawComponent();
+	DrawComponents();
 }
 
-void EnemyBase::InitComponent()
+void EnemyBase::InitComponents()
 {
-	_Velocity = new Velocity(this);
-	_Sharder = new Sharder(this);
+	m_Velocity = new Velocity(this);
+	m_Sharder = new Sharder(this);
 	_Animation = new Animation(this);
-	_Velocity->Init();
-	_Sharder->Init();
+	m_Velocity->Init();
+	m_Sharder->Init();
 	_Animation->Init();
 	LoadModel();
 }
 
-void EnemyBase::UpdateComponent()
+void EnemyBase::UpdateComponents()
 {
 
-	if (_Velocity) { _Velocity->Update(); };
-	if (_Sharder) { _Sharder->Update(); }
-	if (_Model) { _Model->Update(); }
+	if (m_Velocity) { m_Velocity->Update(); };
+	if (m_Sharder) { m_Sharder->Update(); }
+	if (m_Model) { m_Model->Update(); }
 	if (_Animation) { _Animation->Update(); }
 
 }
 
-void EnemyBase::DrawComponent()
+void EnemyBase::DrawComponents()
 {
 	if (_Animation) { _Animation->Draw(); }
-	if (_Model) { _Model->Draw(); }
+	if (m_Model) { m_Model->Draw(); }
 	if (_AnimModel) { _AnimModel->Draw(); }
-	if (_Sharder) { _Sharder->Draw(); }
+	if (m_Sharder) { m_Sharder->Draw(); }
 }
 
-void EnemyBase::RemoveComponent()
+void EnemyBase::RemoveComponents()
 {
 	if (_AnimModel != nullptr)_AnimModel->Unit(); delete _AnimModel;
 	if (_Animation != nullptr)_Animation->Unit(); delete _Animation;
-	if (_Model != nullptr)_Model->Unit(); delete _Model;
-	if (_Sharder != nullptr)_Sharder->Unit(); delete _Sharder;
-	if (_Velocity != nullptr) _Velocity->Unit(); delete _Velocity;
+	if (m_Model != nullptr)m_Model->Unit(); delete m_Model;
+	if (m_Sharder != nullptr)m_Sharder->Unit(); delete m_Sharder;
+	if (m_Velocity != nullptr) m_Velocity->Unit(); delete m_Velocity;
 }
 
 EnemyBase::~EnemyBase()
@@ -129,7 +129,7 @@ void EnemyBase::SetState(ENEMY_STATE state)
 	
 	if (_state == state) return;
 	if (!_player) { _player = Manager::GetScene()->GetGameObject<Player>(); }
-	_state = state; _count = 0;
+	_state = state; m_Count = 0;
 
 	if (_idleMax == 0)return;
 
@@ -157,12 +157,12 @@ void EnemyBase::SetState(ENEMY_STATE state)
 	default:
 		break;
 	}
-	_Velocity->_Velocity = { 0.0f,0.0f,0.0f };
+	m_Velocity->m_Velocity = { 0.0f,0.0f,0.0f };
 }
 
 void EnemyBase::SetRandState()
 {
-	_count = 0;
+	m_Count = 0;
 	int select = rand() % 2;
 	switch (select)
 	{
@@ -201,7 +201,7 @@ void EnemyBase::SetRandState()
 		SetRandState();
 		break;
 	}
-	_Velocity->_Velocity = { 0.0f,0.0f,0.0f };
+	m_Velocity->m_Velocity = { 0.0f,0.0f,0.0f };
 
 }
 
@@ -209,17 +209,17 @@ void EnemyBase::SetDebugState(ENEMY_STATE state, int paturn)
 {
 	if (_state == state) return;
 	if (!_player) { _player = Manager::GetScene()->GetGameObject<Player>(); }
-	_state = state; _count = 0;	_paturnNo = paturn;
+	_state = state; m_Count = 0;	_paturnNo = paturn;
 }
 
 
 //---------------------------------------Enemy個々の処理---------------------------------------------
 void EnemyBase::LoadModel()
 {
-	_TransForm->_Scale = { 5.0f,2.0f,5.0f };
-	//_Model = new ModelRenderer(this);
-	//_Model->Init();
-	//_Model->Load("asset\\model\\cylinder.obj");
+	m_TransForm->m_Scale = { 5.0f,2.0f,5.0f };
+	//m_Model = new ModelRenderer(this);
+	//m_Model->Init();
+	//m_Model->Load("asset\\model\\cylinder.obj");
 	//_AnimModel = new AnimationModel(this);
 	//_AnimModel->Init();
 	//_AnimModel->Load("asset\\model\\Akai.fbx");

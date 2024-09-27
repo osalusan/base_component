@@ -73,6 +73,9 @@
     <Filter Include="ソース ファイル\actor">
       <UniqueIdentifier>{449cdfb1-bb15-4760-a3bb-cf755643b87b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\actor">
+      <UniqueIdentifier>{d2d07d31-40a3-4825-86d1-0e96aa2308cb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -278,9 +281,6 @@
     <ClInclude Include="enemybase.h">
       <Filter>ヘッダー ファイル\baseclass</Filter>
     </ClInclude>
-    <ClInclude Include="job.h">
-      <Filter>ヘッダー ファイル\baseclass</Filter>
-    </ClInclude>
     <ClInclude Include="swordsman_job.h">
       <Filter>ヘッダー ファイル\component</Filter>
     </ClInclude>
@@ -289,9 +289,6 @@
     </ClInclude>
     <ClInclude Include="collision.h">
       <Filter>ヘッダー ファイル\component</Filter>
-    </ClInclude>
-    <ClInclude Include="firepillar.h">
-      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="animationModel.h">
       <Filter>ヘッダー ファイル\component</Filter>
@@ -329,6 +326,15 @@
     <ClInclude Include="texturecacheManager.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="grass.h">
+      <Filter>ヘッダー ファイル\billboard</Filter>
+    </ClInclude>
+    <ClInclude Include="firepillar.h">
+      <Filter>ヘッダー ファイル\actor</Filter>
+    </ClInclude>
+    <ClInclude Include="rock.h">
+      <Filter>ヘッダー ファイル\actor</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="shader\common.hlsl">
@@ -340,10 +346,22 @@
     <FxCompile Include="shader\unlitTextureVS.hlsl">
       <Filter>リソース ファイル</Filter>
     </FxCompile>
-    <FxCompile Include="billboadVS.hlsl">
+    <FxCompile Include="shader\BumpPS.hlsl">
       <Filter>リソース ファイル</Filter>
     </FxCompile>
-    <FxCompile Include="billboadPS.hlsl">
+    <FxCompile Include="shader\BumpVS.hlsl">
+      <Filter>リソース ファイル</Filter>
+    </FxCompile>
+    <FxCompile Include="shader\BumpTangentPS.hlsl">
+      <Filter>リソース ファイル</Filter>
+    </FxCompile>
+    <FxCompile Include="shader\BumpTangentVS.hlsl">
+      <Filter>リソース ファイル</Filter>
+    </FxCompile>
+    <FxCompile Include="shader\DisneyPBRPS.hlsl">
+      <Filter>リソース ファイル</Filter>
+    </FxCompile>
+    <FxCompile Include="shader\DisneyPBRVS.hlsl">
       <Filter>リソース ファイル</Filter>
     </FxCompile>
   </ItemGroup>

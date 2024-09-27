@@ -13,9 +13,9 @@ public:
 	void LoadTexture() { Load(L"asset\\texture\\T_PushSpace.png"); }
 	void Update() { 
 		float ud = 0.015f;
-		if (_color.w <= 0.15f) { _direction = false; }
-		else if (_color.w >= 1.0f) { _direction = true; }
+		if (m_Color.w <= 0.15f) { _direction = false; }
+		else if (m_Color.w >= 1.0f) { _direction = true; }
 		if (_direction) { ud *= -1; }
-		_color.w+= ud;
+		m_Color.w+= ud;
 	};
 };

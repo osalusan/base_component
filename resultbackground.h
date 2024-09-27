@@ -36,8 +36,8 @@ public:
 		Renderer::GetDeviceContext()->Map(m_VertexBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &msr);
 
 		VERTEX_3D* vertex = (VERTEX_3D*)msr.pData;
-		XMFLOAT3 position = _TransForm->_Position;
-		XMFLOAT3 size = _TransForm->_Scale;
+		XMFLOAT3 position = m_TransForm->m_Position;
+		XMFLOAT3 size = m_TransForm->m_Scale;
 
 		vertex[0].Position = XMFLOAT3(position.x - (size.x * 0.5f), position.y - (size.y * 0.5f), 0.0f);
 		vertex[0].Normal = XMFLOAT3(0.0f, 0.0f, 0.0f);

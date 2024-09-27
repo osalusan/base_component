@@ -119,14 +119,14 @@ void UDP_Server::ReturnOtherPlayers(sockaddr_in addsocket,int number)
 void UDP_Server::ReturnHost(sockaddr_in addsocket)
 {
     //ホストの座標を送信
-    SendXMFLOAT3(addsocket,Manager::GetScene()->GetGameObject<Player>()->_TransForm->_Position);
+    SendXMFLOAT3(addsocket,Manager::GetScene()->GetGameObject<Player>()->m_TransForm->m_Position);
 }
 
 void UDP_Server::ReflectOtherPlayer()
 {
     for (auto otherplayer : Manager::GetScene()->GetGameObjects<OtherPlayer>())
     {
-         otherplayer->_TransForm->_Position = _AllPlayerData[otherplayer->playerID].pos;
+         otherplayer->m_TransForm->m_Position = _AllPlayerData[otherplayer->playerID].pos;
     }
 }
 
@@ -165,7 +165,7 @@ void UDP_Server::ServerLoop() {
         {
             //ホストの情報は固定
             _AllPlayerData[0].playerID = 0;
-            _AllPlayerData[0].pos = Manager::GetScene()->GetGameObject<Player>()->_TransForm->_Position;
+            _AllPlayerData[0].pos = Manager::GetScene()->GetGameObject<Player>()->m_TransForm->m_Position;
 
             OtherPlayerData value;
             std::memcpy(&value, buf, sizeof(OtherPlayerData));

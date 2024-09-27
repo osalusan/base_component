@@ -4,7 +4,6 @@
 #include "modelRenderer.h"
 #include "sharder.h"
 #include "animation.h"
-#include "job.h"
 #include "collision.h"
 #include "animationModel.h"
 #include "audio.h"
@@ -34,44 +33,43 @@ typedef struct OtherPlayerData {
 };
 class Player :public GameObject {
 private:
-	Velocity* _Velocity = {};
-	Sharder* _Sharder = {};
-	Collision* _Collision = {};
-	AnimationModel* _animeModel = {};
-	Audio* _attackSE = {};
+	Velocity* m_Velocity = {};
+	Sharder* m_Sharder = {};
+	Collision* m_Collision = {};
+	AnimationModel* mm_AnimeModel = {};
+	Audio* m_AttackSE = {};
 
-	Job* _job = {};
 
-	float _moveSpeed = 15.00f;
-	bool _dash = false;			  // ダッシュ中
-	bool _jump = false;			  // ジャンプ中
-	bool _chengeAnimation = false;// アニメーションが今変えられるかどうか
-	int _animationFrame = 0;	  // アニメーションのフレーム
-	std::string _animationName = "Idle";// アニメーションの名前
-	std::string _nextanimationName = "Idle";// ブレンド用、次のアニメーションの名前
-	float _blendRatio = 1.0f;// アニメーションブレンドの数値
-	bool _useAttack = false;
+	float m_MoveSpeed = 15.00f;
+	bool m_Dash = false;			  // ダッシュ中
+	bool m_Jump = false;			  // ジャンプ中
+	bool m_ChengeAnimation = false;// アニメーションが今変えられるかどうか
+	unsigned int m_AnimationFrame = 0;	  // アニメーションのフレーム
+	std::string m_AnimationName = "Idle";// アニメーションの名前
+	std::string m_NextanimationName = "Idle";// ブレンド用、次のアニメーションの名前
+	float m_BlendRatio = 1.0f;// アニメーションブレンドの数値
+	bool m_UseAttack = false;
 
 	float _lerpValue = 0;
 
 
-	int _atkCount = 0;
-	int _atkTime = 100.0f;
-	int _dashCount = 0;
+	int m_AtkCount = 0;
+	int m_AtkTime = 100.0f;
+	int m_DashCount = 0;
 	
 public:
-	bool _atkFlag = false;// 攻撃が当たった
-	float _hp = 100.0f;// 体力
-	float _stamina = 100.0f;// スタミナ
+	bool m_AtkFlag = false;// 攻撃が当たった
+	float m_Hp = 100.0f;// 体力
+	float m_Stamina = 100.0f;// スタミナ
 
 	virtual void Init()override;
 	virtual void Uninit()override;
 	virtual void Update()override;
 	virtual void Draw()override;
-	virtual void InitComponent()override;
-	virtual void UpdateComponent()override;
-	virtual void DrawComponent()override;
-	virtual void RemoveComponent()override;
+	virtual void InitComponents()override;
+	virtual void UpdateComponents()override;
+	virtual void DrawComponents()override;
+	virtual void RemoveComponents()override;
 	void Move();
 	void CollisionControl();
 	void AnimationState();

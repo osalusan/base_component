@@ -10,7 +10,6 @@
 #include "input.h"
 #include "network.h"
 #include "otherplayer.h"
-#include "job.h"
 #include "fade.h"
 #include "result.h"
 #include "gameclear.h"
@@ -22,37 +21,36 @@ const std::string serverIP = "192.168.11.32";
 #endif
 
 
-Scene* Manager::_Scene;
-Scene* Manager::_NextScene;
-Audio* Manager::_Audio;
-UDP_Server* Manager::_UDPServer;
-UDP_Client* Manager::_UDPClient;
-int Manager::_Players;
-int Manager::_ConnectionCount;
-JOB Manager:: _useJob;
-Fade* Manager::_fade;
+Scene* Manager::m_Scene;
+Scene* Manager::m_NextScene;
+Audio* Manager::m_Audio;
+UDP_Server* Manager::m_UDPServer;
+UDP_Client* Manager::m_UDPClient;
+int Manager::m_Players;
+int Manager::m_ConnectionCount;
+
+Fade* Manager::m_Fade;
 void Manager::Init()
 {
 	Renderer::Init();
-	_useJob = JOB::Job_Swordsman;
-	_ConnectionCount = 0;
-	_Audio->InitMaster();
-	_Scene = new Game;
-	_Scene->Init();
-	_fade = new Fade;
-	_fade->Init();
+	m_ConnectionCount = 0;
+	m_Audio->InitMaster();
+	m_Scene = new Game;
+	m_Scene->Init();
+	m_Fade = new Fade;
+	m_Fade->Init();
 }
 
 
 void Manager::Uninit()
 {
-	if (_UDPClient) {delete _UDPClient;}
-	if (_UDPServer) { RemoveServer(); }
+	if (m_UDPClient) {delete m_UDPClient;}
+	if (m_UDPServer) { RemoveServer(); }
 	
-	_fade->Uninit();
-	delete _fade;
-	_Scene->Uninit();
-	delete _Scene;
+	m_Fade->Uninit();
+	delete m_Fade;
+	m_Scene->Uninit();
+	delete m_Scene;
 
 	ModelRenderer::UnloadAll();
 	Audio::UninitMaster();
@@ -64,33 +62,33 @@ void Manager::Update()
 	Input::Update();
 
 
-	if (!_fade->_used) { _Scene->Update(); _fade->_alfa = 0.0f; }
-	else { _fade->Update(); }
+	if (!m_Fade->_used) { m_Scene->Update(); m_Fade->_alfa = 0.0f; }
+	else { m_Fade->Update(); }
 
 
 	//if (Input::GetKeyTrigger('0'))
 	//{
-	//	if (!_UDPServer)
+	//	if (!m_UDPServer)
 	//	{
-	//		_UDPServer = new UDP_Server;
+	//		m_UDPServer = new UDP_Server;
 	//	}
 	//}
 	
 	//if (Input::GetKeyTrigger('3'))
 	//{
-	//	GetScene()->AddGameObject_T<OtherPlayer>(Draw_Actor)->playerID = _Players;
+	//	GetScene()->AddGameObject_T<OtherPlayer>(Draw_Actor)->playerID = m_Players;
 	//}
 
 	//if (Input::GetKeyTrigger(VK_RETURN)) {
-	//	if (!_UDPClient) {
-	//		 _UDPClient = new UDP_Client(serverIP, PORT);
+	//	if (!m_UDPClient) {
+	//		 m_UDPClient = new UDP_Client(serverIP, PORT);
 	//	}
 	//}
 
 	// Ú‘±Šm”F
-	if (_UDPClient && !_UDPClient->_Success) {_UDPClient->Check();}
+	if (m_UDPClient && !m_UDPClient->_Success) {m_UDPClient->Check();}
 	// Ú‘±¬Œ÷
-	if (_UDPClient) { _UDPClient->Success(); }
+	if (m_UDPClient) { m_UDPClient->Success(); }
 }
 
 void Manager::Draw()
@@ -98,64 +96,64 @@ void Manager::Draw()
 
 	Renderer::Begin();
 
-	_Scene->Draw();
+	m_Scene->Draw();
 
-	_fade->Draw();
+	m_Fade->Draw();
 
 	Renderer::End();
 
-	if (_NextScene)
+	if (m_NextScene)
 	{
-		_fade->StartFadeIn();
-		if (!_fade->_used)
+		m_Fade->StartFadeIn();
+		if (!m_Fade->_used)
 		{
-			if (_Scene)
+			if (m_Scene)
 			{
-				_Scene->Uninit();
-				delete _Scene;
-				_Audio->UninitMaster();
+				m_Scene->Uninit();
+				delete m_Scene;
+				m_Audio->UninitMaster();
 			}
-			_Audio->InitMaster();
-			_Scene = _NextScene;
-			_Scene->Init();
+			m_Audio->InitMaster();
+			m_Scene = m_NextScene;
+			m_Scene->Init();
 
-			_NextScene = nullptr;
-			_fade->StartFadeOut();
-			_Scene->Update();
+			m_NextScene = nullptr;
+			m_Fade->StartFadeOut();
+			m_Scene->Update();
 		}
 	}
 }
 
 void Manager::CreateServer()
 {
-	if (!_UDPServer) { _UDPServer = new UDP_Server; }
+	if (!m_UDPServer) { m_UDPServer = new UDP_Server; }
 }
 
 void Manager::RemoveServer()
 {
-	if (_UDPServer) { 
-		_UDPServer->Stop(); delete _UDPServer; _UDPServer = nullptr;
+	if (m_UDPServer) { 
+		m_UDPServer->Stop(); delete m_UDPServer; m_UDPServer = nullptr;
 	}
 }
 
 void Manager::Disconnect()
 {
-	_Players--;
+	m_Players--;
 }
 
 void Manager::AddOtherPlayer(int count)
 {
-	if (_Players >= 0 && _Players < MAX_PLAYERS)
+	if (m_Players >= 0 && m_Players < MAX_PLAYERS)
 	{
-		_Players = count;
-		GetScene()->AddGameObject_T<OtherPlayer>(Draw_Actor)->playerID = _Players;	
+		m_Players = count;
+		GetScene()->AddGameObject_T<OtherPlayer>(Draw_Actor)->playerID = m_Players;	
 	}
 		
 }
 
 void Manager::AddOtherClientPlayers(int id)
 {
-	if (_Players >= 0 && _Players < MAX_PLAYERS)
+	if (m_Players >= 0 && m_Players < MAX_PLAYERS)
 	{
 		GetScene()->AddGameObject_T<OtherPlayer>(Draw_Actor)->playerID = id;
 	}
@@ -163,8 +161,8 @@ void Manager::AddOtherClientPlayers(int id)
 
 void Manager::AddConnectionCount()
 {
-	_ConnectionCount++;
-	if (_ConnectionCount > 500)
+	m_ConnectionCount++;
+	if (m_ConnectionCount > 500)
 	{
 		RemoveClient();
 		ResetConnectionCound();

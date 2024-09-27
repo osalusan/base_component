@@ -16,23 +16,32 @@
 #include "gameclear.h"
 #include "meshfiled.h"
 #include "tree.h"
+#include "grass.h"
+#include "rock.h"
 void Game::Init()
 {
 
-	AddGameObject<Player_Camera>(Draw_Camera)->_TransForm->_Rotation = { 0.0f,0.0f,0.0f };
+	AddGameObject<Player_Camera>(Draw_Camera)->m_TransForm->m_Rotation = { 0.0f,0.0f,0.0f };
 	AddGameObject<Game_SkyDome>(Draw_SkyDome);
-	AddGameObject<Player>(Draw_Actor)->_TransForm->_Position = {0.0f,0.0f,-40.0f};
+	AddGameObject<Player>(Draw_Actor)->m_TransForm->m_Position = {0.0f,0.0f,-40.0f};
 	AddGameObject<MeshFiled>(Draw_Filed);
 	auto filed = GetGameObject<MeshFiled>();
 	for (int i = 0; i < 100; i++)
 	{
-		auto tree = AddGameObject<Tree>(Draw_BillBoard);
+		auto tree = AddGameObject<Tree>(Drawm_BillBoard);
 		XMFLOAT2 pos = { (float)(rand() % 200 - 100),(float)(rand() % 200 - 100) };
-		tree->_TransForm->_Position = { pos.x,0.0f,pos.y };
+		tree->m_TransForm->m_Position = { pos.x,0.0f,pos.y };
 		
 	}
-	//AddGameObject<BlueFire_Ring>(Draw_Effect)->_TransForm->_Position = { 0.0f,0.0f,15.0f };
-	//AddGameObject<BillBoard>(Draw_BillBoard)->SetBillBoard(XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT3(5.0f, 5.0f, 0.0f));
+	for (int i = 0; i < 30; i++)
+	{
+		auto rock = AddGameObject<Rock>(Draw_Actor);
+		XMFLOAT2 pos = { (float)(rand() % 200 - 100),(float)(rand() % 200 - 100) };
+		rock->m_TransForm->m_Position = { pos.x,0.0f,pos.y };
+		rock->m_TransForm->m_Rotation = { (float)(rand() % 200 - 100) * 0.01f,(float)(rand() % 200 - 100) * 0.01f,0.0f };
+	}
+	//AddGameObject<BlueFire_Ring>(Draw_Effect)->m_TransForm->m_Position = { 0.0f,0.0f,15.0f };
+	//AddGameObject<BillBoard>(Drawm_BillBoard)->SetBillBoard(XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT3(5.0f, 5.0f, 0.0f));
 	
 	//AddGameObj(new UI(XMFLOAT3(0.0f, 0.0f, 0.0f)));
 	Scene::Init();
@@ -41,12 +50,20 @@ void Game::Init()
 void Game::Update()
 {
 	Scene::Update();
-	if (_count == 0)
+	if (m_Count == 0)
 	{
 		auto filed = GetGameObject<MeshFiled>();
 		for (auto tree : Manager::GetScene()->GetGameObjects<Tree>())
 		{
-			tree->_TransForm->_Position.y = filed->GetHeight(tree->_TransForm->_Position);
+			tree->m_TransForm->m_Position.y = filed->GetHeight(tree->m_TransForm->m_Position);
+		}
+	}
+	if (m_Count == 1)
+	{
+		auto filed = GetGameObject<MeshFiled>();
+		for (auto rock : Manager::GetScene()->GetGameObjects<Rock>())
+		{
+			rock->m_TransForm->m_Position.y = filed->GetHeight(rock->m_TransForm->m_Position);
 		}
 	}
 	//auto& keyboard = Keyboard::GetInstance();

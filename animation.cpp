@@ -5,24 +5,24 @@
 void Animation::Update()
 {
 	if (!_animationRecord) {
-		_count = 0; 
+		m_Count = 0; 
 		_reverse =false;
 	}
 	else
 	{	
 		if (_loop)
 		{
-			if (_maxTime <= _count) {
-				_count = 0;
-				if (_reverse) { _direction = Back; _count = _maxTime; }//アニメーションの反転
+			if (_maxTime <= m_Count) {
+				m_Count = 0;
+				if (_reverse) { _direction = Back; m_Count = _maxTime; }//アニメーションの反転
 			}
-			if (0 > _count) {
+			if (0 > m_Count) {
 				if (_reverse) { _direction = Forward; }//アニメーションの反転
-				_count = 0;
+				m_Count = 0;
 			}
 		}
-		if (_direction == Forward) { _count++; }
-		if (_direction == Back) { _count--; }
+		if (_direction == Forward) { m_Count++; }
+		if (_direction == Back) { m_Count--; }
 
 		_value = (_maxValue - _minValue) / _maxTime;
 	}
@@ -33,7 +33,7 @@ void Animation::Update()
 float Animation::EasingAnimationValue(float value)
 {
 	
-	_easingTime = _count / _maxTime;
+	_easingTime = m_Count / _maxTime;
 
 	_easingValue = _easingTime;
 
@@ -133,9 +133,9 @@ float Animation::AnimationFloat()
 
 	_animationRecord = true;
 
-	float valueT = _minValue + (_value * _count);
+	float valueT = _minValue + (_value * m_Count);
 
-	if (_count >= _maxTime) { return 0; }
+	if (m_Count >= _maxTime) { return 0; }
 	return EasingAnimationValue(valueT);
 	
 }
