@@ -267,7 +267,7 @@ void Player::Attack()
 void Player::LoadModel()
 {
 	m_AnimeModel->Load("asset\\model\\Akai.fbx");
-	m_AnimeModel->LoadAnimation("asset\\model\\Akai_Idle.fbx", "Idle");
+	m_AnimeModel->LoadAnimation("asset\\model\\Idle_Knight.fbx", "Idle");
 	m_AnimeModel->LoadAnimation("asset\\model\\Akai_Run.fbx", "Run");
 	m_AnimeModel->LoadAnimation("asset\\model\\HurricaneKick.fbx", "Attack");
 	m_AnimeModel->LoadAnimation("asset\\model\\FallALoop.fbx", "Dash");
@@ -297,7 +297,7 @@ void Player::InitComponents()
 	m_AttackSE = new Audio(this);
 
 	m_Velocity->Init();
-	m_Sharder->m_Usesharder = 2; m_Sharder->Init();
+	m_Sharder->m_Usesharder = 0; m_Sharder->Init();
 	m_Collision->Init();
 	m_AnimeModel->Init();
 	m_AttackSE->Load("asset\\sound\\seireipower.wav");
