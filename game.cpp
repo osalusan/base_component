@@ -33,9 +33,10 @@ void Game::Init()
 		tree->m_TransForm->m_Position = { pos.x,0.0f,pos.y };
 		
 	}
-	for (int i = 0; i < 30; i++)
+
+	for (int i = 0; i < 1; i++)
 	{
-		auto rock = AddGameObject<Rock>(Draw_Actor);
+		auto rock = AddGameObject<Rock>(Draw_Filed);
 		XMFLOAT2 pos = { (float)(rand() % 200 - 100),(float)(rand() % 200 - 100) };
 		rock->m_TransForm->m_Position = { pos.x,0.0f,pos.y };
 		rock->m_TransForm->m_Rotation = { (float)(rand() % 200 - 100) * 0.01f,(float)(rand() % 200 - 100) * 0.01f,0.0f };

@@ -48,7 +48,7 @@ void Player::Update()
 	//コンポーネントの更新
 	UpdateComponents();
 	// 体力
-	if (m_Hp <= 0) { mm_AnimeModel->_visible = false; Manager::SetScene<GameOver>(); }
+	if (m_Hp <= 0) { m_AnimeModel->_visible = false; Manager::SetScene<GameOver>(); }
 	else { m_Hp += 0.02f; }
 	if (m_Hp >= 100.0f) { m_Hp = 100.0f; }
 }
@@ -217,9 +217,9 @@ void Player::AnimationState()
 	if (m_AnimationName != m_NextanimationName && m_BlendRatio < 1.0f) {m_BlendRatio += 0.05f;}
 	else if(m_AnimationName != m_NextanimationName && m_BlendRatio > 0.0f){ m_BlendRatio -= 0.05f; }
 
-	mm_AnimeModel->Update(m_AnimationName.c_str(), m_AnimationFrame, m_NextanimationName.c_str(), m_AnimationFrame, m_BlendRatio);
-	//if (_blendRatio >= 1.0f || _blendRatio <= 0.0f) { mm_AnimeModel->Update(_animationName.c_str(), _animationFrame); }
-	//else { mm_AnimeModel->Update(_animationName.c_str(), _animationFrame, _nextanimationName.c_str(), _animationFrame,_blendRatio); }
+	m_AnimeModel->Update(m_AnimationName.c_str(), m_AnimationFrame, m_NextanimationName.c_str(), m_AnimationFrame, m_BlendRatio);
+	//if (_blendRatio >= 1.0f || _blendRatio <= 0.0f) { m_AnimeModel->Update(_animationName.c_str(), _animationFrame); }
+	//else { m_AnimeModel->Update(_animationName.c_str(), _animationFrame, _nextanimationName.c_str(), _animationFrame,_blendRatio); }
 
 	m_AnimationFrame++;
 }
@@ -266,11 +266,11 @@ void Player::Attack()
 
 void Player::LoadModel()
 {
-	mm_AnimeModel->Load("asset\\model\\Akai.fbx");
-	mm_AnimeModel->LoadAnimation("asset\\model\\Akai_Idle.fbx", "Idle");
-	mm_AnimeModel->LoadAnimation("asset\\model\\Akai_Run.fbx", "Run");
-	mm_AnimeModel->LoadAnimation("asset\\model\\HurricaneKick.fbx", "Attack");
-	mm_AnimeModel->LoadAnimation("asset\\model\\FallALoop.fbx", "Dash");
+	m_AnimeModel->Load("asset\\model\\Akai.fbx");
+	m_AnimeModel->LoadAnimation("asset\\model\\Idle_Knight.fbx", "Idle");
+	m_AnimeModel->LoadAnimation("asset\\model\\Akai_Run.fbx", "Run");
+	m_AnimeModel->LoadAnimation("asset\\model\\HurricaneKick.fbx", "Attack");
+	m_AnimeModel->LoadAnimation("asset\\model\\FallALoop.fbx", "Dash");
 }
 
 void Player::Draw()
@@ -285,7 +285,7 @@ void Player::Draw()
 	world = scl * rot * trans;
 	Renderer::SetWorldMatrix(world);
 
-	if (mm_AnimeModel) { mm_AnimeModel->Draw(); }
+	if (m_AnimeModel) { m_AnimeModel->Draw(); }
 }
 
 void Player::InitComponents()
@@ -293,13 +293,13 @@ void Player::InitComponents()
 	m_Velocity = new Velocity(this);
 	m_Sharder = new Sharder(this);
 	m_Collision = new Collision(this);
-	mm_AnimeModel = new AnimationModel(this);
+	m_AnimeModel = new AnimationModel(this);
 	m_AttackSE = new Audio(this);
 
 	m_Velocity->Init();
-	m_Sharder->m_Usesharder = 2; m_Sharder->Init();
+	m_Sharder->m_Usesharder = 0; m_Sharder->Init();
 	m_Collision->Init();
-	mm_AnimeModel->Init();
+	m_AnimeModel->Init();
 	m_AttackSE->Load("asset\\sound\\seireipower.wav");
 
 	LoadModel();
@@ -318,9 +318,10 @@ void Player::DrawComponents()
 
 void Player::RemoveComponents()
 {
-	if (mm_AnimeModel != nullptr) { mm_AnimeModel->Unit(); delete mm_AnimeModel; }
-	if (m_Collision != nullptr) { m_Collision->Unit(); delete m_Collision; }
-	if (m_Sharder != nullptr) { m_Sharder->Unit(); delete m_Sharder; }
-	if (m_Velocity != nullptr) { m_Velocity->Unit(); delete m_Velocity; }
+	m_AttackSE->Uninit(); delete m_AttackSE;
+	m_AnimeModel->Unit(); delete m_AnimeModel; 
+	m_Collision->Unit(); delete m_Collision; 
+	m_Sharder->Unit(); delete m_Sharder;
+	m_Velocity->Unit(); delete m_Velocity; 
 
 }
