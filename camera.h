@@ -8,6 +8,8 @@ protected:
 	float _length = 20.0f;
 	XMFLOAT4X4 _ViewMatrix = {};
 
+	const float _LENGTH_MIN = 10.0f;
+	const float _LENGTH_MAX = 25.0f;
 public:
 	Camera() {}
 	Camera(XMFLOAT3 position, XMFLOAT3 rotation);

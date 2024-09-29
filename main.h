@@ -40,6 +40,7 @@ using namespace DirectX;
 HWND GetWindow();
 XMFLOAT2 GetWindowSize();
 int GetRand(int min,int max);
+int GetMouseWheelValue();
 //void Invoke(std::function<void()> Function, int Time);
 
 

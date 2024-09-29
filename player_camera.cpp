@@ -18,7 +18,10 @@ void Player_Camera::Update()
 
 	_MousePos = XMFLOAT2(static_cast<float>(MousePos.x), static_cast<float>(MousePos.y));
 
+	_length -= GetMouseWheelValue() * 0.01f;
 
+	if (_length <= _LENGTH_MIN) { _length = _LENGTH_MIN; }
+	else if(_length >= _LENGTH_MAX) { _length = _LENGTH_MAX; }
 #if _DEBUG
 	if (Input::GetKeyPress('R'))
 	{

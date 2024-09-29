@@ -17,7 +17,7 @@ const char* GAME_VERSION = "0.9.0" ;
 #pragma comment(lib, "d2d1.lib")
 #pragma comment(lib, "dwrite.lib")
 
-
+static int g_MouseWheelValue = 0;
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
@@ -47,6 +47,13 @@ int GetRand(int min, int max)
 	//// 乱数を生成
 	//int randomValue = distribution(generator);
 	return 0;
+}
+
+int GetMouseWheelValue()
+{
+	int value = g_MouseWheelValue;
+	g_MouseWheelValue = 0;
+	return value;
 }
 
 LRESULT CALLBACK FPSWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
@@ -338,7 +345,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			break;
 		}
 		break;
-
+	case WM_MOUSEWHEEL:
+		g_MouseWheelValue = GET_WHEEL_DELTA_WPARAM(wParam);// マウスホイールの値を取得
+		break;
 	default:
 		break;
 	}
