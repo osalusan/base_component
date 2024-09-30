@@ -101,7 +101,7 @@ void Audio::Load(const char *FileName)
 }
 
 
-void Audio::Uninit()
+void Audio::Unit()
 {
 	m_SourceVoice->Stop();
 	m_SourceVoice->DestroyVoice();

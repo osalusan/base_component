@@ -218,9 +218,6 @@ void Player::AnimationState()
 	else if(m_AnimationName != m_NextanimationName && m_BlendRatio > 0.0f){ m_BlendRatio -= 0.05f; }
 
 	m_AnimeModel->Update(m_AnimationName.c_str(), m_AnimationFrame, m_NextanimationName.c_str(), m_AnimationFrame, m_BlendRatio);
-	//if (_blendRatio >= 1.0f || _blendRatio <= 0.0f) { m_AnimeModel->Update(_animationName.c_str(), _animationFrame); }
-	//else { m_AnimeModel->Update(_animationName.c_str(), _animationFrame, _nextanimationName.c_str(), _animationFrame,_blendRatio); }
-
 	m_AnimationFrame++;
 }
 
@@ -271,6 +268,8 @@ void Player::LoadModel()
 	m_AnimeModel->LoadAnimation("asset\\model\\Akai_Run.fbx", "Run");
 	m_AnimeModel->LoadAnimation("asset\\model\\HurricaneKick.fbx", "Attack");
 	m_AnimeModel->LoadAnimation("asset\\model\\FallALoop.fbx", "Dash");
+
+	m_ChildModel->Load("asset\\model\\cylinder.obj");
 }
 
 void Player::Draw()
@@ -285,7 +284,21 @@ void Player::Draw()
 	world = scl * rot * trans;
 	Renderer::SetWorldMatrix(world);
 
-	if (m_AnimeModel) { m_AnimeModel->Draw(); }
+	m_AnimeModel->Draw();
+
+	XMMATRIX rightHandMatrix = m_AnimeModel->GetBoneMatrix("mixamorig:RightHand");
+
+	XMMATRIX childWorld, childScl, childRot, childTrans;
+	childScl = XMMatrixScaling(1.0f / m_TransForm->m_Scale.x,
+		1.0f / m_TransForm->m_Scale.y
+		, 1.0f / m_TransForm->m_Scale.z);
+	childRot = XMMatrixRotationRollPitchYaw(0.0f,0.0f,0.0f);
+	childTrans = XMMatrixTranslation(0.0f,2.0f,3.0f);
+	childWorld = childRot * childTrans * childScl * rightHandMatrix * world;
+	Renderer::SetWorldMatrix(childWorld);
+
+	m_ChildModel->Draw();
+
 }
 
 void Player::InitComponents()
@@ -295,12 +308,14 @@ void Player::InitComponents()
 	m_Collision = new Collision(this);
 	m_AnimeModel = new AnimationModel(this);
 	m_AttackSE = new Audio(this);
+	m_ChildModel = new ModelRenderer(this);
 
 	m_Velocity->Init();
 	m_Sharder->m_Usesharder = 0; m_Sharder->Init();
 	m_Collision->Init();
 	m_AnimeModel->Init();
 	m_AttackSE->Load("asset\\sound\\seireipower.wav");
+	m_ChildModel->Init();
 
 	LoadModel();
 }
@@ -318,7 +333,8 @@ void Player::DrawComponents()
 
 void Player::RemoveComponents()
 {
-	m_AttackSE->Uninit(); delete m_AttackSE;
+	m_ChildModel->Unit(); delete m_ChildModel;
+	m_AttackSE->Unit(); delete m_AttackSE;
 	m_AnimeModel->Unit(); delete m_AnimeModel; 
 	m_Collision->Unit(); delete m_Collision; 
 	m_Sharder->Unit(); delete m_Sharder;

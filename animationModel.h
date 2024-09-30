@@ -27,6 +27,7 @@ struct BONE
 	aiMatrix4x4 Matrix;
 	aiMatrix4x4 AnimationMatrix;
 	aiMatrix4x4 OffsetMatrix;
+	XMMATRIX WorldMatrix;
 };
 
 class AnimationModel : public Component
@@ -56,4 +57,16 @@ public:
 	void CreateBone(aiNode* node);
 	void Update(const char* AnimationName1, int Frame1);
 	void UpdateBoneMatrix(aiNode* node, aiMatrix4x4 matrix);
+
+	XMMATRIX GetBoneMatrix(std::string boneName) {return m_Bone[boneName].WorldMatrix;}
+
+	XMMATRIX AiMatrixToXMMATRIX(const aiMatrix4x4& mat) {
+		// AssimpÇÃaiMatrix4x4ÇÕçsóDêÊÅAXMMATRIXÇÕóÒóDêÊÇ»ÇÃÇ≈ì]íuÇ∑ÇÈ
+		return XMMATRIX(
+			mat.a1, mat.a2, mat.a3, mat.a4,
+			mat.b1, mat.b2, mat.b3, mat.b4,
+			mat.c1, mat.c2, mat.c3, mat.c4,
+			mat.d1, mat.d2, mat.d3, mat.d4 
+		);
+	}
 };

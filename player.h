@@ -37,6 +37,7 @@ private:
 	Sharder* m_Sharder = {};
 	Collision* m_Collision = {};
 	AnimationModel* m_AnimeModel = {};
+	ModelRenderer* m_ChildModel = {};
 	Audio* m_AttackSE = {};
 
 
