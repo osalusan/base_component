@@ -217,7 +217,7 @@ void Player::AnimationState()
 	if (m_AnimationName != m_NextanimationName && m_BlendRatio < 1.0f) {m_BlendRatio += 0.05f;}
 	else if(m_AnimationName != m_NextanimationName && m_BlendRatio > 0.0f){ m_BlendRatio -= 0.05f; }
 
-	m_AnimeModel->Update(m_AnimationName.c_str(), m_AnimationFrame, m_NextanimationName.c_str(), m_AnimationFrame, m_BlendRatio);
+	//m_AnimeModel->Update(m_AnimationName.c_str(), m_AnimationFrame, m_NextanimationName.c_str(), m_AnimationFrame, m_BlendRatio);
 	//if (_blendRatio >= 1.0f || _blendRatio <= 0.0f) { m_AnimeModel->Update(_animationName.c_str(), _animationFrame); }
 	//else { m_AnimeModel->Update(_animationName.c_str(), _animationFrame, _nextanimationName.c_str(), _animationFrame,_blendRatio); }
 

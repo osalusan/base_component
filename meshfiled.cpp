@@ -295,7 +295,8 @@ void MeshFiled::Load(const wchar_t* FileName, ID3D11ShaderResourceView*& texture
 	//テクスチャ読み込み
 	TexMetadata metadata;
 	ScratchImage image;
+	ScratchImage mipChain;
 
-	TextureCacheManager::LoadTexture(FileName, metadata, image, texture);
+	TextureCacheManager::LoadTexture(FileName, metadata, image, mipChain, texture);
 	assert(texture);
 }
