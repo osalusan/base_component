@@ -9,4 +9,5 @@ private:
 public:
 
 	static void LoadTexture(const wchar_t* filename, TexMetadata& meta, ScratchImage& image, ID3D11ShaderResourceView*& texture);
+	static void LoadTexture(const wchar_t* filename, TexMetadata& meta, ScratchImage& image, ScratchImage& mip, ID3D11ShaderResourceView*& texture);
 };
