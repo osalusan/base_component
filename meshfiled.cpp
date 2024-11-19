@@ -40,7 +40,8 @@ float g_FiledHeight[FILED_MAX][FILED_MAX] =
 
 void MeshFiled::Init()
 {
-	Load(L"asset\\texture\\rocky_terrain_02_diff_2k.png", m_Texture);
+	//Load(L"asset\\texture\\rocky_terrain_02_diff_2k.png", m_Texture);
+	LoadDDS(L"asset\\texture\\rocky_terrain_02_diff_2k_Mip.dds", m_Texture);
 	Load(L"asset\\texture\\rocky_terrain_02_nor_gl_512.png", m_Normal);
 	//Load(L"asset\\texture\\oruga_T001.png");
 	InitComponents();
@@ -293,10 +294,22 @@ float MeshFiled::GetHeight(XMFLOAT3 position)
 void MeshFiled::Load(const wchar_t* FileName, ID3D11ShaderResourceView*& texture)
 {
 	//テクスチャ読み込み
+
 	TexMetadata metadata;
 	ScratchImage image;
 	ScratchImage mipChain;
 
 	TextureCacheManager::LoadTexture(FileName, metadata, image, mipChain, texture);
+	assert(texture);
+
+}
+
+void MeshFiled::LoadDDS(const wchar_t* FileName, ID3D11ShaderResourceView*& texture)
+{
+	TexMetadata metadata;
+	ScratchImage image;
+
+	LoadFromDDSFile(FileName, DDS_FLAGS_NONE, &metadata, image);
+	CreateShaderResourceView(Renderer::GetDevice(), image.GetImages(), image.GetImageCount(), metadata, &texture);
 	assert(texture);
 }

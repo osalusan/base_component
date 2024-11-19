@@ -31,4 +31,5 @@ public:
 	virtual void RemoveComponents()override;
 	float GetHeight(XMFLOAT3 position);
 	void Load(const wchar_t* FileName, ID3D11ShaderResourceView*& texture);
+	void LoadDDS(const wchar_t* FileName, ID3D11ShaderResourceView*& texture);
 };
