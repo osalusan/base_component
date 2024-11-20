@@ -157,12 +157,12 @@ void BillBoard::Draw()
 
 	
 	// アルファトゥカバレッジ有効
-	Renderer::SetATCEnable(true);
+	//Renderer::SetATCEnable(true);
 
 	//ポリゴン描画
 	Renderer::GetDeviceContext()->Draw(4, 0);
 
-	Renderer::SetATCEnable(false);
+	//Renderer::SetATCEnable(false);
 
 }
 

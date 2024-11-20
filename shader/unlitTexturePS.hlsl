@@ -19,5 +19,10 @@ void main(in PS_IN In, out float4 outDiffuse : SV_Target)
 		outDiffuse = In.Diffuse;
     }
 
+	// アルファクリップ
+    //clip(outDiffuse.a - 0.1);
 
+	// アルファティザ
+    float t = frac((In.TexCoord.x + In.TexCoord.y) * 200);
+    clip(outDiffuse.a - t);
 }
