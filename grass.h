@@ -2,8 +2,11 @@
 #include "billboard.h"
 class Grass :public BillBoard {
 private:
-
+	ID3D11Buffer* m_PositionBuffer{};
+	ID3D11ShaderResourceView* m_PositionSRV{};
 public:
-	void Init()override { m_Pivot = 1; BillBoard::Init(); m_TransForm->m_Scale = { 2.0f,2.0f,2.0f }; };
-	void LoadTexture()override { Load(L"asset\\texture\\Tree04_2K.png"); }
+	void Init()override;
+	void Uninit()override;
+	void Draw()override;
+	void LoadTexture()override { Load(L"asset\\texture\\Grass-4.png"); }
 };

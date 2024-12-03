@@ -38,6 +38,8 @@ struct VS_IN
     float4 Diffuse : COLOR0;
     float2 TexCoord : TEXCOORD0;
     float4 Tangent : TANGENT;
+    
+    uint InstanceID : SV_InstanceID;
 }; //表示するポリゴンのレイアウトと同じ
 //ピクセルシェーダーへ入力されるデータを構造体の形で表現
 struct PS_IN

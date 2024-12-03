@@ -26,13 +26,22 @@ void Game::Init()
 	AddGameObject<Player>(Draw_Actor)->m_TransForm->m_Position = {0.0f,0.0f,-40.0f};
 	AddGameObject<MeshFiled>(Draw_Filed);
 	auto filed = GetGameObject<MeshFiled>();
-	for (int i = 0; i < 100; i++)
-	{
-		auto tree = AddGameObject<Tree>(Drawm_BillBoard);
-		XMFLOAT2 pos = { (float)(rand() % 200 - 100),(float)(rand() % 200 - 100) };
-		tree->m_TransForm->m_Position = { pos.x,0.0f,pos.y };
-		
-	}
+	//for (int i = 0; i < 100; i++)
+	//{
+	//	auto tree = AddGameObject<Tree>(Drawm_BillBoard);
+	//	XMFLOAT2 pos = { (float)(rand() % 200 - 100),(float)(rand() % 200 - 100) };
+	//	tree->m_TransForm->m_Position = { pos.x,0.0f,pos.y };
+	//	
+	//}
+	
+	AddGameObject<Grass>(Drawm_BillBoard);
+	//for (int i = 0; i < 10000; i++)
+	//{
+	//	auto grass = AddGameObject<Grass>(Drawm_BillBoard);
+	//	XMFLOAT2 pos = { (float)(rand() % 200 - 100),(float)(rand() % 200 - 100) };
+	//	grass->m_TransForm->m_Position = { pos.x,0.0f,pos.y };
+
+	//}
 
 	for (int i = 0; i < 1; i++)
 	{
@@ -51,14 +60,22 @@ void Game::Init()
 void Game::Update()
 {
 	Scene::Update();
-	if (m_Count == 0)
-	{
-		auto filed = GetGameObject<MeshFiled>();
-		for (auto tree : Manager::GetScene()->GetGameObjects<Tree>())
-		{
-			tree->m_TransForm->m_Position.y = filed->GetHeight(tree->m_TransForm->m_Position);
-		}
-	}
+	//if (m_Count == 0)
+	//{
+	//	auto filed = GetGameObject<MeshFiled>();
+	//	for (auto tree : Manager::GetScene()->GetGameObjects<Tree>())
+	//	{
+	//		tree->m_TransForm->m_Position.y = filed->GetHeight(tree->m_TransForm->m_Position);
+	//	}
+	//}
+	//if (m_Count == 0)
+	//{
+	//	auto filed = GetGameObject<MeshFiled>();
+	//	for (auto grass : Manager::GetScene()->GetGameObjects<Grass>())
+	//	{
+	//		grass->m_TransForm->m_Position.y = filed->GetHeight(grass->m_TransForm->m_Position);
+	//	}
+	//}
 	if (m_Count == 1)
 	{
 		auto filed = GetGameObject<MeshFiled>();
