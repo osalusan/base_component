@@ -7,7 +7,6 @@ protected:
 	class GameObject* _GameObject = nullptr;
 
 public:
-	Component() = delete;
 	Component(GameObject* object) {
 		_GameObject = object;
 	}
@@ -17,6 +16,4 @@ public:
 	virtual void Unit() {};
 	virtual void Update() {};
 	virtual void Draw() {};
-
-	
 };

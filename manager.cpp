@@ -35,7 +35,7 @@ void Manager::Init()
 	Renderer::Init();
 	m_ConnectionCount = 0;
 	m_Audio->InitMaster();
-	m_Scene = new Game;
+	m_Scene = new Title;
 	m_Scene->Init();
 	m_Fade = new Fade;
 	m_Fade->Init();

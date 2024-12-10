@@ -159,6 +159,8 @@
     <ClCompile Include="gameover.cpp" />
     <ClCompile Include="grass.cpp" />
     <ClCompile Include="input.cpp" />
+    <ClCompile Include="loading.cpp" />
+    <ClCompile Include="loadLogo.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="manager.cpp" />
     <ClCompile Include="meshfiled.cpp" />
@@ -177,6 +179,7 @@
     <ClCompile Include="skydome.cpp" />
     <ClCompile Include="texturecacheManager.cpp" />
     <ClCompile Include="title.cpp" />
+    <ClCompile Include="tree.cpp" />
     <ClCompile Include="udp_client.cpp" />
     <ClCompile Include="udp_server.cpp" />
   </ItemGroup>
@@ -201,6 +204,8 @@
     <ClInclude Include="game_skydome.h" />
     <ClInclude Include="grass.h" />
     <ClInclude Include="input.h" />
+    <ClInclude Include="loading.h" />
+    <ClInclude Include="loadLogo.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="manager.h" />
     <ClInclude Include="meshfiled.h" />

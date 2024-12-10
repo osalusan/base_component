@@ -18,6 +18,10 @@
 #include "tree.h"
 #include "grass.h"
 #include "rock.h"
+#include "tree.h"
+
+bool Game::m_LoadFinish = false;
+
 void Game::Init()
 {
 
@@ -146,4 +150,22 @@ void Game::Update()
 			return object->Destroy();
 			});
 	}
+}
+
+void Game::Uninit()
+{
+	Scene::Uninit();
+
+	Tree::UnLoad();
+
+	m_LoadFinish = false;
+}
+
+void Game::Load()
+{
+	// ロード開始
+	m_LoadFinish = false;
+	Tree::Loading();
+	// ロード終了
+	m_LoadFinish = true;
 }

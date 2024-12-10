@@ -10,6 +10,13 @@
 #include "gameover.h"
 #include "meshfiled.h"
 
+Collision* Player::m_Collision{};
+
+void Player::Loading()
+{
+
+}
+
 void Player::Init()
 {
 	InitComponents();

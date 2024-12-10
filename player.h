@@ -35,11 +35,11 @@ class Player :public GameObject {
 private:
 	Velocity* m_Velocity = {};
 	Sharder* m_Sharder = {};
-	Collision* m_Collision = {};
+	static Collision* m_Collision;
 	AnimationModel* m_AnimeModel = {};
 	Audio* m_AttackSE = {};
 
-
+	static void Loading();
 	float m_MoveSpeed = 15.00f;
 	bool m_Dash = false;			  // ダッシュ中
 	bool m_Jump = false;			  // ジャンプ中

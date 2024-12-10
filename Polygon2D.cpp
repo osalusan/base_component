@@ -173,6 +173,14 @@ void Polygon2D::Draw()
 	//マトリクス設定
 	Renderer::SetWorldViewProjection2D();
 
+	XMMATRIX world, scl, rot, trans;
+
+	scl = XMMatrixScaling(m_TransForm->m_Scale.x, m_TransForm->m_Scale.y, m_TransForm->m_Scale.z);
+	rot = XMMatrixRotationRollPitchYaw(m_TransForm->m_Rotation.x, m_TransForm->m_Rotation.y, m_TransForm->m_Rotation.z);
+	trans = XMMatrixTranslation(m_TransForm->m_Position.x, m_TransForm->m_Position.y, m_TransForm->m_Position.z);
+	world = scl * rot * trans;
+	Renderer::SetWorldMatrix(world);
+
 	//頂点バッファの設定
 	UINT stride = sizeof(VERTEX_3D);
 	UINT offset = 0;
@@ -232,8 +240,12 @@ void Polygon2D::SetSize(XMFLOAT3 position, XMFLOAT3 size, int pivot)
 {
 	if (pivot < 0 && pivot > 4)return;
 
+
 	m_TransForm->m_Position = position;
 	m_TransForm->m_Scale = size;
+
+	position = { 0.0f,0.0f,0.0f };
+	size = { 1.0f,1.0f,0.0f };
 	if (pivot == 0)
 	{// 中央
 		m_Vertex[0].Position = XMFLOAT3(position.x - (size.x * 0.5f), position.y - (size.y * 0.5f), 0.0f);

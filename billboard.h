@@ -6,7 +6,7 @@ class BillBoard :public GameObject
 protected:
 
 	ID3D11Buffer* m_VertexBuffer = nullptr;
-	ID3D11ShaderResourceView* m_Texture = nullptr;
+	static ID3D11ShaderResourceView* m_Texture;
 
 	XMFLOAT3 m_Position = {};
 

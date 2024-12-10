@@ -6,6 +6,7 @@
 #include "manager.h"
 #include "input.h"
 #include "game.h"
+#include "loading.h"
 void Title::Init()
 {
 	AddGameObject<Title_Camera>(Draw_Camera)->m_TransForm->m_Position = {0.0f,5.0f, -10.0f };
@@ -22,6 +23,6 @@ void Title::Update()
 	Scene::Update();
 	if (Input::GetKeyRelease(VK_SPACE))
 	{
-		Manager::SetScene<Game>();
+		Manager::SetScene<Loading>();
 	}
 }

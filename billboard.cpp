@@ -2,6 +2,10 @@
 #include "player_camera.h"
 #include "manager.h"
 #include "texturecacheManager.h"
+
+
+ID3D11ShaderResourceView* BillBoard::m_Texture = nullptr;
+
 void BillBoard::Init()
 {
 	LoadTexture();
