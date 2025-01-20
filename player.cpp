@@ -269,7 +269,7 @@ void Player::LoadModel()
 	m_AnimeModel->LoadAnimation("asset\\model\\HurricaneKick.fbx", "Attack");
 	m_AnimeModel->LoadAnimation("asset\\model\\FallALoop.fbx", "Dash");
 
-	m_ChildModel->Load("asset\\model\\cylinder.obj");
+	m_ChildModel->Load("asset\\model\\rock.obj");
 }
 
 void Player::Draw()
@@ -293,7 +293,7 @@ void Player::Draw()
 		1.0f / m_TransForm->m_Scale.y
 		, 1.0f / m_TransForm->m_Scale.z);
 	childRot = XMMatrixRotationRollPitchYaw(0.0f,0.0f,0.0f);
-	childTrans = XMMatrixTranslation(0.0f,2.0f,3.0f);
+	childTrans = XMMatrixTranslation(0.0f,0.0f,0.0f);
 	childWorld = childRot * childTrans * childScl * rightHandMatrix * world;
 	Renderer::SetWorldMatrix(childWorld);
 
